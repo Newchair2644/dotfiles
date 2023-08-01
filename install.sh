@@ -3,7 +3,7 @@
 # Config backups are made automatically in the same dir
 # THIS SCRIPT IS CURRENTLY UNFINISHED AND UNTESTED ON A FRESH INSTALL
 
-DOTFILES_ROOT="${HOME}/.dotfiles/home"
+DOTFILES_ROOT="${HOME}/.dotfiles"
 HOME_BACKUP="${HOME}/home.bak"
 
 # Generic yes/no prompt
@@ -40,19 +40,18 @@ setup() {
     echo "Backing ~/ to ${HOME_BACKUP} and creating needed dirs..." | tag 0
 
     mkdir -p "$HOME_BACKUP" | tag $?
-    find "$HOME" -mindepth 1 -maxdepth 1 -exec mv -v {} "$HOME_BACKUP" \;
+    find "$HOME" -mindepth 1 -maxdepth 1 | grep -v "$DOTFILES_ROOT" | grep -v "$HOME_BACKUP" | xargs mkdir -v | tag $?
 
-    if [ -f "${DOTFILES_ROOT}/.config/user-dirs.dirs.symlink" ]; then
+    if [ -f "${DOTFILES_ROOT}/home/.config/user-dirs.dirs.symlink" ]; then
         echo "Creating XDG user directories..." | tag 0
-        sed 's/\=.*$//g' "${DOTFILES_ROOT}/.config/user-dirs.dirs.symlink" | xargs mkdir
+        sed 's/\=.*$//g' "${DOTFILES_ROOT}/home/.config/user-dirs.dirs.symlink" | xargs mkdir -v | tag $?
     else
         echo "Skipping creation of XDG user directories because no user-dirs.dirs was found" | tag 1
     fi
 
-    mkdir -pv \
-        "${HOME}/.config" \
-        "${HOME}/.local/src" \
-        "${HOME}/.local/share/fonts"
+    mkdir -pv "${HOME}/.config" | tag $?
+    mkdir -pv "${HOME}/.local/src" | tag $?
+    mkdir -pv "${HOME}/.local/share/fonts" | tag $?
 }
 
 # Install packages with xbps-install and download some fonts
