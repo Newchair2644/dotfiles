@@ -44,7 +44,7 @@ setup() {
 
     mkdir -pv "${HOME}/.config" \
         "${HOME}/.local/src" \
-        "${HOME}/.local/bin"
+        "${HOME}/.local/bin" \
         "${HOME}/.local/share/fonts"
 }
 
