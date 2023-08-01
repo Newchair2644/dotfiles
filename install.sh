@@ -40,19 +40,19 @@ setup() {
     echo "Backing ~/ to ${HOME_BACKUP} and creating needed dirs..." | tag 0
 
     mkdir -p "$HOME_BACKUP" | tag $?
-    find "$HOME" -mindepth 1 -maxdepth 1 -exec mv -v {} "$HOME_BACKUP"
+    find "$HOME" -mindepth 1 -maxdepth 1 -exec mv -v {} "$HOME_BACKUP" \;
 
-    if [ -f "${DOTFILES_ROOT}/home/.config/user-dirs.dirs.symlink" ]; then
-        sed 's/\=.*$//g' "${DOTFILES_ROOT}/home/.config/user-dirs.dirs.symlink" | xargs mkdir
-        success "Created XDG user directories"
+    if [ -f "${DOTFILES_ROOT}/.config/user-dirs.dirs.symlink" ]; then
+        echo "Creating XDG user directories..." | tag 0
+        sed 's/\=.*$//g' "${DOTFILES_ROOT}/.config/user-dirs.dirs.symlink" | xargs mkdir
     else
-        info "Skipping creation of XDG user directories because no user-dirs.dirs was found"
+        echo "Skipping creation of XDG user directories because no user-dirs.dirs was found" | tag 1
     fi
 
     mkdir -pv \
-        ${HOME}/.config \
-        ${HOME}/.local/src \
-        ${HOME}/.local/share/fonts
+        "${HOME}/.config" \
+        "${HOME}/.local/src" \
+        "${HOME}/.local/share/fonts"
 }
 
 # Install packages with xbps-install and download some fonts
