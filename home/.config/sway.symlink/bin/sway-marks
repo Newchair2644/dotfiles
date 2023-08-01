@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Wrapper around some common i3 vim-like marks commands that shows window
+# borders, runs the specified command, then hides them (marks are shown in border)
+
+swaymsg '[class=".*"] border normal 1'
+case $1 in
+	mark)
+		i3-input -f pango:'JetBrainsMono Nerd Font' -F 'mark %s' -l 2 -P 'Mark:'
+		;;
+	unmark)
+		i3-input -f pango:'Iosevka' -F 'unmark %s' -l 2 -P 'Unmark:'
+		;;
+	goto)
+		i3-input -f pango:'Iosevka' -F '[con_mark="%s"] focus' -l 2 -P 'Go to mark:'
+		;;
+	move)
+		i3-input -f pango:'Iosevka' -F '[con_mark="%s"] move container to workspace current, focus' -l 2 -P 'Move Mark:'
+		;;
+	swap)
+		swaymsg 'mark --add "_swapee"'
+		i3-input -f pango:'Iosevka' -F '[con_mark="%s"] swap container with mark "_swapee", focus' -l 2 -P 'Swap With Mark:'
+		;;
+	show)
+		marks=$(swaymsg -t get_marks | tr -d '\["\]')  # remove quotations
+		if [ -z "$marks" ]; then  # no marks
+			herbe "Nothing is marked"
+		else
+			herbe "Marks: $marks"
+		fi
+		;;
+esac
+swaymsg '[class=".*"] border pixel 1'

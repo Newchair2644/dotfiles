@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Run a program if it exists else give it the focus
+# Syntax:
+# -c -> window class
+# -t -> window title
+
+case "$3" in
+	*terminal*)
+		PROG=$(pgrep -cx "$4")
+		;;
+	*)
+		PROG=$(pgrep -cx "$3")
+		;;
+esac
+
+case "$1" in
+	-t)
+		FIND="title"
+		;;
+	-c)
+		FIND="app_id"
+		;;
+	*)
+		echo "Specify window (-t) or window clase (-c)."
+		exit 1
+		;;
+esac
+
+if [ "$PROG" -eq 0 ]; then
+	swaymsg exec "$3" "$4" "$5"
+else
+	swaymsg [$FIND="(?i)$2"] focus
+fi

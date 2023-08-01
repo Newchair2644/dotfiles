@@ -1,0 +1,57 @@
+# Style file
+# Assign colors to sway and toggle other appearance settings
+
+## Basic settings
+
+### Font
+font pango: monospace 10
+
+### Window gaps
+#gaps outer 3
+#gaps inner 3
+#smart_gaps on
+hide_edge_borders smart
+
+### Window title
+title_align center
+titlebar_border_thickness 2
+
+### Wallpaper
+#exec_always sway output LVDS-1 bg "~/Pictures/Wallpapers/$(flavours current).*" fill
+
+## Swaybar + i3blocks
+bar {
+        font pango: monospace 13
+	position top
+	tray_output primary
+	tray_padding 5
+	status_command i3blocks
+	strip_workspace_numbers true
+
+	colors {
+		background $base00
+		separator  $base01
+		statusline $base04
+
+		# State             Border  BG      Text
+		focused_workspace   $base05 $base0D $base00
+		active_workspace    $base05 $base03 $base00
+		inactive_workspace  $base03 $base01 $base05
+		urgent_workspace    $base08 $base08 $base00
+		binding_mode        $base00 $base0A $base00
+	}
+}
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+
+## Default borders and weight
+default_border pixel 1
+default_floating_border normal 1

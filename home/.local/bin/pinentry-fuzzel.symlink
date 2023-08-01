@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "OK Please go ahead"
+while read stdin; do
+	case $stdin in
+		SETDESC)
+			KEYNAME=${stdin#*:%0A%22}
+			KEYNAME=${KEYNAME%\%22\%0A*}
+			KEYID=${stdin#*ID }KEYID=${KEYID%,*}
+			echo "OK"
+			;;
+		GETPIN)
+			echo "D `fuzzel -p "Passphrase: " --password="*" --dmenu -l 0 --line-height=12 "gpg-agent: $KEYNAME ($KEYID)"`\nOK"
+			;;
+		BYE)
+			echo "Ok closing connection"
+			exit 0
+			;;
+		*)
+			echo "OK"
+	esac
+done

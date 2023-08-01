@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ -z "$DMENU" ]; then
+	echo 'Error: "$DMENU" variable is not set' 1>&2
+	exit
+fi
+
+xdotool="wtype -"
+password_files=${PASSWORD_STORE_DIR-~/.password-store}
+password="$(find "$password_files" -type f | cut -d/ -f5- | grep -v '^\..*$' | \
+	rev | cut -c 5- | rev | $DMENU)"
+
+[ -z "$password" ] && exit
+
+contents="$(pass show "$password" | tail -n +2)"
+if [ -n "$contents" ]; then
+	fields="$(printf "$contents" | cut -d: -f1 | tr '[:upper:]' '[:lower:]' | sed '1 i autotype\npassword')"
+	field="$(printf "$fields" | $DMENU)"
+	case "$field" in
+		"autotype")
+			username="$(pass show "$password" | grep -i "^username:" | cut -d: -f2 | cut -c 2-)"
+			secret="$(pass show "$password" | head -n1)"
+			printf "%s\t%s" "$username" "$secret" | $xdotool
+		;;
+		"password")
+			pass -c "$password"
+		;;
+		"otpauth")
+			pass otp -c "$password"
+		;;
+		*)
+			pass "$password" | grep -i "^${field}:" | cut -d: -f2 | cut -c 2- | wl-copy
+		;;
+	esac
+else
+	pass -c "$password"
+fi

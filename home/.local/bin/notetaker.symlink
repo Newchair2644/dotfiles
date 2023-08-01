@@ -1,0 +1,13 @@
+#!/bin/sh
+
+fname="${HOME}/Documents/Notes/daily/note-$(date '+%m-%d-%Y').md"
+
+if [ ! -f "$fname" ]; then
+    echo "# Notes for $(date '+%m-%d-%Y')" > "$fname"
+fi
+
+nvim -c "norm Go" \
+    -c "norm Go## $(date '+%I:%M %p')" \
+    -c "norm G2o" \
+    -c "norm zz" \
+    -c "startinsert" "$fname"

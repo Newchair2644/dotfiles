@@ -1,0 +1,59 @@
+#    __        __
+#   / /_____ _/ /__ ________
+#  /  '_/ _ `/  '_// __/ __/
+# /_/\_\\_,_/_/\_\/_/  \__/
+
+# General
+# ───────
+# Plugins
+nop %sh{
+    mkdir -p "$kak_config/autoload"
+    ln -s "$kak_runtime/rc" "$kak_config/autoload/standard-library"
+}
+
+# Basic settings
+colorscheme base16
+set-option global ui_options terminal_assistant=none
+
+# Enable editor config
+hook global BufOpenFile .* %{ editorconfig-load }
+hook global BufNewFile .* %{ editorconfig-load }
+
+# Relative line numbering in normal mode, absolute in insert mode
+hook global WinCreate .* %{ add-highlighter window/numbers number-lines -hlcursor -relative }
+hook global ModeChange .*:normal %{ add-highlighter -override window/numbers number-lines -hlcursor -relative }
+hook global ModeChange .*:insert %{ add-highlighter -override window/numbers number-lines -hlcursor }
+
+# LSP mappings
+map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
+map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
+map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object e '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
+map global object k '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
+map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
+map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
+
+# autoindent selection <https://discuss.kakoune.com/t/autoindent-selections/1065>
+def indent-selection %{
+    eval -save-regs '"^i' %{
+        exec '<a-x>"iZ'
+        try %{
+            exec '"_s^[ 	]+<ret><a-d>'
+        }
+        exec '"iz'
+        execute-keys -with-hooks "<a-d>ko%sh{ echo ""$kak_selection"" | sed 's/</<lt>/g' }<esc>:select %val{selection_desc}<ret><a-x>"
+    }
+}
+map global normal = ':indent-selection<ret>'
+
+# Enable lsp on filetypes
+# ───────────────────────
+eval %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(c|cpp|scad) %{
+   lsp-enable-window
+}
+#
+#hook global WinSetOption filetype=python %{
+    #set-option global lintcmd 'flake8'
+#}

@@ -1,0 +1,74 @@
+/* Start flavours */
+/* base16-wofi (https://sr.ht/~knezi/base16-wofi)
+ * Base16 wofi template by knezi
+ * Material Darker scheme by Nate Peterson */
+
+window {
+	background-color: #212121;
+	color: #EEFFFF;
+	border: 1px solid #303030;
+}
+
+#entry:selected {
+	background-color: #82AAFF;
+}
+
+#text:selected {
+	color: #212121;
+}
+
+#input {
+	background-color: #303030;
+	color: #B2CCD6;
+	border-color: #353535; 
+}
+
+#input:focus {
+	border-color: #FFCB6B; 
+}
+
+#input image {
+	color: #B2CCD6;
+}
+/* End flavours */
+
+
+window {
+	font-family: monospace;
+	margin: 0px;
+	border-radius: 10px;
+	font-size: 16px;
+}
+
+#input {
+	margin: 5px;
+}
+
+#inner-box {
+	margin: 5px;
+	border: none;
+}
+
+#outer-box {
+	margin: 5px;
+	border: none;
+}
+
+#scroll {
+	margin: 0px;
+	border: none;
+}
+
+#text {
+	margin: 5px;
+	border: none;
+} 
+
+#entry:selected {
+	border-radius: 4px;
+	font-weight: normal;
+}
+
+#text:selected {
+	font-weight: normal;
+}

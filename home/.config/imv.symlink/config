@@ -1,0 +1,64 @@
+[options]
+overlay_font = monospace:12
+# Start flavours
+## Base16 Chalk
+# Author: Chris Kempson (http://chriskempson.com)
+
+background = #151515
+overlay_text_color = #d0d0d0
+overlay_text_alpha = ff
+overlay_background_color = #202020
+overlay_background_alpha = ff
+# End flavours
+
+# Suppress built-in key bindings, and specify them explicitly in this
+# config file.
+suppress_default_binds = true
+
+[aliases]
+# Define aliases here. Any arguments passed to an alias are appended to the
+# command.
+# alias = command to run
+
+[binds]
+# General
+g = goto 1
+<Shift+G> = goto -1
+n = next
+p = prev
+<space> = next
+<Shift+space> = prev
+<bracketright> = next 10
+<bracketleft> = prev 10
+<Ctrl+space> = toggle_playing
+<Ctrl+n> = next_frame
+s = slideshow +1
+<Shift+S> = slideshow -1
+q = quit
+f = fullscreen
+i = overlay
+x = close
+o = exec echo $imv_current_file
+
+# Panning
+h = pan 50 0
+j = pan 0 -50
+k = pan 0 50
+l = pan -50 0
+z = center
+
+# Zooming
+<Shift+plus> = zoom 1
+<minus> = zoom -1
+<equal> = reset
+w = scaling next
+<Shift+W> = upscaling next
+
+# Rotation
+<Shift+greater> = rotate by 90
+<Shift+less> = rotate by -90
+<Shift+question> = rotate by 180
+
+# Flipping
+<Shift+bar> = flip horizontal
+<Shift+underscore> = flip vertical

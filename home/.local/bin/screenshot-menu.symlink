@@ -1,0 +1,25 @@
+#!/bin/sh
+
+choice="$(printf \
+	"Entire Screen\nEntire Screen (5 sec)\nSelected Region\nSelected Region (5 sec)\n" \
+	| $DMENU)"
+
+[ -z "$choice" ] && exit
+
+screenshot_name="$(date +'Screenshot_%Y-%m-%d-%S.png')"
+
+case "$choice" in
+	"Entire Screen")
+		grim ~/Pictures/Screenshots/${screenshot_name} \
+			&& notify-send "Screenshot $screenshot_name saved in ~/Pictures/Screenshots"
+		;;
+	"Entire Screen (5 sec)" )
+		sleep 5 && grim ~/Pictures/Screenshots/${screenshot_name} \
+			&& swaynag -m 'Screenshot taken' -t custom
+		;;
+	"Selected Region" )
+		grim -g "$(slurp)" ~/Pictures/Screenshots/${screenshot_name}
+		;;
+	"Selected Region (5 sec)" )
+		sleep 5 && grim -g "$(slurp)" ~/Pictures/Screenshots/${screenshot_name}
+esac

@@ -1,0 +1,67 @@
+add ~/Music
+clear
+clear 
+add ~/Music/
+cleear
+stop
+o ~/Music
+help
+::
+set dsp.alsa.device=default
+set dsp.alsa.device=
+set mixer.alsa.channel=PCM
+set mixer.alsa.device=default
+set mixer.alsa.device=
+set mixer.alsa.channel=
+refresh 
+win-update
+add Music/
+q
+add ~/mus
+load Music/
+he
+clea
+a ~/Music
+open ~/Music
+live-filter 
+lqueue 
+tqueue 
+colorscheme colors
+set format_title=Playing: %a - %l - %t (%y)
+add https://www.youtube.com/watch?v=VoLdkt3y0BQ
+colorscheme gruvbox
+add
+iefniurefniurenfi
+colorscheme default
+colorscheme amazon
+colorscheme night
+set color_trackwin_album_fg=yellow
+set color_trackwin_album_fg=black
+set color_trackwin_album_fg=magenta
+set color_trackwin_album_fg=cyan
+set color_trackwin_album_fg=red
+set color_trackwin_album_fg=green
+set color_trackwin_album_fg=default
+colo
+fiurenfreiu
+fieurfner
+fierfneiru
+iuenf
+colorscheme cyan
+colorscheme green
+colorscheme jellybeans
+colorscheme zenburn
+colorscheme gray-88
+colorscheme nord
+colorscheme dracula
+set status_display_program=
+set color_win_cur_sel_bg=blue
+set color_win_cur_sel_bg=bluw
+bind common <key> colorscheme
+set color_win_cur_sel_bg=magenta
+set output_plugin=alsa
+fset classical=genre="Classical"
+fset missing-tag=!stream&(artist=""|album=""|title=""|tracknumber=-1|date=-1)
+shell 
+fset unheard=play_count=0
+live-filter jjj

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+current_path="$(mpc current -f '%file%' | xargs -0 dirname)"
+
+album_art="$(find "${HOME}/Music/${current_path}" -iname *.jpg | tail -n1)"
+title="$(mpc current -f '%title%')"
+body="$(mpc current -f '%artist% - %album%')"
+
+notify-send -i "$album_art" "$title" "$body"

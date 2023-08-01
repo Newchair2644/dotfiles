@@ -1,0 +1,23 @@
+# Arch linux helper functions and aliases
+
+# Shorten some commands
+alias pacman='sudo pacman'
+alias paccache='sudo paccache'
+alias pac='pacman'
+alias qpac='pacman -Q'
+
+# Remove orphan pkgs
+alias opac='pacman -Qtd > /dev/null && sudo pacman -Rns $(pacman -Qtdq)'
+
+# List all available aur pkgs
+alias apkg="curl -s \"https://aur.archlinux.org/packages.gz\" | zcat"
+
+# list package which owns command
+whoowns() {
+    pacman -Qo "$@" 2> /dev/null || pacman -F "$@"
+}
+
+# list commands which are provided by package
+listprogs() {
+    pacman -Qlq "$@" | grep -F "${PATH//:/$'\n'}" | sed -rn 's|.*/([^/]+)$|\1|p'
+}

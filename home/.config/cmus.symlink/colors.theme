@@ -1,0 +1,28 @@
+### Colors for cmus
+### Numair Dubas <Numair2644@protonmail.com>
+### {{{
+set color_cmdline_bg=black
+set color_cmdline_fg=white
+set color_error=red
+set color_info=white
+set color_separator=white
+set color_statusline_bg=black
+set color_statusline_fg=white
+set color_titleline_bg=black
+set color_titleline_fg=yellow
+set color_trackwin_album_fg=green
+set color_win_bg=black
+set color_win_cur=red
+set color_win_cur_sel_bg=cyan
+set color_win_cur_sel_fg=black
+set color_win_dir=white
+set color_win_fg=white
+set color_win_inactive_cur_sel_bg=magenta
+set color_win_inactive_cur_sel_fg=black
+set color_win_inactive_sel_bg=magenta
+set color_win_inactive_sel_fg=black
+set color_win_sel_bg=cyan
+set color_win_sel_fg=black
+set color_win_title_bg=black
+set color_win_title_fg=white
+### }}}

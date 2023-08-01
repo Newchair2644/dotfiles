@@ -1,0 +1,14 @@
+# Startup Apps
+# Runs when the sway is started, terminate when stopped
+# Similar to .xinitrc
+
+exec mako
+exec foot --server
+exec wlsunset -l 40.325939 -L -78.917488
+exec syncthing --no-browser
+exec footclient cmus
+exec remind -z5 -k'notify-send %s &' ~/.reminders
+exec swayidle -w \
+	timeout 300 'swaylock -f -c 000000' \
+	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+	before-sleep 'swaylock -f -c 000000'

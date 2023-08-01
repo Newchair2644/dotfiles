@@ -1,0 +1,42 @@
+## See /usr/share/doc/alacritty/example/alacritty.yml
+
+## Import files (Colors, Fonts, Etc)
+import:
+  - ~/.config/alacritty/colors.yml
+  - ~/.config/alacritty/fonts.yml
+
+## Set environment variables
+env:
+  TERM: alacritty
+
+## Terminal window settings
+window:
+  dimensions:
+    columns: 82
+    lines: 25
+
+  padding:
+    x: 12
+    y: 12
+
+  startup_mode: Windowed
+  dynamic_title: true
+
+## scrolling
+  history: 10000
+  multiplier: 3
+
+## Background opacity
+window.opacity: 1.00
+
+## Cursor
+cursor:
+  style:
+    shape: Block
+    blinking: On
+
+mouse:
+  hide_when_typing: true
+
+## Live config reload
+live_config_reload: true

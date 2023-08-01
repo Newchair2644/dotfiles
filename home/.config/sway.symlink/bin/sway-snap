@@ -1,0 +1,48 @@
+#!/bin/bash
+
+monitor_dimensions="$(swaymsg -t get_outputs |
+	jq -r '.. | select(.focused?) | .current_mode | "\(.width)x\(.height)"')"
+win_param=( $(swaymsg -t get_tree |
+	jq -r '.. | select(.type?) | select(.focused?) | .rect.x, .rect.y, .rect.width, .rect.height, .deco_rect.height') )
+
+
+monitor_width=${monitor_dimensions%x*}
+monitor_height=${monitor_dimensions#*x}
+
+new_x=${win_param[0]}
+new_y=${win_param[1]}
+win_width=${win_param[2]}
+win_height=${win_param[3]}
+deco_height=${win_param[4]}
+
+bar_height=28
+gaps_inner=0
+gaps_outer=0
+
+[ -n "$1" ] && command="$1"
+
+case $command in
+	up)
+		new_y=0
+		;;
+
+	down)
+		new_y=$(( monitor_height - win_height - deco_height - bar_height ))
+		;;
+
+	left)
+		new_x=0
+		new_y=$(( new_y - deco_height - bar_height ))
+		;;
+
+	right)
+		new_x=$(( monitor_width -  win_width ))
+		new_y=$(( new_y - deco_height - bar_height ))
+		;;
+	*)
+		echo "ERROR: $1: No such position" >&2
+		exit 1
+		;;
+esac
+
+swaymsg "move position ${new_x} ${new_y}"

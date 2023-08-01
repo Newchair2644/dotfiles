@@ -1,0 +1,51 @@
+# General rules for swaywm
+# Windows and input rules
+
+## Window and workspace riles
+
+### App locations (I don't use too many guis welp)
+#assign [app_id="qutebrowser"] workspace number $ws3
+#assign [app_id="zathura"] workspace number $ws4
+
+### Window rules
+set $video floating enable, sticky enable, resize set 40 ppt 40 ppt
+set $image floating enable, sticky enable, resize set 65 ppt 72 ppt
+set $dropdown floating enable, sticky enable, \
+	resize set 100 ppt 50 ppt, \
+	move position 0 0, move scratchpad
+
+for_window [app_id="mpv"] $video
+for_window [app_id="imv"] $image
+for_window [app_id="^Clac$" title="Calculator"] $video
+for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
+for_window [app_id="foot" title="File Picker"] floating enable
+for_window [con_mark="^dropdown$"] $dropdown
+for_window [title="^notetaker_window$"] floating enable, sticky enable
+for_window [title="^vim-anywhere$"] floating enable
+for_window [app_id="^chiaki$"] floating enable
+for_window [class="Godot" title=".*\(DEBUG\)"] floating enable
+for_window [app_id="org.libretro.RetroArch"] fullscreen enable
+#for_window [app_id="EmulationStation"] fullscreen enable
+
+### Pre-defined marks
+#for_window [class="^firefox$"] exec i3-auto-mark Navigator f
+#for_window [class="^Alacritty$"] exec i3-auto-mark Alacritty a
+
+## Uncomment for terminal transparency
+#for_window [app_id="foot"] opacity 0.95
+
+## Display rules
+bindswitch --locked lid:on exec swaylock
+
+## Input rules
+input "type:touchpad" {
+	natural_scroll enable
+	scroll_factor 0.5
+	tap enable
+	dwt enable
+}
+
+input "type:mouse" {
+	scroll_factor 0.5
+	accel_profile adaptive
+}

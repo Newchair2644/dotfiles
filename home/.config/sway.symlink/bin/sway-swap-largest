@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Get the ID of the current workspace
+current_workspace=$(swaymsg -t get_workspaces | jq '.[] | select(.focused==true).name')
+
+# Get the ID of the current window
+current_window=$(swaymsg -t get_tree | jq 'recurse(.nodes[]) | select(.focused==true).id')
+
+# Get the ID of the largest window in the current workspace
+largest_window=$(swaymsg -t get_tree | jq --arg current_workspace "$current_workspace" 'recurse(.nodes[]) | select(.type=="con" and .name==$current_workspace) | max_by(.rect.width * .rect.height).id')
+
+# Swap the current window with the largest window in the current workspace
+swaymsg "[con_id=$current_window] swap container with [con_id=$largest_window]"

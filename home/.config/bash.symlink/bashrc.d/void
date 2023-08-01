@@ -1,0 +1,30 @@
+# Void linux helpers
+
+# shorten some cmds
+alias xbi="sudo xbps-install"
+alias xbq="xbps-query"
+alias xbr="sudo xbps-remove"
+
+# use fzf to interactively seach and install packages
+xfzf() {
+	xpkg -a |
+		fzf -m --preview 'xq {1}' \
+		--preview-window=right:66%:wrap |
+		xargs -ro xi
+}
+
+# search repology for package
+xversion() {
+	if [ "$1" = "-s" ] && [ -n "$2" ]; then
+		curl -s "https://repology.org/api/v1/project/${2}" | \
+			jq -r '.[] | select(.repo=="void_x86_64") |
+			[.visiblename,.version,.summary] | @tsv' |
+			sed 's/\t/-/'  | column -t -o " "
+	elif [ -n "$1" ]; then
+		curl -s "https://repology.org/api/v1/project/${1}" | \
+			jq -r ".[] | select(.repo==\"void_x86_64\") | \
+			select(.visiblename==\"${1}\") | [.status,.version] | @tsv"
+	else
+		echo "Usage: xversion -[s] [PKG]"
+	fi
+}

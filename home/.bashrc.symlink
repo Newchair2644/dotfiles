@@ -1,0 +1,41 @@
+#!/bin/bash
+# Source all configs and define general behavior
+
+# source completions, functions, aliases, etc
+[ -f "/usr/share/bash-completion/bash_completion" ] && . "/usr/share/bash-completion/bash_completion"
+[ -f "/usr/share/bash-completion/completions/pass" ] && . "/usr/share/bash-completion/completions/pass"
+[ -f "/usr/share/bash-completion/completions/pass-otp" ] && . "/usr/share/bash-completion/completions/pass-otp"
+[ -f "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh" ] && . "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh"
+[ -d "${HOME}/.config/bash/bashrc.d" ] && for f in "${HOME}/.config/bash/bashrc.d/"*; do source "$f"; done
+
+# Base16 Shell, sets shell colors (terminal-agnostic)
+base16-shell() {
+    BASE16_SHELL="$HOME/.config/bash/"
+    [ -n "$PS1" ] && [ -s "${BASE16_SHELL}/base16-shell" ] && \
+    source "${BASE16_SHELL}/base16-shell"
+}
+base16-shell
+trap base16-shell USR1
+
+# general shell behavior
+shopt -s histappend                 # append history on exit, don't overwrite
+shopt -s lithist                    # Save multi-line cmd with embedded newline
+shopt -s checkwinsize               # Update col/lines after commands
+shopt -s checkjobs                  # defer exit if jobs are running
+shopt -s autocd                     # Can change dir without `cd`
+shopt -s cdspell                    # Fixes minor spelling errors in cd paths
+shopt -s no_empty_cmd_completion    # Stops empty line tab comp
+shopt -s dirspell                   # Tab comp can fix dir name typos
+shopt -s globstar                   # pattern ** also searches subdirectories
+shopt -s extglob                    # enable extended pattern matching features
+
+# history stuff
+HISTSIZE=5000
+HISTFILESIZE=inf
+HISTTIMEFORMAT="%d/%m/%y %T "
+HISTCONTROL=ignoreboth:erasedups
+HISTIGNORE="iwctl station w* connect * -p *"
+
+# Keybinds
+bind '"\ee"':"\"${EDITOR}\C-m\""
+bind '"\e`"':"\"n -e\C-m\""

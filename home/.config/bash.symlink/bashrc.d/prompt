@@ -1,0 +1,30 @@
+## Set the prompt and window title
+# (Slightly) Modified version of this prompt:
+# https://github.com/mokuken/dots/blob/main/bashrc
+
+reset="\[\e[m\]"
+blue="\[\e[00;34m\]"
+purple="\[\e[00;35m\]"
+cyan="\[\e[00;36m\]"
+yellow="\[\e[00;33m\]"
+blink_yellow="\[\e[05;33m\]"
+
+first_line="${reset}┌─[${blue}\u${reset}]-[${cyan}\h${reset}]-[${yellow}\w${reset}]"
+second_line="\n└─[${blink_yellow}\$${reset}] "
+
+if [ -f /usr/share/git/git-prompt.sh ]; then
+    source /usr/share/git/git-prompt.sh
+    GIT_PS1_SHOWCOLORHINTS=1
+    PROMPT_COMMAND="__git_ps1 '$first_line' '$second_line' ' $purple %s';"
+else
+    # if the file doesn't exist create prompt directly with PS1
+    PS1="$first_line$second_line"
+fi
+unset reset blue purple cyan yellow blink_yellow first_line second_line
+
+# Set window title to currently running command or running shell
+PROMPT_COMMAND+='[ -n "$BASH_COMMAND" ] && printf "\e]0;%s\a" "$SHELL";'
+trap 'printf "\e]0;%s\a" "${BASH_COMMAND//[^[:print:]]/}"' DEBUG
+
+# (ALT) Set title to: user@host:dir-full-path
+#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'

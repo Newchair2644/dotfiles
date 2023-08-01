@@ -1,0 +1,4 @@
+#!/bin/sh
+
+url="$(echo "$1" | sed 's/watch.whatever.social/www.youtube.com/g')"
+mpc add "$(yt-dlp -x -f bestaudio/best -g $url)"

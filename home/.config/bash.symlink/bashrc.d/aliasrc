@@ -1,0 +1,97 @@
+# Generic aliasrc file with aliases and functions
+
+# color and prefs
+alias \
+	ls="ls --color=auto" \
+	dir="dir --color=auto" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+        ip='ip --color=auto'
+	ffmpeg="ffmpeg -hide_banner" \
+        info="info --vi-keys -v match-style=underline,bold,nocolor \
+        -v link-style=yellow -v active-link-style=yellow,bold"
+
+# colored manpages
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}
+
+# shorten common cmds and tasks
+alias \
+	e="$EDITOR" \
+	v="$EDITOR" \
+	z="zathura" \
+	vpn_up="sudo wg-quick up ${1}" \
+	vpn_down="sudo wg-quick down ${1}" \
+	l="ls" \
+	la="ls -a" \
+	ll="ls -la" \
+	yta="yt-dlp --add-metadata -x -f bestaudio/best"
+	diskspace="du -S -h | sort -h -r | less" \
+	retval="echo $?" \
+	cmd_freq="history | awk '{print $4}' | sort | uniq -c | sed 's/^\s//g' | sort | tail"
+
+# typing sudo is too hard
+sudo_cmds=(mount umount shutdown poweroff reboot halt ifconfig ipinfo makewhatis)
+for cmd in "${sudo_cmds[@]}"; do
+    [ -x "$(command -v $cmd)" ] && alias $cmd="sudo ${cmd}"
+done; unset cmd sudo_cmds
+
+# arduino uno compile/upload
+alias \
+    avr-compile="arduino-cli compile --fqbn arduino:avr:uno" \
+    avr-upload="arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno"
+
+# remind number to print reminders for n days
+for i in {1..6}; do alias $i='rem -gaad -@ "*"'${i}; done
+
+# for fun :)
+alias ascii-town='ssh play@ascii.town'
+alias ascii-games='ssh newchair@tty.sdf.org'
+
+# report disk usage of directory and sort files by size
+dusort() {
+    find "$@" -mindepth 1 -maxdepth 1 -exec du -sch {} + | sort -h | less
+}
+
+# count loc without downloading (github)
+github-loc() {
+	curl -L "https://api.codetabs.com/v1/loc?github={$1}"
+}
+
+# count loc without downloading (gitlab)
+gitlab-loc() {
+	curl -L "https://api.codetabs.com/v1/loc?gitlab={$1}"
+}
+
+# tldr version of man pages
+tldr() {
+    local IFS=-
+    curl cheat.sh/"$*"
+}
+
+# find fonts which contain character(s)
+find-fonts() {
+    fc-list ":charset=$(printf "%x " "${@/#/\'}")" family style
+}
+
+# fetch current weather report, with location as optional parameter
+weather() {
+    local request="wttr.in/${*^}?F"
+    if [[ "$(tput cols)" -lt 125 ]]; then
+        request+='n'
+    fi
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "${request// /+}"
+}
+
+# conveniently copy files to nas
+ncp() {
+    rsync --info=progress2 --recursive --protect-args --times --perms \
+        --chmod=D775,F664 "${1%/}" "${2:+NAS:/media/storage/$2}"
+}

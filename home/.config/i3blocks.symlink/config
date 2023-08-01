@@ -1,0 +1,48 @@
+## Base16 Catppuccin
+# Author: Pocco81 (https://github.com/pocco81)
+
+# i3blocks does not provide variables so we must make the entire config a flavours template
+
+markup=pango
+full_text=
+align=center
+separator=false
+separator_block_width=8
+background=#3c3836
+border=#665c54
+
+[wifi]
+color=#fabd2f
+command=~/.config/i3blocks/bin/wifi.sh
+interval=2
+
+[separator]
+
+[volume]
+color=#fb4934
+command=~/.config/i3blocks/bin/volume.sh
+interval=once
+signal=10
+
+[separator]
+
+[battery]
+color=#b8bb26
+command=~/.config/i3blocks/bin/battery.sh
+interval=3
+
+[separator]
+
+[calendar]
+color=#83a598
+command=date '+ 󰃭 %a %d '
+interval=5
+
+[separator]
+
+[time]
+color=#d3869b
+command=~/.config/i3blocks/bin/time.sh
+interval=5
+
+[separator]

@@ -1,0 +1,86 @@
+## Base16 Catppuccin
+# Author: Pocco81 (https://github.com/pocco81)
+
+# i3blocks does not provide variables so we must make the entire config a flavours template
+
+markup=pango
+full_text= 
+align=center
+separator=false
+separator_block_width=5
+
+border=#1E1D2D
+border_left=0
+border_right=0
+border_top=3
+border_bottom=3
+
+[battery-icon]
+separator_block_width=10
+color=#96CDFB
+command=~/.config/i3blocks/bin/battery.sh
+interval=3
+
+[separator]
+
+[volume]
+color=#F28FAD
+command=~/.config/i3blocks/bin/volume.sh
+interval=once
+signal=10
+
+[separator]
+
+[cpu-label]
+separator_block_width=0
+color=#1E1D2D
+background=#B3E1A3
+full_text=" CPU "
+
+[cpu]
+color=#D7DAE0
+background=#282737
+command=grep -o "^[^ ]*" /proc/loadavg | awk '{printf " %s \n", $1}'
+interval=4
+
+[separator]
+
+[memory-label]
+separator_block_width=0
+color=#1E1D2D
+background=#c6aae8
+full_text="  "
+
+[memory]
+color=#c6aae8
+command=free -h | awk '/^Mem/ { print $3 }' | sed s/i//g | awk '{printf " %s \n", $1}'
+interval=4
+
+[wifi-icon]
+separator_block_width=10
+color=#1E1D2D
+background=#EADDA0
+command=~/.config/i3blocks.bak/bin/wifi.sh wlp2s0
+interval=2
+
+[ssid]
+color=#EADDA0
+command=~/.config/i3blocks.bak/bin/ssid.sh wlp2s0
+interval=once
+signal=11
+
+[separator]
+
+[clock]
+separator_block_width=0
+color=#1E1D2D
+background=#83BAE8
+command=~/.config/i3blocks.bak/bin/clock.sh
+interval=5
+
+[time]
+border_right=3
+color=#1E1D2D
+background=#96CDFB
+command=date '+ %I:%M %p '
+interval=5
