@@ -8,9 +8,8 @@
    \ `-_____  \/   SHELL:     bash
     `-______\      UI:        wayland
 ```
-</div>
 
-<img src="https://raw.githubusercontent.com/Numair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/blob/master/screenshots/gruvbox-dark-medium-2.png" alt="img" align="right" width="400px">
 
 Dotfiles for the most based distro known to man
 
