@@ -10,6 +10,8 @@
 ```
 </div>
 
+<img src="https://raw.githubusercontent.com/Numair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="400px">
+
 Dotfiles for the most based distro known to man
 
 - **OS**: Void Linux
@@ -25,8 +27,8 @@ Dotfiles for the most based distro known to man
 *Make sure to backup configs before proceeding!*
 1. Clone this repository into ~/.dotfiles
 2. Run the installer script
-   *Make sure you have root access through either *sudo* or *doas*!*
-3. Add user to the `_seatd` group in order to launch sway
-3. $$$$ Profit!
+   *This script requres root access through either `sudo` or `opendoas*!`
+3. Add user to the `_seatd` group in order to launch `sway`
+3. 💰💲💸 Profit!
 
 ## Gallery
