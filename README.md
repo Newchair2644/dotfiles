@@ -1,16 +1,4 @@
-<div align="center">
-```
-      _______      newchair@Latitude  
-      \_____ `-    OS:        Void Linux  
-   /\   ___ `- \   KERNEL:    Linux 6.3.13_1  
-  | |  /   \  | |  UPTIME:    1 hour, 1 minute  
-  | |  \___/  | |  PACKAGES:  615  
-   \ `-_____  \/   SHELL:     bash  
-    `-______\      UI:        wayland  
-```
-</div>
-
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="325px">
 
 Dotfiles for the most based distro known to man
 
@@ -32,12 +20,12 @@ Dotfiles for the most based distro known to man
 3. 💰💲💸 Profit!
 
 ## Gallery
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/catppuccin.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/catppuccin.png" alt="img" align="center" width="900px">
 
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="center" width="900px">
 
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/paradise.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/paradise.png" alt="img" align="center" width="900px">
 
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gallery-01.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gallery-01.png" alt="img" align="center" width="900px">
 
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gallery-02.png" alt="img" align="right" width="400px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gallery-02.png" alt="img" align="center" width="900px">
