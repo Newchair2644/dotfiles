@@ -73,7 +73,7 @@ pkg_install() {
 # Symlink dotfiles, create backup if $dst already exists
 dotfiles_install() {
     for src in $(find "$DOTFILES_ROOT" -name '*.symlink' -not -path '*.git*'); do
-        dst="$(echo "$src" | sed -e "s/\.symlink$//g" -e "s|${DOTFILES_ROOT}|$HOME|")"
+        dst="$(echo "$src" | sed -e "s/\.symlink$//g" -e "s|${DOTFILES_ROOT}\/home|$HOME|")"
         if ! [ "$src" -ef "$(readlink "$dst")" ]; then
             if [ -f "$dst" ] || [ -d "$dst" ]; then
                 backup="$dst-$(date +%Y-%m-%d)"
