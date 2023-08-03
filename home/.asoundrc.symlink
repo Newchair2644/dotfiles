@@ -1,0 +1,30 @@
+pcm.shared_hw0 {
+    type dmix
+    ipc_key 123456
+    slave { pcm "hw:0,0" }
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+pcm.!default {
+    type plug
+    slave.pcm {
+        type multi
+        slaves {
+            a { channels 2 pcm "shared_hw0" }
+            b { channels 2 pcm "hw:Loopback,0" }
+        }
+        bindings {
+            0 { slave a channel 0 }
+            1 { slave a channel 1 }
+            2 { slave b channel 0 }
+            3 { slave b channel 1 }
+        }
+    }
+    ttable [
+        [ 1 0 1 0 ]   # left  -> a.left,  b.left
+        [ 0 1 0 1 ]   # right -> a.right, b.right
+    ]
+}
