@@ -18,7 +18,7 @@ title_align center
 titlebar_border_thickness 2
 
 ### Wallpaper (current flavours scheme defined by ~/.local/share/flavours/lastscheme)
-exec_always pkill swaybg; swaybg -i ~/Pictures/Wallpapers/$(flavours current).* -m fill
+exec_always pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).* -m fill
 
 ## Swaybar + i3blocks
 bar {
