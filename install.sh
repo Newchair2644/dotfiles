@@ -1,7 +1,6 @@
 #!/bin/sh
 # Install script for my entire system
 # Config backups are made automatically in the same dir
-# THIS SCRIPT IS CURRENTLY UNFINISHED AND UNTESTED ON A FRESH INSTALL
 
 DOTFILES_ROOT="${HOME}/.dotfiles"
 HOME_BACKUP="${HOME}/home.bak"
@@ -64,7 +63,7 @@ pkg_install() {
         'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Mononoki/Regular/MononokiNerdFont-Regular.ttf'
 }
 
-# Symlink dotfiles, create backup if $dst already exists
+# Symlink dotfiles, create backup if $dst already exists, then wallpapers
 dotfiles_install() {
     for src in $(find "$DOTFILES_ROOT" -name '*.symlink' -not -path '*.git*'); do
         dst="$(echo "$src" | sed -e "s/\.symlink$//g" -e "s|${DOTFILES_ROOT}\/home|$HOME|")"
