@@ -1,43 +1,14 @@
 #!/bin/bash
 
-# Flavours dmenu to apply a selected colorscheme
-# If wallpaper in $wallpapers == colorscheme, apply it
-# else create one with graphicsmagick (using colors set by flavours)
-# Requires flavours, notify-send, $DMENU (env variable), and graphicsmagick
+# Flavours dmenu to apply a selected colorscheme based on availble wallpapers
+# Requires flavours, notify-send, and $DMENU (env variable)
 
-wallpapers="${HOME}/Pictures/Wallpapers"
-wall_cmd="swaybg -i"
+selected="$(find ~/.dotfiles/wallpapers/ -mindepth 1 -maxdepth 1 | \
+            rev | cut -d'/' -f1 | cut -d. -f2 | rev | sed -e 's/ /\n/g' \
+            -e 's/\-/ /g' -e 's/\b\(.\)/\u\1/g' | sed -e '/^$/d' -e 's/^/󰘩  /g' | \
+            $DMENU | cut -c 7-)"
 
-# Use graphicsmagick to generate a base16 wallpaper
-set_wallpaper() {
-    wallpaper="$(find "$wallpapers" -mindepth 1 -maxdepth 1 -regex \
-        ".*${1}\.\(png\|jpg\|jpeg\)$")"
-    if [ -z "$wallpaper" ]; then
-        wallpaper="/tmp/base16.png"
-        gm convert -size 1920x1080 xc:"$black" \
-            -stroke "$red" -strokewidth 30 -draw     "line    0,510  320,510" \
-            -stroke "$color16" -strokewidth 30 -draw "line  320,510  640,510" \
-            -stroke "$yellow" -strokewidth 30 -draw  "line  640,510  960,510" \
-            -stroke "$green" -strokewidth 30 -draw   "line  960,510 1280,510" \
-            -stroke "$blue" -strokewidth 30 -draw    "line 1280,510 1600,510" \
-            -stroke "$magenta" -strokewidth 30 -draw "line 1600,510 1920,510" \
-            -resize 1920x1080! "$wallpaper"
-    fi
-    pkill -f "$wall_cmd"
-    $wall_cmd "$wallpaper" -m "fill" &
-}
+[ -z "$selected" ] && exit
 
-main() {
-    selected="$(flavours list | \
-        sed -e 's/ /\n/g' -e 's/\-/ /g' -e 's/\b\(.\)/\u\1/g' | \
-        sed -e '/^$/d' -e 's/^/󰘩  /g' | \
-        $DMENU | cut -c 7-)"
-    [ -z "$selected" ] && exit
-
-    scheme="$(echo "$selected" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
-    flavours apply "$scheme" && notify-send "Flavours" "Colorscheme: <i>$selected</i>"
-    source "${HOME}/.local/share/base16-colors"
-    set_wallpaper "$scheme"
-}
-
-main
+scheme="$(echo "$selected" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
+flavours apply "$scheme" && notify-send "Flavours" "Colorscheme: <i>$selected</i>"
