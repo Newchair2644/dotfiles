@@ -146,17 +146,17 @@ source = hw:Loopback,1
 # You can define as many as 8 different colors. They range from bottom to top of screen
 
 # Start flavours
-## Base16 Gruvbox dark, medium
-# Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+## Base16 Tokyonight
+# Author: Folke Lemaitre (https://github.com/folke)
 
 gradient = 1
 gradient_count = 6
-gradient_color_1 = '#d3869b'
-gradient_color_2 = '#83a598'
-gradient_color_3 = '#8ec07c'
-gradient_color_4 = '#b8bb26'
-gradient_color_5 = '#fabd2f'
-gradient_color_6 = '#fb4934'
+gradient_color_1 = '#bb9af7'
+gradient_color_2 = '#41a6b5'
+gradient_color_3 = '#1abc9c'
+gradient_color_4 = '#9ece6a'
+gradient_color_5 = '#e0af68'
+gradient_color_6 = '#f7768e'
 # End flavours
 
 [smoothing]

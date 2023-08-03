@@ -7,17 +7,18 @@
 font pango: monospace 10
 
 ### Window gaps
-#gaps outer 3
-#gaps inner 3
+gaps outer 5
+gaps inner 4
+gaps top 8
 #smart_gaps on
-hide_edge_borders smart
+#hide_edge_borders smart
 
 ### Window title
 title_align center
 titlebar_border_thickness 2
 
-### Wallpaper
-#exec_always sway output LVDS-1 bg "~/Pictures/Wallpapers/$(flavours current).*" fill
+### Wallpaper (current flavours scheme defined by ~/.local/share/flavours/lastscheme)
+exec_always pkill swaybg; swaybg -i ~/Pictures/Wallpapers/$(flavours current).* -m fill
 
 ## Swaybar + i3blocks
 bar {

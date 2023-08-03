@@ -103,12 +103,6 @@
 /home/newchair/Music/Collosia/Persona 5 Reimagined/07 Madarame's Theme (From _Persona 5_).opus
 /home/newchair/Music/Collosia/Persona 5 Reimagined/06 Mementos Theme (From _Persona 5_).opus
 /home/newchair/Music/Collosia/Persona 5 Reimagined/04 The Velvet Room Theme (From _Persona 5_).opus
-/home/newchair/Music/Duzzled, GlitchxCity/Megalovania/00 Megalovania.opus
-/home/newchair/Music/Ephixa/Zelda Step/01 Song Of Storms Dubstep Remix.mp3
-/home/newchair/Music/Ephixa/Zelda Step/02 Midna's Lament Dubstep remix.mp3
-/home/newchair/Music/Ephixa/Zelda Step/03 Lost Woods Dubstep Remix.mp3
-/home/newchair/Music/Ephixa/Zelda Step/04 Gerudo Valley Dubstep Remix.mp3
-/home/newchair/Music/Ephixa/Zelda Step/05 Dragon Roost Island Remix.mp3
 /home/newchair/Music/GlitchxCity/00 Chemical Plant Zone (Remix).opus
 /home/newchair/Music/GlitchxCity/00 Green Hill Zone (GlitchxCity Remix).opus
 /home/newchair/Music/GlitchxCity/00 Ice Cap Zone (Remix).opus

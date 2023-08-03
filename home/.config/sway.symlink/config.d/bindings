@@ -107,7 +107,7 @@ bindsym $Super+v exec vim-anywhere
 ### Reload config file
 bindsym Ctrl+$Alt+r reload
 ### Exit sway
-bindsym Ctrl+$Alt+Shift+BackSpace exit
+bindsym Ctrl+$Alt+Shift+BackSpace exec exit
 ### Lockscreen
 bindsym Ctrl+$Alt+l exec swaylock
 ### Power menu (displays in reverse order)

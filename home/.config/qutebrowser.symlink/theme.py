@@ -1,25 +1,25 @@
 # base16-qutebrowser (https://github.com/theova/base16-qutebrowser)
-# Scheme name: Gruvbox dark, medium
-# Scheme author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+# Scheme name: Tokyonight
+# Scheme author: Folke Lemaitre (https://github.com/folke)
 # Template author: theova and Daniel Mulford
 # Commentary: Tinted Theming: (https://github.com/tinted-theming)
 
-base00 = "#282828"
-base01 = "#3c3836"
-base02 = "#504945"
-base03 = "#665c54"
-base04 = "#bdae93"
-base05 = "#d5c4a1"
-base06 = "#ebdbb2"
-base07 = "#fbf1c7"
-base08 = "#fb4934"
-base09 = "#fe8019"
-base0A = "#fabd2f"
-base0B = "#b8bb26"
-base0C = "#8ec07c"
-base0D = "#83a598"
-base0E = "#d3869b"
-base0F = "#d65d0e"
+base00 = "#16161e"
+base01 = "#1e202e"
+base02 = "#292e42"
+base03 = "#565f89"
+base04 = "#a9b1d6"
+base05 = "#c0caf5"
+base06 = "#c0caf5"
+base07 = "#c0caf5"
+base08 = "#f7768e"
+base09 = "#ff9e64"
+base0A = "#e0af68"
+base0B = "#9ece6a"
+base0C = "#1abc9c"
+base0D = "#41a6b5"
+base0E = "#bb9af7"
+base0F = "#ff007c"
 
 # set qutebrowser colors
 
