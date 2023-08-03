@@ -1,10 +1,10 @@
 # base16-qutebrowser (https://github.com/theova/base16-qutebrowser)
-# Scheme name: Gruvbox dark, medium
+# Scheme name: Gruvbox dark, hard
 # Scheme author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 # Template author: theova and Daniel Mulford
 # Commentary: Tinted Theming: (https://github.com/tinted-theming)
 
-base00 = "#282828"
+base00 = "#1d2021"
 base01 = "#3c3836"
 base02 = "#504945"
 base03 = "#665c54"

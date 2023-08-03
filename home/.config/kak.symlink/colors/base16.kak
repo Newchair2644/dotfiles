@@ -1,9 +1,9 @@
 ## base16-kakoune (https://github.com/leira/base16-kakoune)
 ## by Leira Hua
-## Gruvbox dark, medium scheme by Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+## Gruvbox dark, hard scheme by Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
 evaluate-commands %sh{
-    base00='rgb:282828'
+    base00='rgb:1d2021'
     base01='rgb:3c3836'
     base02='rgb:504945'
     base03='rgb:665c54'

@@ -7,10 +7,10 @@ set $Alt Mod1
 
 ## Set base16 colors, managed by flavours
 # Start flavours
-## Base16 Gruvbox dark, medium
+## Base16 Gruvbox dark, hard
 # Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
-set $base00 #282828
+set $base00 #1d2021
 set $base01 #3c3836
 set $base02 #504945
 set $base03 #665c54
