@@ -8,18 +8,18 @@ full_text=
 align=center
 separator=false
 separator_block_width=8
-background=#1e202e
-border=#565f89
+background=#3c3836
+border=#665c54
 
 [wifi]
-color=#e0af68
+color=#fabd2f
 command=~/.config/i3blocks/bin/wifi.sh
 interval=2
 
 [separator]
 
 [volume]
-color=#f7768e
+color=#fb4934
 command=~/.config/i3blocks/bin/volume.sh
 interval=once
 signal=10
@@ -27,21 +27,21 @@ signal=10
 [separator]
 
 [battery]
-color=#9ece6a
+color=#b8bb26
 command=~/.config/i3blocks/bin/battery.sh
 interval=3
 
 [separator]
 
 [calendar]
-color=#41a6b5
+color=#83a598
 command=date '+ 󰃭 %a %d '
 interval=5
 
 [separator]
 
 [time]
-color=#bb9af7
+color=#d3869b
 command=~/.config/i3blocks/bin/time.sh
 interval=5
 
