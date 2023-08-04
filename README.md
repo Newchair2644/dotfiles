@@ -1,5 +1,5 @@
 ## Dotfiles
-<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="380px">
+<img src="https://raw.githubusercontent.com/Newchair2644/dotfiles/master/screenshots/gruvbox-dark-medium.png" alt="img" align="right" width="280">
 
 Dotfiles for the most based distro known to man
 
