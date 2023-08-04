@@ -5,31 +5,31 @@ indicator-thickness=8
 ignore-empty-password
 
 # Start Flavours
-## Base16 Gruvbox dark, hard
-# Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+## Base16 Tokyonight
+# Author: Folke Lemaitre (https://github.com/folke)
 
-color=1d2021D9
-inside-ver-color=b8bb26
-inside-wrong-color=fb4934
-inside-clear-color=fabd2f
-inside-color=1d202100
+color=16161eD9
+inside-ver-color=9ece6a
+inside-wrong-color=f7768e
+inside-clear-color=e0af68
+inside-color=16161e00
 
-ring-ver-color=b8bb26
-ring-wrong-color=fb4934
-ring-clear-color=fabd2f
-ring-color=83a598
+ring-ver-color=9ece6a
+ring-wrong-color=f7768e
+ring-clear-color=e0af68
+ring-color=41a6b5
 
-line-ver-color=1d2021
-line-wrong-color=1d2021
-line-clear-color=1d2021
-line-color=1d2021
-separator-color=1d2021
+line-ver-color=16161e
+line-wrong-color=16161e
+line-clear-color=16161e
+line-color=16161e
+separator-color=16161e
 
-key-hl-color=fabd2f
-bs-hl-color=fb4934
+key-hl-color=e0af68
+bs-hl-color=f7768e
 
-text-ver-color=1d2021
-text-wrong-color=1d2021
-text-caps-lock-color=d3869b
-layout-text-color=d5c4a1
+text-ver-color=16161e
+text-wrong-color=16161e
+text-caps-lock-color=bb9af7
+layout-text-color=c0caf5
 # End Flavours
