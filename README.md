@@ -17,9 +17,8 @@ Scripts and configs are written with portability in mind, but ***things may brea
 *Make sure to backup configs before proceeding!*
 1. Clone this repository into ~/.dotfiles
 2. Run the installer script. It will create needed directories, symlink configs, and download all packages automagically. Make sure to review packages in `pkg-list.txt` beforehand. It will **not** do partitioning or user management, nor will it copy configs in `./system`. Those tasks are best done manually.
-   *The script requres root access through either `sudo` or `opendoas!`*
-3. If on a fresh install add user to groups: `_seatd`, `acpi`, `chrony`, `socklog`, and `wheel`. This will differ based on your package selection.
-4. 💰💲💸 Profit!
+   *The script requres root access with `sudo`. To use `opendoas` instead, symlink `doas` to `sudo` (you probably want this anyway).
+3. 💰💲💸 Profit!
 
 ## Gallery
 <details>
