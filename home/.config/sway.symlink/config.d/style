@@ -7,9 +7,9 @@
 font pango: monospace 10
 
 ### Window gaps
-gaps outer 5
-gaps inner 4
-gaps top 8
+gaps outer 3
+gaps inner 2
+gaps top 4
 #smart_gaps on
 #hide_edge_borders smart
 
