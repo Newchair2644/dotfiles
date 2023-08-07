@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Install script for my entire system
 # Config backups are made automatically in the same dir
 
@@ -47,6 +47,14 @@ setup() {
         "${HOME}/.local/share/fonts"
 }
 
+# Add user to needed groups and start services
+add_groups_services() {
+    echo "Adding user to groups..." | tag 0
+    sudo usermod -aG _seatd socklog
+    echo "Enabling services..." | tag 0
+    sudo ln -sf {acpid,chronyd,dbus,dhcpcd,iwd,seatd,tlp} /var/service/
+}
+
 # Install packages with xbps-install and download some fonts
 pkg_install() {
     echo "Installing packages..." | tag 0
@@ -81,8 +89,10 @@ dotfiles_install() {
 main() {
     printf "My void linux setup script.\nInstalls needed dotfiles, fonts, and packages on a fresh install.\n\n"
     prompt "Initial setup? (creates needed directores and makes a full backup of ~)" && setup
+    prompt "Add user to groups and enable services?" && add_groups_services
     prompt "Install needed packages and fonts? (needs root access)" && pkg_install
     prompt "Symlink dotfiles? (will backup duplicate configs automatically)" && dotfiles_install
+    printf "Setup completed. Logout and log back in tty1."
 }
 
 main
