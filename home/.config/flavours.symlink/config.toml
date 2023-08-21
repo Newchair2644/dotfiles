@@ -43,11 +43,6 @@ file = "~/.config/fuzzel/fuzzel.ini"
 template = "fuzzel"
 
 [[item]]
-file = "~/.config/nvim/pack/bundle/opt/base16-vim/colors/base16.vim"
-template = "vim"
-rewrite = true
-
-[[item]]
 file = "~/.config/kak/colors/base16.kak"
 template = "kakoune"
 rewrite = true
