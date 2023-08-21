@@ -2,7 +2,7 @@
 
 # Script to convert prayer times from islamicfinder api to remind format
 
-ip="$(curl -s ifconfig.so)"
+ip="$(curl -s myip.wtf/text)"
 
 endpoint="http://www.islamicfinder.us/index.php/api/prayer_times"
 response="$(curl -s "${endpoint}/?user_ip=${ip}&show_entire_month=1" | \
