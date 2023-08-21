@@ -2,7 +2,7 @@
 
 swaymsg -t get_tree |
 	jq -r '.nodes[].nodes[] | if .nodes then [recurse(.nodes[])] else [] end +  .floating_nodes  |  .[]  |  select(.nodes==[]) | ((.id | tostring) + " " + .name)' |
-	fuzzel-base16 --dmenu "$@" | {
+	fuzzel --dmenu "$@" | {
 	read -r id name
 	swaymsg "[con_id=$id]" focus
 }

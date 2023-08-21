@@ -3,7 +3,7 @@
 # dmenu to focus any window from the scratchpad
 window_selected="$(swaymsg -t get_tree | \
 	jq -r '.nodes[].nodes[] | select(.name == "__i3_scratch").floating_nodes[] | {app_id,name} | join(" ")' | \
-	column -t -l 2 | fuzzel-base16 --dmenu)"
+	column -t -l 2 | fuzzel --dmenu)"
 
 [ -z "$window_selected" ] && exit
 

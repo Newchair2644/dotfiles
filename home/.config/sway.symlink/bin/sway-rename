@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Rename the current workspace using a list of icons
 
 if [ -z "$DMENU" ]; then
