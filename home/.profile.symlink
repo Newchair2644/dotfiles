@@ -26,10 +26,9 @@ export XBPS_DISTDIR="${HOME}/.local/src/void-packages"
 
 # Wayland variables (this is stupid should just werk without setting vars)
 export XDG_SESSION_TYPE=wayland
-export GDK_BACKEND=wayland
-export SDL_VIDEODRIVER=wayland
+export SDL_VIDEODRIVER="wayland,x11"
 export MOZ_ENABLE_WAYLAND=1
-export QT_QPA_PLATFORM=wayland-egl
+export QT_QPA_PLATFORM="wayland;xcb"
 export QT_SCALE_FACTOR=1
 export QT_WAYLAND_FORCE_DPI=physical
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
