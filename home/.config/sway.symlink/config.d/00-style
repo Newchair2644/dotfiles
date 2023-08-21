@@ -10,8 +10,8 @@ font pango: monospace 10
 gaps outer 3
 gaps inner 2
 gaps top 4
-#smart_gaps on
-#hide_edge_borders smart
+smart_gaps on
+hide_edge_borders smart
 
 ### Window title
 title_align center
@@ -22,6 +22,7 @@ exec_always pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).*
 
 ## Swaybar + i3blocks
 bar {
+	height 35
         font pango: monospace 13
 	position top
 	tray_output primary

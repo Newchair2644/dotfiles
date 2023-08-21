@@ -1,11 +1,24 @@
 # General rules for swaywm
 # Windows and input rules
 
-## Window and workspace riles
+## Workspace and window rules
 
-### App locations (I don't use too many guis welp)
-#assign [app_id="qutebrowser"] workspace number $ws3
-#assign [app_id="zathura"] workspace number $ws4
+## Set workroom and workspace symbols <https://www.reddit.com/r/swaywm/comments/tsvydv/workrooms_a_set_of_workspaces/>
+set $workroom 1
+set $ws_q " 󰞷 "
+set $ws_w " 󰖟 "
+set $ws_e " 󰅴 "
+set $ws_a " 󱗖 "
+set $ws_s " 󰻞 "
+set $ws_d " 󰺷 "
+set $ws_x "0 󰆌 "
+
+### App locations according to symbols
+for_window [app_id="Firefox"] move container to workspace "2:$$workroom$ws_w"
+for_window [class="Godot"] move container to workspace "3:$$workroom$ws_e"
+for_window [app_id="zathura"] move container to workspace "4:$workroom$ws_a"
+for_window [class="Chiaki"] move container to workspace "6:$$workroom$ws_d"
+for_window [app_id="^(org.libretro.RetroArch|emulationstation)$"] move container to workspace "6:$$workroom$ws_d"
 
 ### Window rules
 set $video floating enable, sticky enable, resize set 40 ppt 40 ppt
@@ -15,21 +28,16 @@ set $dropdown floating enable, sticky enable, \
 	move position 0 0, move scratchpad
 
 for_window [app_id="mpv"] $video
-for_window [app_id="imv"] $image
+for_window [class="Nsxiv"] $image
 for_window [app_id="^Clac$" title="Calculator"] $video
 for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
 for_window [app_id="foot" title="File Picker"] floating enable
-for_window [con_mark="^dropdown$"] $dropdown
 for_window [title="^notetaker_window$"] floating enable, sticky enable
 for_window [title="^vim-anywhere$"] floating enable
-for_window [app_id="^chiaki$"] floating enable
 for_window [class="Godot" title=".*\(DEBUG\)"] floating enable
+for_window [class="^Chiaki$"] fullscreen enable
 for_window [app_id="org.libretro.RetroArch"] fullscreen enable
 #for_window [app_id="EmulationStation"] fullscreen enable
-
-### Pre-defined marks
-#for_window [class="^firefox$"] exec i3-auto-mark Navigator f
-#for_window [class="^Alacritty$"] exec i3-auto-mark Alacritty a
 
 ## Uncomment for terminal transparency
 #for_window [app_id="foot"] opacity 0.95

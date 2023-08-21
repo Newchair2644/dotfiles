@@ -1,11 +1,11 @@
 # Bindings for swaywm, including modes
 # Put all bindings here to keep consistent
 
-## System
+### === System === ###
 ## These bindings are for system actions such as brightness and volume control, and for system utilities
 ## like an application launcher and terminal)
 
-### Volume
+# Volume
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
@@ -19,97 +19,89 @@ bindsym XF86AudioMute exec amixer sset Master toggle | \
 	sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | \
 	head -1 > $WOBSOCK && exec pkill -SIGRTMIN+10 i3blocks
 
-### Media
+# Media
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-### Cmus menu
-bindsym $Super+m exec ~/.config/rofi/bin/mpd
-
-### Cmus window
+# Cmus window
 bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
-
-### Brightness (included for compatibility, not needed if you are based and use acpid)
-bindsym XF86MonBrightnessUp exec --no-startup-id brightness 300
-bindsym XF86MonBrightnessDown exec --no-startup-id brightness -300
-
-# Toggle touchpad
-bindsym XF86TouchpadToggle exec --no-startup-id toggletouch
 
 # Calculator
 bindsym XF86Calculator exec footclient --app-id 'Clac' --title 'Calculator' clac
 
-### Screenshot menu
+# Screenshot menu
 #bindsym Ctrl+$Alt+s \
 #exec
 
-### Quick screenshot
+# Quick screenshot
 bindsym Print \
 	exec grim ~/Pictures/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg') \
 	&& exec notify-send 'System' 'Captured screenshot'
 
-### Quick screenshot (5 sec delay)
+# Quick screenshot (5 sec delay)
 bindsym Ctrl+Print \
 	exec sleep 5 && grim ~/Pictures/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg') \
 	&& exec swaynag -m 'Screenshot taken' -t custom
 
-### Notifications
+# Notifications
 bindsym $Super+d exec makoctl dismiss
 bindsym $Super+Shift+d exec makoctl dismiss -a
 bindsym $Super+Ctrl+i exec makoctl invoke; exec makoctl dismiss
 
-### OCR Grab
+# OCR Grab
 bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send "Clipboard" "Copied text to selection: <b>CLIPBOARD</b>"
 
-### Color Picker
+# Color Picker
 bindsym $Super+Shift+y exec pickcolor
 
-### Password dmenu
+# Password dmenu
 bindsym $Super+p exec passmenu
 
-### Terminal
+# Terminal
 bindsym $Super+Return exec footclient
 
-### Terminal (cwd)
+# Terminal (cwd)
 bindsym $Super+Shift+Return exec footclient --working-directory="$(sway-cwd)"
 
-### Copy cwd
+# Copy cwd
 bindsym $Super+Shift+u exec wl-copy "$(sway-cwd)" && notify-send "Clipboard" "Copied working directory to selection: <b>CLIPBOARD</b>"
 
-### Application launcher
+# Application launcher
 bindsym $Alt+space exec fuzzel
 
-### Run command (like dmenu_run)
+# Run command (like dmenu_run)
 bindsym $Alt+Shift+space exec fuzzel_run
 
-### Window switcher
+# Window switcher
 bindsym $Super+g exec sway-window-picker -w 50
 
-### Dmenu scratchpad menu
+# Dmenu scratchpad menu
 bindsym $Super+Shift+Tab exec sway-scratchpad
 
-### Dmenu theme picker
+# Dmenu theme picker
 bindsym Ctrl+$Alt+t exec flavours-menu
 
-### Iwd menu
-#bindsym Ctrl+$Alt+n exec footclient --title 'notetaker_window' -e notetaker
-bindsym Ctrl+$Alt+n exec iwd-dmenu
+# Notetaker window
+#bindsym $Super+n exec footclient --title 'notetaker_window' -e notetaker
 
-### Vim window, copies saved file to clipboard
+# Vim window, copies saved file to clipboard
 bindsym $Super+v exec vim-anywhere
 
 
-## Basic Sway binds
+### === Basic Sway binds === ###
 ## These bindings are mostly basic sway keybindings (ws change, focus change, etc)
 
 ### Reload config file
 bindsym Ctrl+$Alt+r reload
+
 ### Exit sway
-bindsym Ctrl+$Alt+Shift+BackSpace exec exit
+bindsym Ctrl+$Alt+Shift+BackSpace exit
+
 ### Lockscreen
 bindsym Ctrl+$Alt+l exec swaylock
+
 ### Power menu (displays in reverse order)
 set $power_menu swaynag -t custom -m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
 	-z '󰿅 Logout' 'sway exit' \
@@ -117,7 +109,6 @@ set $power_menu swaynag -t custom -m "󰐦 UP - $(uptime -p | sed -e 's/up //g')
 	-z '󰍁 Lock' 'swaylock' \
 	-z '󰜉 Reboot' 'sudo reboot' \
 	-z '󰐥 Shutdown' 'sudo poweroff'
-
 bindsym $Super+x exec $power_menu
 
 ### kill focused container
@@ -160,7 +151,7 @@ bindsym $Super+Shift+j move down
 bindsym $Super+Shift+k move up
 bindsym $Super+Shift+l move right
 
-### Snap focused window
+### Snap focused floating window
 bindsym $Super+$Alt+h exec sway-snap left
 bindsym $Super+$Alt+j exec sway-snap down
 bindsym $Super+$Alt+k exec sway-snap up
@@ -179,19 +170,12 @@ bindsym $Super+Ctrl+Shift+j resize shrink down $distanceStr
 bindsym $Super+Ctrl+Shift+k resize shrink up $distanceStr
 bindsym $Super+Ctrl+Shift+l resize shrink right $distanceStr
 
-#### Preset sizes for floating windows
-##### Small video-watching window
-bindsym $Super+Shift+F11 floating enable, resize set 40 ppt 40 ppt
-
-##### Dropdown
-bindsym $Super+Shift+F12 \
-	mark --add "dropdown", \
-	floating enable, sticky enable, \
-	resize set 100 ppt 50 ppt, \
-	move position 0 0, move scratchpad
+### Preset sizes for floating windows
+bindsym $Super+Shift+F11 $video
+bindsym $Super+Shift+F12 $dropdown
 
 ### Swap currently focused container with the largest container in the tree
-bindsym $Super+i exec i3-swap-largest
+bindsym $Super+i exec sway-swap-largest
 
 ### Change split direction
 bindsym $Super+equal split horizontal
@@ -200,29 +184,21 @@ bindsym $Super+minus split vertical
 ### Toggle bar
 bindsym $Super+b bar mode toggle
 
-## Set workspace symbols
-set $ws_q " 󰞷 "
-set $ws_w " 󰖟 "
-set $ws_e " 󰅴 "
-set $ws_a " 󱗖 "
-set $ws_s " 󰻞 "
-set $ws_d " 󰆌 "
-
-# Change workroom <https://www.reddit.com/r/swaywm/comments/tsvydv/workrooms_a_set_of_workspaces/>
-set $workroom 1
+# Change workroom
 bindsym Ctrl+$Super+1 set $$workroom 1
 bindsym Ctrl+$Super+2 set $$workroom 2
 bindsym Ctrl+$Super+3 set $$workroom 3
 bindsym Ctrl+$Super+4 set $$workroom 4
 bindsym Ctrl+$Super+5 set $$workroom 5
 
-### Focus workspace (using ws numbers to keep order consistent)
+### Focus workspace in workroom (prepend ws numbers to keep order consistent, ws_x is global, not part of list)
 bindsym Ctrl+$Super+q workspace "1:$$workroom$ws_q"
 bindsym Ctrl+$Super+w workspace "2:$$workroom$ws_w"
 bindsym Ctrl+$Super+e workspace "3:$$workroom$ws_e"
 bindsym Ctrl+$Super+a workspace "4:$$workroom$ws_a"
 bindsym Ctrl+$Super+s workspace "5:$$workroom$ws_s"
 bindsym Ctrl+$Super+d workspace "6:$$workroom$ws_d"
+bindsym Ctrl+$Super+x workspace "7:$ws_x"
 
 ### Move container to workspace
 bindsym Ctrl+$Super+Shift+q move container to workspace "1:$$workroom$ws_q"
@@ -231,6 +207,7 @@ bindsym Ctrl+$Super+Shift+e move container to workspace "3:$$workroom$ws_e"
 bindsym Ctrl+$Super+Shift+a move container to workspace "4:$$workroom$ws_a
 bindsym Ctrl+$Super+Shift+s move container to workspace "5:$$workroom$ws_s"
 bindsym Ctrl+$Super+Shift+d move container to workspace "6:$$workroom$ws_d"
+bindsym Ctrl+$Super+Shift+x move container to workspace "7:$ws_x"
 
 ### Move container to the scratchpad
 bindsym $Super+Shift+z move scratchpad
@@ -241,15 +218,8 @@ bindsym $Super+z scratchpad show
 ### Show dropdown
 bindsym F12 [con_mark="^dropdown$"] scratchpad show
 
-## Program lauching shortcuts
-## Easy to remember shortcuts based on the application's first letter (when available)
-#bindsym $Super+Shift+f exec sway-focus-run -c qutebrowser qutebrowser
-#bindsym $Super+Shift+r exec sway-focus-run -c Zathura zathura
-
-
 ## Modes
 ## Various sway modes in no particular order
-## use variables to name modes
 
 ### Mode to disable all keybindings (good for remote desktop or nested wayland compositor)
 set $passthrough "󰌾 Keybindings Are Disabled"
@@ -258,21 +228,20 @@ mode $passthrough {
 }
 bindsym $Super+Shift+v mode $passthrough
 
+set $quick_launch "󰍉 Quick Launch"
+mode $quick_launch {
+	bindsym q exec foot; mode "default"
+	bindsym w exec firefox; mode "default"
+	bindsym e exec godot; mode "default"
+	bindsym a exec zathura; mode "default"
+	bindsym d exec chiaki; mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $Super+semicolon mode $quick_launch
+
 ### Swap containers without changing the tree's layout
 set $swap "󰓡 Swap Containers"
 mode $swap {
-	# Focus workspace
-	bindsym $Super+1 workspace number $ws1
-	bindsym $Super+2 workspace number $ws2
-	bindsym $Super+3 workspace number $ws3
-	bindsym $Super+4 workspace number $ws4
-	bindsym $Super+5 workspace number $ws5
-	bindsym $Super+6 workspace number $ws6
-	bindsym $Super+7 workspace number $ws7
-	bindsym $Super+8 workspace number $ws8
-	bindsym $Super+9 workspace number $ws9
-	bindsym $Super+0 workspace number $ws10
-
 	# Focus container (h,j,k,l)
 	bindsym $Super+h focus left
 	bindsym $Super+j focus down
