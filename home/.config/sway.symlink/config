@@ -1,10 +1,6 @@
 # Main config file
 # Set variables and a few sway settings
 
-## Set modifier keys
-set $Super Mod4
-set $Alt Mod1
-
 ## Set base16 colors, managed by flavours
 # Start flavours
 ## Base16 Tokyonight
