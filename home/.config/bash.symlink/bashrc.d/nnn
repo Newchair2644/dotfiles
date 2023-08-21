@@ -1,5 +1,4 @@
 # NNN file manager theme <https://github.com/jarun/nnn/wiki/Themes>
-
 BLK="0B"
 CHR="0B"
 DIR="04"
@@ -14,3 +13,6 @@ SOCK="0B"
 OTHER="06"
 export NNN_COLORS="6231"
 export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+
+# NNN plugin keys
+export NNN_PLUG='f:finder;o:fzopen;p:cmusq;d:gpgd;t:nmount;v:imgview'
