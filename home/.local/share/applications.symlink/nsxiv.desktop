@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Nsxiv
+GenricName=Image Viewer
+Type=Application
+Terminal=false
+Exec=/usr/bin/nsxiv -a %f
+MimeType=image/png;image/jpeg;image/gif;
+

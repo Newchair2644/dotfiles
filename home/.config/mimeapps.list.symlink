@@ -1,0 +1,5 @@
+[Default Applications]
+image/png=nsxiv.desktop;
+image/jpeg=nsxiv.desktop;
+image/jpg=nsxiv.desktop;
+image/gif=nsxiv.desktop;
