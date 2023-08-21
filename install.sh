@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Install script for my entire system
 # Config backups are made automatically in the same dir
 
@@ -52,7 +52,9 @@ add_groups_services() {
     echo "Adding user to groups..." | tag 0
     sudo usermod -aG _seatd socklog
     echo "Enabling services..." | tag 0
-    sudo ln -sf {acpid,chronyd,dbus,dhcpcd,iwd,seatd,tlp} /var/service/
+    for service in acpid chronyd dbus dhcpcd iwd seatd tlp; do
+        sudo ln -sf "/etc/sv/$service" "/var/service/"
+    done
 }
 
 # Install packages with xbps-install and download some fonts
@@ -92,7 +94,7 @@ main() {
     prompt "Add user to groups and enable services?" && add_groups_services
     prompt "Install needed packages and fonts? (needs root access)" && pkg_install
     prompt "Symlink dotfiles? (will backup duplicate configs automatically)" && dotfiles_install
-    printf "Setup completed. Logout and log back in tty1."
+    echo "Setup completed. Logout and log back in tty1."
 }
 
 main
