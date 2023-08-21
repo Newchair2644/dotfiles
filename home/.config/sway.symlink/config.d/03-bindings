@@ -1,6 +1,16 @@
 # Bindings for swaywm, including modes
 # Put all bindings here to keep consistent
 
+## Set Super key
+set $Super Mod4
+
+# Mode to disable all keybindings (good for remote desktop, vm, or nested wayland compositor)
+set $passthrough "󰌾 Keybindings Are Disabled"
+mode $passthrough {
+	bindsym Shift+Escape mode "default"
+}
+bindsym $Super+Shift+v mode $passthrough
+
 ### === System === ###
 ## These bindings are for system actions such as brightness and volume control, and for system utilities
 ## like an application launcher and terminal)
@@ -31,19 +41,22 @@ bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
 # Calculator
 bindsym XF86Calculator exec footclient --app-id 'Clac' --title 'Calculator' clac
 
-# Screenshot menu
-#bindsym Ctrl+$Alt+s \
-#exec
+# Copy screenshot to clipboard
+bindsym Print exec sh -c 'grim - | wl-copy' && notify-send " System" "<i>Image</i> sent to selection: <b>CLIPBOARD</b>"
 
-# Quick screenshot
-bindsym Print \
-	exec grim ~/Pictures/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg') \
-	&& exec notify-send 'System' 'Captured screenshot'
+# Copy selection to clipboard
+bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send " System" "<i>Image</i> sent to selection: <b>CLIPBOARD</b>"
 
-# Quick screenshot (5 sec delay)
-bindsym Ctrl+Print \
-	exec sleep 5 && grim ~/Pictures/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg') \
-	&& exec swaynag -m 'Screenshot taken' -t custom
+# Send selection to...
+set $screenshot " Send Screenshot [s,u,i]"
+mode $screenshot {
+    # Save clipboard to image-file (use in conjuction with screenshot mapping
+    bindsym s exec sh -c 'wl-paste > "${HOME}/Pictures/Screenshots/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg')"' && notify-send "System" "Screenshot Saved"
+    # TODO: ffsend
+    # TODO: image sharing service (imgur?)
+    bindsym Escape mode "default"
+}
+bindsym $Super+Shift+backslash mode $screenshot
 
 # Notifications
 bindsym $Super+d exec makoctl dismiss
@@ -51,7 +64,7 @@ bindsym $Super+Shift+d exec makoctl dismiss -a
 bindsym $Super+Ctrl+i exec makoctl invoke; exec makoctl dismiss
 
 # OCR Grab
-bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send "Clipboard" "Copied text to selection: <b>CLIPBOARD</b>"
+bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send " System" "Copied text to selection: <b>CLIPBOARD</b>"
 
 # Color Picker
 bindsym $Super+Shift+y exec pickcolor
@@ -69,10 +82,22 @@ bindsym $Super+Shift+Return exec footclient --working-directory="$(sway-cwd)"
 bindsym $Super+Shift+u exec wl-copy "$(sway-cwd)" && notify-send "Clipboard" "Copied working directory to selection: <b>CLIPBOARD</b>"
 
 # Application launcher
-bindsym $Alt+space exec fuzzel
+bindsym Alt+space exec fuzzel
 
 # Run command (like dmenu_run)
-bindsym $Alt+Shift+space exec fuzzel_run
+bindsym Alt+Shift+space exec fuzzel_run
+
+# Quick launch application
+set $quick_launch "󰍉 Quick Launch"
+mode $quick_launch {
+	bindsym q exec foot; mode "default"
+	bindsym w exec firefox; mode "default"
+	bindsym e exec godot; mode "default"
+	bindsym a exec zathura; mode "default"
+	bindsym d exec chiaki; mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $Super+semicolon mode $quick_launch
 
 # Window switcher
 bindsym $Super+g exec sway-window-picker -w 50
@@ -81,7 +106,7 @@ bindsym $Super+g exec sway-window-picker -w 50
 bindsym $Super+Shift+Tab exec sway-scratchpad
 
 # Dmenu theme picker
-bindsym Ctrl+$Alt+t exec flavours-menu
+bindsym Ctrl+Alt+t exec flavours-menu
 
 # Notetaker window
 #bindsym $Super+n exec footclient --title 'notetaker_window' -e notetaker
@@ -94,16 +119,16 @@ bindsym $Super+v exec vim-anywhere
 ## These bindings are mostly basic sway keybindings (ws change, focus change, etc)
 
 ### Reload config file
-bindsym Ctrl+$Alt+r reload
+bindsym Ctrl+Alt+r reload
 
 ### Exit sway
-bindsym Ctrl+$Alt+Shift+BackSpace exit
+bindsym Ctrl+Alt+Shift+BackSpace exit
 
 ### Lockscreen
-bindsym Ctrl+$Alt+l exec swaylock
+bindsym Ctrl+Alt+l exec swaylock
 
 ### Power menu (displays in reverse order)
-set $power_menu swaynag -t custom -m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
+set $power_menu swaynag -m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
 	-z '󰿅 Logout' 'sway exit' \
 	-z '󰤄 Suspend' 'sudo zzz' \
 	-z '󰍁 Lock' 'swaylock' \
@@ -151,12 +176,34 @@ bindsym $Super+Shift+j move down
 bindsym $Super+Shift+k move up
 bindsym $Super+Shift+l move right
 
+### Swap focused window
+set $swap "󰓡 Swap Containers"
+mode $swap {
+	# Focus container (h,j,k,l)
+	bindsym $Super+h focus left
+	bindsym $Super+j focus down
+	bindsym $Super+k focus up
+	bindsym $Super+l focus right
+
+	# Focus parent/child
+	bindsym $Super+a focus parent
+	bindsym $Super+Shift+a focus child
+
+	# Confirm
+	bindsym $Super+Return swap container with mark "_swapee"; unmark "_swapee"; mode "default"
+	bindsym Return swap container with mark "_swapee"; unmark "_swapee"; mode "default"
+
+	# Cancel
+	bindsym Escape unmark "_swapee"; mode "default"
+}
+bindsym $Super+Shift+i mark --add "_swapee"; mode $swap
+
 ### Snap focused floating window
-bindsym $Super+$Alt+h exec sway-snap left
-bindsym $Super+$Alt+j exec sway-snap down
-bindsym $Super+$Alt+k exec sway-snap up
-bindsym $Super+$Alt+l exec sway-snap right
-bindsym $Super+$Alt+space move absolute position center
+bindsym $Super+Alt+h exec sway-snap left
+bindsym $Super+Alt+j exec sway-snap down
+bindsym $Super+Alt+k exec sway-snap up
+bindsym $Super+Alt+l exec sway-snap right
+bindsym $Super+Alt+space move absolute position center
 
 ### Resize
 set $distanceStr 15 px or 15 ppt
@@ -180,9 +227,6 @@ bindsym $Super+i exec sway-swap-largest
 ### Change split direction
 bindsym $Super+equal split horizontal
 bindsym $Super+minus split vertical
-
-### Toggle bar
-bindsym $Super+b bar mode toggle
 
 # Change workroom
 bindsym Ctrl+$Super+1 set $$workroom 1
@@ -217,46 +261,3 @@ bindsym $Super+Shift+z move scratchpad
 bindsym $Super+z scratchpad show
 ### Show dropdown
 bindsym F12 [con_mark="^dropdown$"] scratchpad show
-
-## Modes
-## Various sway modes in no particular order
-
-### Mode to disable all keybindings (good for remote desktop or nested wayland compositor)
-set $passthrough "󰌾 Keybindings Are Disabled"
-mode $passthrough {
-	bindsym Shift+Escape mode "default"
-}
-bindsym $Super+Shift+v mode $passthrough
-
-set $quick_launch "󰍉 Quick Launch"
-mode $quick_launch {
-	bindsym q exec foot; mode "default"
-	bindsym w exec firefox; mode "default"
-	bindsym e exec godot; mode "default"
-	bindsym a exec zathura; mode "default"
-	bindsym d exec chiaki; mode "default"
-	bindsym Escape mode "default"
-}
-bindsym $Super+semicolon mode $quick_launch
-
-### Swap containers without changing the tree's layout
-set $swap "󰓡 Swap Containers"
-mode $swap {
-	# Focus container (h,j,k,l)
-	bindsym $Super+h focus left
-	bindsym $Super+j focus down
-	bindsym $Super+k focus up
-	bindsym $Super+l focus right
-
-	# Focus parent/child
-	bindsym $Super+a focus parent
-	bindsym $Super+Shift+a focus child
-
-	# Confirm
-	bindsym $Super+Return swap container with mark "_swapee"; unmark "_swapee"; mode "default"
-	bindsym Return swap container with mark "_swapee"; unmark "_swapee"; mode "default"
-
-	# Cancel
-	bindsym Escape unmark "_swapee"; mode "default"
-}
-bindsym $Super+Shift+i mark --add "_swapee"; mode $swap
