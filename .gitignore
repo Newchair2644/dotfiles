@@ -1,5 +1,3 @@
-home/.config/qutebrowser.symlink/bookmarks
-home/.config/qutebrowser.symlink/quickmarks
-home/.config/cmus.symlink/playlists
-home/.config/cmus.symlink/lib.pl
-home/.config/cmus.symlink/command-history
+home/.config/cmus.symlink/*
+!home/.config/cmus.symlink/autosave
+!home/.config/cmus.symlink/colors.theme
