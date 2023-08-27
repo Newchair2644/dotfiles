@@ -17,17 +17,30 @@ bindsym $Super+Shift+v mode $passthrough
 
 # Volume
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
-exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+exec_always pkill wob; rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
-bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | \
-	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
-	exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | \
-	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
-	exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMute exec amixer sset Master toggle | \
-	sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | \
-	head -1 > $WOBSOCK && exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume \
+    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && \
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && \
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' > $WOBSOCK && \
+    pkill -SIGRTMIN+10 i3blocks
+
+bindsym XF86AudioLowerVolume \
+    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && \
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%- && \
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' > $WOBSOCK && \
+    pkill -SIGRTMIN+10 i3blocks
+
+bindsym XF86AudioMute \
+    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && \
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' -e 's/.*\[MUTED\].*/0/' > $WOBSOCK && \
+    pkill -SIGRTMIN+10 i3blocks
+
+bindsym XF86AudioMicMute \
+    exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 # Media
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
