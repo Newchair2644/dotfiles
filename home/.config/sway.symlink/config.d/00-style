@@ -22,7 +22,7 @@ exec_always pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).*
 
 ## Swaybar + i3blocks
 bar {
-	height 35
+	height 32
         font pango: monospace 13
 	position top
 	tray_output primary
