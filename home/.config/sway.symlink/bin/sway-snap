@@ -1,26 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Make sure to explicitly set bar height in your sway config because it is set to 0 by default
-# This script assumes you are using a bar with id "bar-0"
-# Should probably rewite in python but im too lazy and it just werks™ as-is
+# This script assumes you are using a bar with id "bar-0" when finding "$bar_height"
 
 [ -z "$1" ] && exit
 
-bar_height="$(swaymsg -t get_bar_config 'bar-0' | jq '.bar_height')"
+bar_height="$(swaymsg -t get_bar_config 'bar-0' | grep -o '"bar_height": [0-9]*' | cut -d ' ' -f2)"
 monitor_dimensions="$(swaymsg -t get_outputs |
-    jq -r '.. | select(.focused?) | .current_mode | "\(.width)x\(.height)"')"
-win_param=( $(swaymsg -t get_tree |
-    jq -r '.. | select(.type?) | select(.focused?) |
-        .rect.x, .rect.y, .rect.width, .rect.height, .deco_rect.height') )
+    jq -r '.. | select(.focused?) | .current_mode | "\(.width) \(.height)"')"
+win_param="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused?) |
+    "\(.rect.x) \(.rect.y) \(.rect.width) \(.rect.height) \(.deco_rect.height)"')"
 
-monitor_width=${monitor_dimensions%x*}
-monitor_height=${monitor_dimensions#*x}
+monitor_width="$(echo "$monitor_dimensions" | cut -d' ' -f1)"
+monitor_height="$(echo "$monitor_dimensions" | cut -d' ' -f2)"
 
-new_x=${win_param[0]}
-new_y=${win_param[1]}
-win_width=${win_param[2]}
-win_height=${win_param[3]}
-deco_height=${win_param[4]}
+new_x="$(echo "$win_param" | cut -d' ' -f1)"
+new_y="$(echo "$win_param" | cut -d' ' -f2)"
+win_width="$(echo "$win_param" | cut -d' ' -f3)"
+win_height="$(echo "$win_param" | cut -d' ' -f4)"
+deco_height="$(echo "$win_param" | cut -d' ' -f5)"
 
 case "$1" in
     up)
