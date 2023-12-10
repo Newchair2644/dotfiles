@@ -19,26 +19,15 @@ bindsym $Super+Shift+v mode $passthrough
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 exec_always pkill wob; rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
-bindsym XF86AudioRaiseVolume \
-    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && \
-    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && \
-    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
-    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' > $WOBSOCK && \
-    pkill -SIGRTMIN+10 i3blocks
-
-bindsym XF86AudioLowerVolume \
-    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && \
-    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%- && \
-    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
-    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' > $WOBSOCK && \
-    pkill -SIGRTMIN+10 i3blocks
-
-bindsym XF86AudioMute \
-    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && \
-    wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
-    sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//' -e 's/.*\[MUTED\].*/0/' > $WOBSOCK && \
-    pkill -SIGRTMIN+10 i3blocks
-
+bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | \
+	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
+	exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | \
+	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
+	exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMute exec amixer sset Master toggle | \
+	sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | \
+	head -1 > $WOBSOCK && exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMicMute \
     exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
@@ -61,11 +50,12 @@ bindsym Print exec sh -c 'grim - | wl-copy' && notify-send " System" "<i>Imag
 bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send " System" "<i>Image</i> sent to selection: <b>CLIPBOARD</b>"
 
 # Send selection to...
-set $screenshot " Send Screenshot [s,u,i]"
+set $screenshot " Send Screenshot [w,u]"
+set $screenshot_name "$(date +'Screenshot_%Y%m%d-%H%M%S.jpg')"
 mode $screenshot {
     # Save clipboard to image-file (use in conjuction with screenshot mapping
-    bindsym s exec sh -c 'wl-paste > "${HOME}/Pictures/Screenshots/$(date +'Screenshot_%Y%m%d-%H%M%S.jpg')"' && notify-send "System" "Screenshot Saved"
-    # TODO: ffsend
+    bindsym w exec sh -c 'wl-paste > ${HOME}/Pictures/Screenshots/$screenshot_name' && notify-send "System" "$screenshot_name saved"; mode "default"
+    bindsym u exec sh -c 'wl-paste | ffsend upload --name $screenshot_name -' && notify-send "System" "Screenshot uploaded for sharing"; mode "default"
     # TODO: image sharing service (imgur?)
     bindsym Escape mode "default"
 }
@@ -85,6 +75,9 @@ bindsym $Super+Shift+y exec pickcolor
 # Password dmenu
 bindsym $Super+p exec passmenu
 
+# Yubikey 5 series oath menu
+bindsym $Super+Shift+p exec yubikey-oathmenu
+
 # Terminal
 bindsym $Super+Return exec footclient
 
@@ -101,7 +94,7 @@ bindsym Alt+space exec fuzzel
 bindsym Alt+Shift+space exec fuzzel_run
 
 # Quick launch application
-set $quick_launch "󰍉 Quick Launch"
+set $quick_launch "󰍉 Quick Launch [q,w,e,a,d]"
 mode $quick_launch {
 	bindsym q exec foot; mode "default"
 	bindsym w exec firefox; mode "default"
@@ -229,6 +222,13 @@ bindsym $Super+Ctrl+Shift+h resize shrink left $distanceStr
 bindsym $Super+Ctrl+Shift+j resize shrink down $distanceStr
 bindsym $Super+Ctrl+Shift+k resize shrink up $distanceStr
 bindsym $Super+Ctrl+Shift+l resize shrink right $distanceStr
+
+### Alt resize
+set $altDistanceStr 60 px or 60 ppt
+bindsym $Super+Ctrl+Alt+h resize shrink width $altDistanceStr
+bindsym $Super+Ctrl+Alt+j resize grow height $altDistanceStr
+bindsym $Super+Ctrl+Alt+k resize shrink height $altDistanceStr
+bindsym $Super+Ctrl+Alt+l resize grow width $altDistanceStr
 
 ### Preset sizes for floating windows
 bindsym $Super+Shift+F11 $video
