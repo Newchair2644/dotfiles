@@ -62,13 +62,6 @@ file= "~/.config/zathura/zathurarc"
 template = "zathura"
 
 [[item]]
-file = "~/.config/qutebrowser/theme.py"
-template = "qutebrowser"
-subtemplate = "minimal"
-rewrite = true
-hook = "pgrep -x 'qutebrowser' && qutebrowser :config-source"
-
-[[item]]
 file = "~/.config/godot/text_editor_themes/base16.tres"
 template = "godot"
 rewrite = true
