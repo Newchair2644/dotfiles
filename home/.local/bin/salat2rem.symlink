@@ -2,16 +2,17 @@
 
 # Script to convert prayer times from islamicfinder api to remind format
 
+cache_file="${XDG_CACHE_HOME}/02-salat.rem"
 ip="$(curl -s myip.wtf/text)"
 
 endpoint="http://www.islamicfinder.us/index.php/api/prayer_times"
 response="$(curl -s "${endpoint}/?user_ip=${ip}&show_entire_month=1" | \
-			jq -r '.results | to_entries[] | .key as $date | .value |
-			to_entries[] | .value |= gsub("%"; "") | .value |= gsub(" "; "") |
-			"REM \($date) AT \(.value | ascii_upcase) MSG %\"\(.key) time%\" %2%"')"
+    jq -r '.results | to_entries[] | .key as $date | .value |
+    to_entries[] | .value |= gsub("%"; "") | .value |= gsub(" "; "") |
+    "REM \($date) AT \(.value | ascii_upcase) MSG %\"\(.key) time%\" %2%"')"
 
-if [ -n "$1" ]; then
-	echo "$response" > "$1"
+if [ -d "$XDG_CACHE_HOME" ]; then
+    echo "$response" | tee "$cache_file"
 else
-	echo "$response"
+    echo "ERROR: $XDG_CACHE_HOME not found!" 1>&2
 fi
