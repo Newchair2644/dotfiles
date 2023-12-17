@@ -41,12 +41,14 @@ define-command -params 2..3 \
     echo 'lint } }'
 } }
 
+## NOTE: cppcheck is really bad at finding stdlib include files so ignore them
 syntastic-declare-filetype "c" \
-    'cppcheck --language=c --enable=all --template="{file}:{line}:1: {severity}: {message}" 2>&1' \
+    'cppcheck --language=c --enable=all --suppress=missingIncludeSystem --template="{file}:{line}:1: {severity}: {message}" 2>&1' \
     'clang-format'
 
+## NOTE: cppcheck is really bad at finding stdlib include files so ignore them
 syntastic-declare-filetype "cpp" \
-    'cppcheck --language=c++ --enable=all --template="{file}:{line}:1: {severity}: {message}" 2>&1' \
+    'cppcheck --language=c++ --enable=all --suppress=missingIncludeSystem --template="{file}:{line}:1: {severity}: {message}" 2>&1' \
     'clang-format'
 
 ## FIXME: `dscanner` doesn't allow formatting the output yet
