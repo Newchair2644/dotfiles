@@ -28,5 +28,5 @@ get_vol_icon() {
 if amixer get Master | grep -q '\[on\]'; then
 	get_vol_icon
 else
-	echo "$mute"
+	echo " $mute "
 fi

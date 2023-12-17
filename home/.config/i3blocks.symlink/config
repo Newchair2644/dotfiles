@@ -7,12 +7,15 @@ markup=pango
 full_text=
 align=center
 separator=false
-separator_block_width=8
-background=#1e202e
-border=#565f89
+separator_block_width=14
+border_left=0
+border_right=0
+border_top=2
+border_bottom=0
 
 [wifi]
 color=#e0af68
+border=#e0af68
 command=~/.config/i3blocks/bin/wifi.sh
 interval=2
 
@@ -20,6 +23,7 @@ interval=2
 
 [volume]
 color=#f7768e
+border=#f7768e
 command=~/.config/i3blocks/bin/volume.sh
 interval=once
 signal=10
@@ -28,6 +32,7 @@ signal=10
 
 [battery]
 color=#9ece6a
+border=#9ece6a
 command=~/.config/i3blocks/bin/battery.sh
 interval=3
 
@@ -35,13 +40,15 @@ interval=3
 
 [calendar]
 color=#41a6b5
-command=date '+ 󰃭 %a %d '
+border=#41a6b5
+command=date '+ 󰸗 %a %d '
 interval=5
 
 [separator]
 
 [time]
 color=#bb9af7
+border=#bb9af7
 command=~/.config/i3blocks/bin/time.sh
 interval=5
 
