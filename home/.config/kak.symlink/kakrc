@@ -4,38 +4,42 @@
 # /_/\_\\_,_/_/\_\/_/  \__/
 
 # General
-# ───────
-# Plugins
+# ~~~~~~~
+# load included kakoune plugins
 nop %sh{
     mkdir -p "$kak_config/autoload"
     ln -s "$kak_runtime/rc" "$kak_config/autoload/standard-library"
 }
 
-# Basic settings
+# basic settings
 colorscheme base16
 set-option global ui_options terminal_assistant=none
 
-# Enable editor config
+# enable editor config
 hook global BufOpenFile .* %{ editorconfig-load }
 hook global BufNewFile .* %{ editorconfig-load }
 
-# Relative line numbering in normal mode, absolute in insert mode
+# relative line numbering in normal mode, absolute in insert mode
 hook global WinCreate .* %{ add-highlighter window/numbers number-lines -hlcursor -relative }
 hook global ModeChange .*:normal %{ add-highlighter -override window/numbers number-lines -hlcursor -relative }
 hook global ModeChange .*:insert %{ add-highlighter -override window/numbers number-lines -hlcursor }
 
-# LSP mappings
-map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
-map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
-map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-map global object e '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
-map global object k '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
-map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
-map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
+# easy copy to system clipboard
+define-command -hidden clipboard-copy %{
+    execute-keys "<a-|>" %sh{
+        if command -v wl-copy > /dev/null; then
+            printf 'wl-copy'
+        elif command -v xsel > /dev/null; then
+            printf 'xsel -ib'
+        elif command -v xclip > /dev/null; then
+            printf 'xclip -i'
+        fi
+    } <ret>
+}
+map -docstring "copy the current selection to the system clipboard (wayland, xorg)" global normal Y ':clipboard-copy<ret>'
 
-# autoindent selection <https://discuss.kakoune.com/t/autoindent-selections/1065>
-def indent-selection %{
+# (try to) fix indentation on selection <https://discuss.kakoune.com/t/autoindent-selections/1065>
+define-command -hidden indent-selection %{
     eval -save-regs '"^i' %{
         exec '<a-x>"iZ'
         try %{
@@ -45,15 +49,22 @@ def indent-selection %{
         execute-keys -with-hooks "<a-d>ko%sh{ echo ""$kak_selection"" | sed 's/</<lt>/g' }<esc>:select %val{selection_desc}<ret><a-x>"
     }
 }
-map global normal = ':indent-selection<ret>'
+map -docstring "format/auto-indent selection" global normal = ':indent-selection<ret>'
 
-# Enable lsp on filetypes
-# ───────────────────────
+# Setup LSP
+# ~~~~~~~~~
+# enable lsp on filetypes
 eval %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(c|cpp|scad) %{
+hook global WinSetOption filetype=(c|cpp) %{
    lsp-enable-window
 }
-#
-#hook global WinSetOption filetype=python %{
-    #set-option global lintcmd 'flake8'
-#}
+
+# lsp mappings
+map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
+map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
+map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object e '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
+map global object k '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
+map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
+map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
