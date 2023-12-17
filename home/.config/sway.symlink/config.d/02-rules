@@ -16,7 +16,7 @@ set $ws_x "0 󰆌 "
 ### App locations according to symbols
 for_window [app_id="Firefox"] move container to workspace "2:$$workroom$ws_w"
 for_window [class="Godot"] move container to workspace "3:$$workroom$ws_e"
-for_window [app_id="zathura"] move container to workspace "4:$workroom$ws_a"
+for_window [app_id="zathura"] move container to workspace "4:$$workroom$ws_a"
 for_window [class="Chiaki"] move container to workspace "6:$$workroom$ws_d"
 for_window [app_id="^(org.libretro.RetroArch|emulationstation)$"] move container to workspace "6:$$workroom$ws_d"
 
@@ -28,7 +28,7 @@ set $dropdown floating enable, sticky enable, \
 	move position 0 0, move scratchpad
 
 for_window [app_id="mpv"] $video
-for_window [class="Nsxiv"] $image
+for_window [app_id="^pqiv"] $image
 for_window [app_id="^Clac$" title="Calculator"] $video
 for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
 for_window [app_id="foot" title="File Picker"] floating enable
@@ -38,6 +38,7 @@ for_window [class="Godot" title=".*\(DEBUG\)"] floating enable
 for_window [class="^Chiaki$"] fullscreen enable
 for_window [app_id="org.libretro.RetroArch"] fullscreen enable
 #for_window [app_id="EmulationStation"] fullscreen enable
+
 
 ## Uncomment for terminal transparency
 #for_window [app_id="foot"] opacity 0.95
@@ -49,6 +50,7 @@ bindswitch --locked lid:on exec swaylock
 input "type:touchpad" {
 	natural_scroll enable
 	scroll_factor 0.5
+	pointer_accel 0.30
 	tap enable
 	dwt enable
 }
