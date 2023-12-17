@@ -26,6 +26,7 @@ if [ -n "$contents" ]; then
 			pass -c "$password"
 		;;
 		"otpauth")
+    			# this is here if you use pass-otp, but should not use it
 			pass otp -c "$password"
 		;;
 		*)
