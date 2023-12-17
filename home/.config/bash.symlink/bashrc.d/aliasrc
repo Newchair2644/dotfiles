@@ -48,8 +48,18 @@ alias \
     avr-compile="arduino-cli compile --fqbn arduino:avr:uno" \
     avr-upload="arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno"
 
-# remind number to print reminders for n days
-for i in {1..6}; do alias $i='rem -gaad -@ "*"'${i}; done
+# for LUKS encrypted drives
+luks_umount() {
+    umount "/dev/mapper/${1}" && cryptsetup close "${1}"
+}
+luks_mount() {
+    cryptsetup open "${1}" "${2}" && mount "/dev/mapper/${2}" "${3}"
+}
+
+# remind number to print reminders for n days and also make color default
+alias rem='rem -@'
+for i in {1..6}; do alias $i='rem -gaad "*"'${i}; done
+alias remedit="nnn $DOTREMINDERS"
 
 # for fun :)
 alias ascii-town='ssh play@ascii.town'

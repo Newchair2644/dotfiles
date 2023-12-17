@@ -8,6 +8,9 @@
 [ -f "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh" ] && . "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh"
 [ -d "${HOME}/.config/bash/bashrc.d" ] && for f in "${HOME}/.config/bash/bashrc.d/"*; do source "$f"; done
 
+# initialize cod, parses --help output to generate completions
+source <(cod init $$ bash)
+
 # Base16 Shell, sets shell colors (terminal-agnostic)
 base16-shell() {
     BASE16_SHELL="$HOME/.config/bash/"
