@@ -4,7 +4,7 @@
 ## Basic settings
 
 ### Font
-font pango: monospace 10
+font pango: JetBrains Mono Nerd Font 10
 
 ### Window gaps
 gaps outer 3
@@ -22,8 +22,8 @@ exec_always pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).*
 
 ## Swaybar + i3blocks
 bar {
-	height 32
-        font pango: monospace 13
+	height 30
+        font pango: JetBrains Mono Nerd Font 12
 	position top
 	tray_output primary
 	tray_padding 5
