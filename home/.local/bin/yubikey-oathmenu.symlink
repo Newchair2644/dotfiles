@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Simple menu for oath codes
+# makes them almost as seamless as regular u2f / fido
+
+account="$(ykman oath accounts list | fuzzel --dmenu)"
+ykman oath accounts code "$account" |
+    grep -o "[0-9][0-9][0-9][0-9][0-9][0-9]$" | wl-copy
