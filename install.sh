@@ -52,8 +52,9 @@ add_groups_services() {
     echo "Adding user to groups..." | tag 0
     sudo usermod -aG _seatd socklog
     echo "Enabling services..." | tag 0
-    for service in acpid chronyd dbus dhcpcd iwd seatd tlp; do
-        sudo ln -sf "/etc/sv/$service" "/var/service/"
+    for service in _seatd acpid chronyd dbus dhcpcd nanoklogd pcscd polkitd power-profiles-daemon socklog-unix tlp; do
+        sudo ln -sf "/etc/sv/${service}" "/var/service/"
+        sv start "$service"
     done
 }
 
@@ -61,16 +62,21 @@ add_groups_services() {
 pkg_install() {
     echo "Installing packages..." | tag 0
     sudo xbps-install -S $(cat pkg-list.txt)
-    # My favorite fonts, not all are needed (see fontconfig)
+
+    # My favorite fonts, not all are needed, edit fonts var (see fontconfig)
     echo "Installing fonts..." | tag 0
-    curl -fLo "${HOME}/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf" \
-        'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf'
-    curl -fLo "${HOME}/.local/share/fonts/IosevkaNerdFont-Regular.ttf" \
-        'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Iosevka/Regular/IosevkaNerdFont-Regular.ttf'
-    curl -fLo "${HOME}/.local/share/fonts/UbuntuNerdFont-Regular.ttf" \
-        'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Ubuntu/Regular/UbuntuNerdFont-Regular.ttf'
-    curl -fLo "${HOME}/.local/share/fonts/MononokiNerdFont-Regular.ttf" \
-        'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Mononoki/Regular/MononokiNerdFont-Regular.ttf'
+
+    font_src="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts"
+    font_dir="${HOME}/.local/share/fonts"
+    fonts="\
+        JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+        Iosevka/Regular/IosevkaNerdFont-Regular.ttf
+        Ubuntu/Regular/UbuntuNerdFont-Regular.ttf
+        Mononoki/Regular/MononokiNerdFont-Regular.ttf"
+
+    for font in $fonts; do
+        curl -OJL --output-dir "$font_dir" "${font_src}/${font}"
+    done
 }
 
 # Symlink dotfiles, create backup if $dst already exists, then wallpapers
@@ -91,8 +97,8 @@ dotfiles_install() {
 main() {
     printf "My void linux setup script.\nInstalls needed dotfiles, fonts, and packages on a fresh install.\n\n"
     prompt "Initial setup? (creates needed directores and makes a full backup of ~)" && setup
-    prompt "Add user to groups and enable services?" && add_groups_services
     prompt "Install needed packages and fonts? (needs root access)" && pkg_install
+    prompt "Add user to groups and enable services?" && add_groups_services
     prompt "Symlink dotfiles? (will backup duplicate configs automatically)" && dotfiles_install
     echo "Setup completed. Logout and log back in tty1."
 }
