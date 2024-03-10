@@ -143,7 +143,7 @@ match:
     track_length_grace: 10
     track_length_max: 30
 
-plugins: fetchart lastgenre fromfilename
+plugins: fetchart lastgenre fromfilename edit
 
 fetchart:
     cautious: true
