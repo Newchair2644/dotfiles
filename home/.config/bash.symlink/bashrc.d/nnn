@@ -15,4 +15,4 @@ export NNN_COLORS="6231"
 export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
 
 # NNN plugin keys
-export NNN_PLUG='f:finder;o:fzopen;p:cmusq;d:gpgd;t:nmount;v:imgview'
+export NNN_PLUG='f:finder;o:dragdrop;u:upload;g:gitroot;p:preview-tabbed;d:gpgd;t:nmount;v:imgview'
