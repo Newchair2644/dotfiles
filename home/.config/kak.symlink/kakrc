@@ -24,6 +24,12 @@ hook global WinCreate .* %{ add-highlighter window/numbers number-lines -hlcurso
 hook global ModeChange .*:normal %{ add-highlighter -override window/numbers number-lines -hlcursor -relative }
 hook global ModeChange .*:insert %{ add-highlighter -override window/numbers number-lines -hlcursor }
 
+# wrap paragraphs
+map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
+define-command wrap-paragraph %{
+  execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
+}
+
 # easy copy to system clipboard
 define-command -hidden clipboard-copy %{
     execute-keys "<a-|>" %sh{
