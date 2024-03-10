@@ -25,7 +25,7 @@ export DOTREMINDERS="${HOME}/.config/reminders"
 export XBPS_DISTDIR="${HOME}/.local/src/void-packages"
 
 # Wayland variables (this is stupid should just werk without setting vars)
-export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_TYPE="wayland"
 export SDL_VIDEODRIVER="wayland,x11"
 export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORM="wayland;xcb"
@@ -33,12 +33,19 @@ export QT_SCALE_FACTOR=1
 export QT_WAYLAND_FORCE_DPI=physical
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
+# NVidia Garbage
+export LIBVA_DRIVER_NAME="nvidia"
+#export GBM_BACKEND="nvidia-drm"
+export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+export WLR_NO_HARDWARE_CURSORS=1
+
 # Source ~/.bashrc
 [ -n "$BASH_VERSION" ] && [ -f "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
 
 # Start wm if tty1 else multiplexer
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    exec dbus-run-session sway
+    # sadly need this for nvidia atm
+    exec dbus-run-session sway --unsupported-gpu
 else
     dvtm
 fi
