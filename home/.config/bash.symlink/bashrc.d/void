@@ -1,12 +1,25 @@
 # Void linux helpers
 
-# shorten some cmds
+### === Log helpers === ###
+# colored log tail with file names
+syslog-tailf() {
+    lines=10
+    [ -n "$1" ] && lines="$1"
+    find /var/log/socklog -type f -name current | xargs tail -n "${lines}" | clog
+}
+
+#syslog-pager() {
+    #find /var/log/socklog -type f -name current | xargs tail -n "${lines}" | clog
+#}
+
+### === XBPS helpers === ###
+# shorten some cms
 alias xbi="sudo xbps-install"
 alias xbq="xbps-query"
 alias xbr="sudo xbps-remove"
 
 # use fzf to interactively seach and install packages
-xfzf() {
+xbps-fzf() {
 	xpkg -a |
 		fzf -m --preview 'xq {1}' \
 		--preview-window=right:66%:wrap |
@@ -14,7 +27,7 @@ xfzf() {
 }
 
 # search repology for package
-xversion() {
+xbps-version() {
 	if [ "$1" = "-s" ] && [ -n "$2" ]; then
 		curl -s "https://repology.org/api/v1/project/${2}" | \
 			jq -r '.[] | select(.repo=="void_x86_64") |
