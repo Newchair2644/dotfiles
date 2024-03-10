@@ -7,11 +7,12 @@ markup=pango
 full_text=
 align=center
 separator=false
-separator_block_width=14
+separator_block_width=18
+background=#1e202e
 border_left=0
 border_right=0
-border_top=2
-border_bottom=0
+border_top=0
+border_bottom=3
 
 [wifi]
 color=#e0af68
@@ -53,3 +54,6 @@ command=~/.config/i3blocks/bin/time.sh
 interval=5
 
 [separator]
+
+[blank]
+full_text=""

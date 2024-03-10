@@ -3,7 +3,7 @@
 low="󰕿 "
 hi="󰕾 "
 med="󰖀 "
-mute="󰝟"
+mute="󰝟 "
 
 # Mouse actions
 case $BLOCK_BUTTON in
