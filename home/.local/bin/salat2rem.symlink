@@ -2,7 +2,7 @@
 
 # Script to convert prayer times from islamicfinder api to remind format
 
-cache_file="${XDG_CACHE_HOME}/02-salat.rem"
+cache_file="${DOTREMINDERS}/.cache/02-salat.rem"
 ip="$(curl -s myip.wtf/text)"
 
 endpoint="http://www.islamicfinder.us/index.php/api/prayer_times"

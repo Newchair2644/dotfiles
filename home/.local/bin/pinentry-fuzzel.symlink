@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "OK Please go ahead"
-while read stdin; do
+while read -r stdin; do
 	case $stdin in
 		SETDESC)
 			KEYNAME=${stdin#*:%0A%22}
@@ -10,8 +10,8 @@ while read stdin; do
 			echo "OK"
 			;;
 		GETPIN)
-			echo "D `fuzzel -p "Passphrase: " --password="*" --dmenu -l 0 --line-height=12 "gpg-agent: $KEYNAME ($KEYID)"`\nOK"
-			;;
+			printf "D %s\nOK\n" "$(fuzzel -p "Passphrase: " --password="*" --dmenu -l 0 --line-height=12 "gpg-agent: $KEYNAME ($KEYID)")"
+                        ;;
 		BYE)
 			echo "Ok closing connection"
 			exit 0
