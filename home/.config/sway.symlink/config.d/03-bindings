@@ -44,17 +44,18 @@ bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
 bindsym XF86Calculator exec footclient --app-id 'Clac' --title 'Calculator' clac
 
 # Copy screenshot to clipboard
-bindsym Print exec sh -c 'grim - | wl-copy' && notify-send " System" "<i>Image</i> sent to selection: <b>CLIPBOARD</b>"
+bindsym Print exec sh -c 'grim - | wl-copy' && notify-send " System" "<i>Output</i> sent to <b>CLIPBOARD</b>"
 
 # Copy selection to clipboard
-bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send " System" "<i>Image</i> sent to selection: <b>CLIPBOARD</b>"
+bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send " System" "<i>Selection</i> sent to <b>CLIPBOARD</b>"
 
 # Send selection to...
-set $screenshot " Send Screenshot [w,u]"
+set $screenshot " Send Screenshot [w,d,u]"
 set $screenshot_name "$(date +'Screenshot_%Y%m%d-%H%M%S.jpg')"
 mode $screenshot {
     # Save clipboard to image-file (use in conjuction with screenshot mapping
     bindsym w exec sh -c 'wl-paste > ${HOME}/Pictures/Screenshots/$screenshot_name' && notify-send "System" "$screenshot_name saved"; mode "default"
+    bindsym d exec sh -c 'wl-paste > /tmp/screenshot.jpg && dragon-drop /tmp/screenshot.jpg'; mode "default"
     bindsym u exec sh -c 'wl-paste | ffsend upload --name $screenshot_name -' && notify-send "System" "Screenshot uploaded for sharing"; mode "default"
     # TODO: image sharing service (imgur?)
     bindsym Escape mode "default"
@@ -119,6 +120,10 @@ bindsym Ctrl+Alt+t exec flavours-menu
 
 # Vim window, copies saved file to clipboard
 bindsym $Super+v exec vim-anywhere
+
+# Alt+left mouse for middle mouse (useful on hp elitebooks)
+bindsym --no-repeat --whole-window Alt+BTN_LEFT seat seat0 cursor press BTN_MIDDLE
+bindsym --release Alt+BTN_LEFT seat seat0 cursor press BTN_MIDDLE
 
 
 ### === Basic Sway binds === ###

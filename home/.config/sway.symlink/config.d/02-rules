@@ -30,14 +30,17 @@ set $dropdown floating enable, sticky enable, \
 for_window [app_id="mpv"] $video
 for_window [app_id="^pqiv"] $image
 for_window [app_id="^Clac$" title="Calculator"] $video
+for_window [app_id="^dragon-drop$"] sticky enable
 for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
 for_window [app_id="foot" title="File Picker"] floating enable
 for_window [title="^notetaker_window$"] floating enable, sticky enable
 for_window [title="^vim-anywhere$"] floating enable
-for_window [class="Godot" title=".*\(DEBUG\)"] floating enable
+for_window [instance="Godot_Engine"] floating enable
+#for_window [class="^Godot$" instance="Godot_Engine"] tiling enable
 for_window [class="^Chiaki$"] fullscreen enable
 for_window [app_id="org.libretro.RetroArch"] fullscreen enable
 #for_window [app_id="EmulationStation"] fullscreen enable
+for_window [app_id="^(?i)waydroid.*"] floating enable
 
 
 ## Uncomment for terminal transparency
@@ -46,7 +49,11 @@ for_window [app_id="org.libretro.RetroArch"] fullscreen enable
 ## Display rules
 bindswitch --locked lid:on exec swaylock
 
-## Input rules
+## Inputs and seats
+
+# Hide when typing
+seat mouse hide_cursor when-typing true
+
 input "type:touchpad" {
 	natural_scroll enable
 	scroll_factor 0.5

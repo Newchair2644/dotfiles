@@ -7,7 +7,7 @@
 font pango: JetBrains Mono Nerd Font 10
 
 ### Window gaps
-gaps outer 3
+gaps outer 2
 gaps inner 2
 gaps top 4
 smart_gaps on
@@ -18,7 +18,7 @@ title_align center
 titlebar_border_thickness 2
 
 ### Wallpaper (current flavours scheme defined by ~/.local/share/flavours/lastscheme)
-exec_always pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).* -m fill
+exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).* -m fill'
 
 ## Swaybar + i3blocks
 bar {
@@ -55,5 +55,5 @@ client.background       $base07
 
 
 ## Default borders and weight
-default_border pixel 1
-default_floating_border normal 1
+default_border pixel 2
+default_floating_border normal 2
