@@ -1,0 +1,40 @@
+font=monospace 11
+edge=bottom
+border-bottom-size=2
+message-padding=10
+details-border-size=2
+button-border-size=2
+button-gap=5
+button-dismiss-gap=5
+button-margin-right=10
+button-padding=5
+
+# Start flavours
+## Base16 Tokyonight
+## Author: Folke Lemaitre (https://github.com/folke)
+[normal]
+background=1e202e
+border=565f89
+border-bottom=292e42
+button-background=292e42
+details-background=1e202e
+text=c0caf5
+
+[error]
+background=f7768e
+border=ff9e64
+border-bottom=ff9e64
+button-background=ff9e64
+details-background=ff9e64
+text=16161e
+button-text=1e202e
+
+[warning]
+background=e0af68
+border=c0caf5
+border-bottom=c0caf5
+button-background=c0caf5
+details-background=c0caf5
+text=16161e
+button-text=1e202e
+# End flavours
