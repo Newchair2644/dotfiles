@@ -19,25 +19,34 @@ alias xbq="xbps-query"
 alias xbr="sudo xbps-remove"
 
 # use fzf to interactively seach and install packages
-xbps-fzf() {
+xfzf() {
 	xpkg -a |
-		fzf -m --preview 'xq {1}' \
+		fzf -m --bind change:first \
+                --preview 'xq {1}' \
 		--preview-window=right:66%:wrap |
 		xargs -ro xi
 }
 
+# nice formatted search output from repology
+_repology_search() {
+	curl -s "https://repology.org/api/v1/projects/?search=${1}&inrepo=void_x86_64" | \
+		jq -r '.[] | .[] | select(.repo=="void_x86_64") | [.srcname,.version,.status,.summary] | @tsv' | \
+		sed 's/\\t/\t/g' | awk -F'\t' '{ print $1 "-" $2 " (" $3 ")\t" $4 }' | column -t -s $'\t'
+}
+
+# specific package status based on name from repos
+_repology_status() {
+	curl -s "https://repology.org/api/v1/project/${1}" | \
+		jq -r ".[] | select(.repo==\"void_x86_64\") | \
+		select(.srcname==\"${1}\") | [.status,.version] | @tsv"
+}
+
 # search repology for package
-xbps-version() {
-	if [ "$1" = "-s" ] && [ -n "$2" ]; then
-		curl -s "https://repology.org/api/v1/project/${2}" | \
-			jq -r '.[] | select(.repo=="void_x86_64") |
-			[.visiblename,.version,.summary] | @tsv' |
-			sed 's/\t/-/'  | column -t -o " "
-	elif [ -n "$1" ]; then
-		curl -s "https://repology.org/api/v1/project/${1}" | \
-			jq -r ".[] | select(.repo==\"void_x86_64\") | \
-			select(.visiblename==\"${1}\") | [.status,.version] | @tsv"
-	else
-		echo "Usage: xversion -[s] [PKG]"
-	fi
+xversion() {
+    [ -z "$1" ] && echo "Usage: xversion -[s] [PKG]" && return
+    if [ "$1" = "-s" ] && [ -n "$2" ]; then
+        _repology_search "$2"
+    else
+        _repology_status "$1"
+    fi
 }

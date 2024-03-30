@@ -1,6 +1,6 @@
 ## Set the prompt and window title
-# (Slightly) Modified version of this prompt:
-# https://github.com/mokuken/dots/blob/main/bashrc
+# Modified version of this prompt:
+# https://github.com/mokuken/linux-setup/blob/dceaa0fd5eb8412fe3765903285de571a9d87c4c/.bashrc
 
 reset="\[\e[m\]"
 blue="\[\e[00;34m\]"
@@ -12,19 +12,44 @@ blink_yellow="\[\e[05;33m\]"
 first_line="${reset}┌─[${blue}\u${reset}]-[${cyan}\h${reset}]-[${yellow}\w${reset}]"
 second_line="\n└─[${blink_yellow}\$${reset}] "
 
-if [ -f /usr/share/git/git-prompt.sh ]; then
-    source /usr/share/git/git-prompt.sh
-    GIT_PS1_SHOWCOLORHINTS=1
-    PROMPT_COMMAND="__git_ps1 '$first_line' '$second_line' ' $purple %s';"
-else
-    # if the file doesn't exist create prompt directly with PS1
-    PS1="$first_line$second_line"
-fi
-unset reset blue purple cyan yellow blink_yellow first_line second_line
+# Set prompt with git branch 
+git_ps1() {
+    if [ -f /usr/share/git/git-prompt.sh ]; then
+        source /usr/share/git/git-prompt.sh
+        GIT_PS1_SHOWCOLORHINTS=1
+        PROMPT_COMMAND="__git_ps1 '$first_line' '$second_line' ' $purple %s';"
+    else
+        # if the file doesn't exist create prompt directly with PS1
+        PS1="$first_line$second_line"
+    fi
+}
 
-# Set window title to currently running command or running shell
-PROMPT_COMMAND+='[ -n "$BASH_COMMAND" ] && printf "\e]0;%s\a" "$SHELL";'
-trap 'printf "\e]0;%s\a" "${BASH_COMMAND//[^[:print:]]/}"' DEBUG
+# Foot terminal cwd <https://codeberg.org/dnkl/foot/wiki#user-content-shell-integration>
+osc7_cwd() {
+    local strlen=${#PWD}
+    local encoded=""
+    local pos c o
+    for (( pos=0; pos<strlen; pos++ )); do
+        c=${PWD:$pos:1}
+        case "$c" in
+            [-/:_.!\'\(\)~[:alnum:]] ) o="${c}" ;;
+            * ) printf -v o '%%%02X' "'${c}" ;;
+        esac
+        encoded+="${o}"
+    done
+    printf '\e]7;file://%s%s\e\\' "${HOSTNAME}" "${encoded}"
+}
 
-# (ALT) Set title to: user@host:dir-full-path
-#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+# Foot terminal notification
+osc7_notify() {
+    local prog="$(fc -nl -1 | awk '{ for (i=1; i<=NF; i++) if ($i != "sudo" && $i !~ /^-/) { print $i; break } }')"
+    printf "\e]777;notify;%s;exited\e\\" "$prog"
+}
+
+# Set git prompt, set window title to: user@host:dir-full-path
+git_ps1
+PROMPT_COMMAND+='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007";'
+PROMPT_COMMAND+='osc7_cwd;'
+PROMPT_COMMAND+='osc7_notify'
+
+unset reset blue purple cyan yellow blink_yellow first_line second_line git_ps1
