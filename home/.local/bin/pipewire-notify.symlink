@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Function to update volume and send notification
+
+update_volume() {
+    device_desc="$(wpctl inspect @DEFAULT_AUDIO_SINK@ | grep node.description | cut -d\" -f2)"
+    new_volume_lvl="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed -e 's/\.//' -e 's/^Volume: //' -e 's/^0\?0\?//')"
+
+    volume_lvl="$new_volume_lvl"
+    notify-send --replace-id 01110110 -a "Pipewire" -i "audio-volume-low" \
+      --hint=int:value:"${volume_lvl}" "${device_desc}" "level: ${volume_lvl}%" \
+      --expire-time=2000
+}
+update_volume
+
+#while true; do
+    #trap 'update_volume' SIGRTMIN+10
+#done

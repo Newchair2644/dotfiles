@@ -1,0 +1,3 @@
+#!/bin/sh
+# Compatibility with dmenu
+$DMENU "$@"
