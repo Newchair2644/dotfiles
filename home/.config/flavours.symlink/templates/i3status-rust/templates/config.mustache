@@ -1,0 +1,87 @@
+## Base16 Catppuccin
+# Author: Pocco81 (https://github.com/pocco81)
+
+# Full config template needed for block theme overrides
+# Start flavours
+# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
+# Nord by arcticicestudio
+
+[theme]
+theme = "solarized-dark"
+[theme.overrides]
+idle_bg = "#{{base01-hex}}"
+idle_fg = "#{{base05-hex}}"
+info_bg = "#{{base0C-hex}}"
+info_fg = "#{{base00-hex}}"
+good_bg = "#{{base0B-hex}}"
+good_fg = "#{{base00-hex}}"
+warning_bg = "#{{base0A-hex}}"
+warning_fg = "#{{base00-hex}}"
+critical_bg = "#{{base08-hex}}"
+critical_fg = "#{{base00-hex}}"
+# The rest of the theme settings are left at default.
+# End flavours
+#separator = ""
+
+[icons]
+icons = "material-nf"
+
+# i3srs config
+[[block]]
+block = "cpu"
+format = " $icon $utilization "
+format_alt = " $icon $frequency{ $boost|} "
+
+[[block]]
+block = "memory"
+format = " $icon $mem_total_used_percents.eng(w:2) "
+format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
+[block.theme_overrides]
+idle_bg = "#{{base02-hex}}"
+
+[[block]]
+block = "disk_space"
+info_type = "available"
+alert_unit = "GB"
+alert = 10.0
+warning = 15.0
+format = " $icon $available "
+format_alt = " $icon $available / $total "
+[block.theme_overrides]
+idle_bg = "#{{base03-hex}}"
+
+[[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+[block.theme_overrides]
+idle_bg = "#{{base0A-hex}}"
+idle_fg = "#{{base00-hex}}"
+
+[[block]]
+block = "battery"
+format = " $icon $percentage "
+empty_format = " $icon $percentage, $power power, $time remaining "
+missing_format = ""
+interval = 5
+
+[[block]]
+block = "net"
+format = " 󰇚 $speed_down 󰕒 $speed_up "
+format_alt = " $icon  {$ssid at$frequency|Wired connection} "
+[block.theme_overrides]
+idle_bg = "#{{base02-hex}}"
+
+[[block]]
+block = "time"
+interval = 5
+format = " $icon $timestamp.datetime(f:'%m/%d/%y %I:%M %p') "
+[block.theme_overrides]
+idle_bg = "#{{base0D-hex}}"
+idle_fg = "#{{base01-hex}}"
+
+[[block]]
+block = "pomodoro"
+[block.theme_overrides]
+idle_bg = "#{{base03-hex}}"

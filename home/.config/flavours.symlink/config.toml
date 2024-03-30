@@ -9,38 +9,65 @@ hook = "swaymsg reload"
 light = false
 
 [[item]]
+file = "~/.config/swaylock/config"
+template = "swaylock"
+
+[[item]]
+file = "~/.config/swaynag/config"
+template = "swaynag"
+subtemplate = "colors"
+
+[[item]]
+file = "~/.config/i3status-rust/config.toml"
+template = "i3status-rust"
+subtemplate = "config"
+rewrite = true
+
+[[item]]
+file = "~/.config/fuzzel/fuzzel.ini"
+template = "fuzzel"
+
+[[item]]
+file = "~/.config/fnott/fnott.ini"
+template = "fnott"
+hook = "sway exec \"pkill fnott; exec fnott\""
+
+[[item]]
+file = "~/.local/share/themes/FlatColor/colors2"
+template = "gtk-flatcolor"
+subtemplate = "gtk-2"
+rewrite = true
+
+[[item]]
+file = "~/.local/share/themes/FlatColor/colors3"
+template = "gtk-flatcolor"
+subtemplate = "gtk-3"
+hook = "gsettings set org.gnome.desktop.interface gtk-theme dummy && gsettings set org.gnome.desktop.interface gtk-theme FlatColor"
+rewrite = true
+
+[[item]]
+file= "~/.config/zathura/zathurarc"
+template = "zathura"
+
+[[item]]
+file = "~/.config/godot/text_editor_themes/base16.tet"
+template = "godot"
+rewrite = true
+
+[[item]]
 file = "~/.config/bash/base16-shell"
 template = "shell"
 rewrite = true
 hook = "pkill -USR1 bash"
 
 [[item]]
-file = "~/.config/swaylock/config"
-template = "swaylock"
-
-#[[item]]
-#file = "~/.config/swaynag/config"
-#template = "swaynag"
-#subtemplate = "colors"
-
-[[item]]
-file = "~/.config/i3blocks/config"
-template = "i3blocks"
-subtemplate = "config"
+file = "~/.local/share/base16-colors.sh"
+template = "base16-colors.sh"
 rewrite = true
 
 [[item]]
-file = "~/.config/mako/config"
-template = "mako"
-hook = "makoctl reload"
-
-[[item]]
-file = "~/.config/wob/wob.ini"
-template = "wob"
-
-[[item]]
-file = "~/.config/fuzzel/fuzzel.ini"
-template = "fuzzel"
+file = "~/.config/bash/bashrc.d/fzf"
+template = "fzf"
 
 [[item]]
 file = "~/.config/kak/colors/base16.kak"
@@ -48,20 +75,6 @@ template = "kakoune"
 rewrite = true
 
 [[item]]
-file = "~/.config/bash/bashrc.d/base16-fzf"
-template = "fzf"
-rewrite = true
-
-[[item]]
 file = "~/.config/cava/config"
 template = "cava"
 subtemplate = "gradient"
-
-[[item]]
-file= "~/.config/zathura/zathurarc"
-template = "zathura"
-
-[[item]]
-file = "~/.config/godot/text_editor_themes/base16.tres"
-template = "godot"
-rewrite = true

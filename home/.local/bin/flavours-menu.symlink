@@ -11,4 +11,4 @@ selected="$(find ~/.dotfiles/wallpapers/ -mindepth 1 -maxdepth 1 | \
 [ -z "$selected" ] && exit
 
 scheme="$(echo "$selected" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
-flavours apply "$scheme" && notify-send "Flavours" "Colorscheme: <i>$selected</i>"
+flavours apply "$scheme" && notify-send -i raindrop -a "Flavours" "Colorscheme Updated" "<i>$selected</i> colorscheme applied"
