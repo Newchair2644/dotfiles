@@ -4,14 +4,16 @@
 ## Basic settings
 
 ### Font
-font pango: JetBrains Mono Nerd Font 10
+font pango: JetBrainsMono Nerd Font 10
 
 ### Window gaps
-gaps outer 2
+gaps top 1
+gaps bottom 1
+gaps left 2
+gaps right 2
 gaps inner 2
-gaps top 4
-smart_gaps on
-hide_edge_borders smart
+#smart_gaps on
+#hide_edge_borders smart
 
 ### Window title
 title_align center
@@ -22,12 +24,13 @@ exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours c
 
 ## Swaybar + i3blocks
 bar {
-	height 30
-        font pango: JetBrains Mono Nerd Font 12
+        font pango: JetBrainsMono Nerd Font 12
+	height 27
+        status_padding 2
 	position top
 	tray_output primary
 	tray_padding 5
-	status_command i3blocks
+	status_command i3status-rs
 	strip_workspace_numbers true
 
 	colors {
@@ -36,9 +39,9 @@ bar {
 		statusline $base04
 
 		# State             Border  BG      Text
-		focused_workspace   $base05 $base0D $base00
+		focused_workspace   $base0D $base0D $base00
 		active_workspace    $base05 $base03 $base00
-		inactive_workspace  $base03 $base01 $base05
+		inactive_workspace  $base00 $base01 $base05
 		urgent_workspace    $base08 $base08 $base00
 		binding_mode        $base00 $base0A $base00
 	}
@@ -46,7 +49,7 @@ bar {
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
-client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused          $base0D $base0D $base00 $base0D $base0D
 client.focused_inactive $base01 $base01 $base05 $base03 $base01
 client.unfocused        $base01 $base00 $base05 $base01 $base01
 client.urgent           $base08 $base08 $base00 $base08 $base08
@@ -57,3 +60,16 @@ client.background       $base07
 ## Default borders and weight
 default_border pixel 2
 default_floating_border normal 2
+
+# window transparency
+for_window [app_id="foot"] opacity 0.95
+
+## Eye Candy (needs swayfx)
+#blur enable
+#blur_passes 3
+#blur_radius 5
+#shadows enable
+#corner_radius 3
+#layer_effects "panel" shadows enable
+#layer_effects "launcher" blur enable; shadows enable
+#layer_effects "notifications" blur enable; shadows enable; corner_radius 10

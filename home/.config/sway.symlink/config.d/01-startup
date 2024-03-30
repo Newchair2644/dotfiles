@@ -2,13 +2,13 @@
 # Runs when the sway is started, terminate when stopped
 # Similar to .xinitrc
 
-exec mako
+exec fnott
 exec foot --server
 exec pipewire
 exec wlsunset -l 40.325939 -L -78.917488
 exec syncthing --no-browser
 exec footclient cmus
-exec remind -z5 -k"notify-send '󰸗 Reminder' %s &" ~/.config/reminders
+exec remind -z5 -k"notify-send -i calendar -a'Reminder' %s &" ~/.config/reminders
 exec sway-fullscreen-bar
 exec swayidle -w \
 	timeout 300 'swaylock -f -c 000000' \

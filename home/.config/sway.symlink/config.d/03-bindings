@@ -16,18 +16,15 @@ bindsym $Super+Shift+v mode $passthrough
 ## like an application launcher and terminal)
 
 # Volume
-set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
-exec_always pkill wob; rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && \
+	exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
 
-bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | \
-	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
-	exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | \
-	sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK && \
-	exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMute exec amixer sset Master toggle | \
-	sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | \
-	head -1 > $WOBSOCK && exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && \
+	exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
+
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && \
+    exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
+
 bindsym XF86AudioMicMute \
     exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
@@ -63,27 +60,27 @@ mode $screenshot {
 bindsym $Super+Shift+backslash mode $screenshot
 
 # Notifications
-bindsym $Super+d exec makoctl dismiss
-bindsym $Super+Shift+d exec makoctl dismiss -a
-bindsym $Super+Ctrl+i exec makoctl invoke; exec makoctl dismiss
+bindsym $Super+d exec fnottctl dismiss
+bindsym $Super+Shift+d exec fnottctl dismiss all
+bindsym $Super+Shift+n exec fnottctl actions 
 
 # OCR Grab
 bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send " System" "Copied text to selection: <b>CLIPBOARD</b>"
 
 # Color Picker
-bindsym $Super+Shift+y exec pickcolor
+bindsym $Super+Shift+y exec eyedropper
 
 # Password dmenu
-bindsym $Super+p exec passmenu
+bindsym $Super+q exec passmenu
 
 # Yubikey 5 series oath menu
-bindsym $Super+Shift+p exec yubikey-oathmenu
+bindsym $Super+Shift+q exec yubikey-oathmenu
 
 # Terminal
 bindsym $Super+Return exec footclient
 
-# Terminal (cwd)
-bindsym $Super+Shift+Return exec footclient --working-directory="$(sway-cwd)"
+# Terminal (floating)
+bindsym $Super+Shift+Return exec footclient --app-id="footfloat"
 
 # Copy cwd
 bindsym $Super+Shift+u exec wl-copy "$(sway-cwd)" && notify-send "Clipboard" "Copied working directory to selection: <b>CLIPBOARD</b>"
@@ -139,12 +136,13 @@ bindsym Ctrl+Alt+Shift+BackSpace exit
 bindsym Ctrl+Alt+l exec swaylock
 
 ### Power menu (displays in reverse order)
-set $power_menu swaynag -m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
-	-z '󰿅 Logout' 'sway exit' \
-	-z '󰤄 Suspend' 'sudo zzz' \
-	-z '󰍁 Lock' 'swaylock' \
-	-z '󰜉 Reboot' 'sudo reboot' \
-	-z '󰐥 Shutdown' 'sudo poweroff'
+set $power_menu swaynag -t normal \
+	-m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
+	-Z '󰿅 Logout' 'sway exit' \
+	-Z '󰤄 Suspend' 'sudo zzz' \
+	-Z '󰍁 Lock' 'swaylock' \
+	-Z '󰜉 Reboot' 'sudo reboot' \
+	-Z '󰐥 Shutdown' 'sudo poweroff'
 bindsym $Super+x exec $power_menu
 
 ### kill focused container
@@ -217,7 +215,7 @@ bindsym $Super+Alt+l exec sway-snap right
 bindsym $Super+Alt+space move absolute position center
 
 ### Resize
-set $distanceStr 15 px or 15 ppt
+set $distanceStr 10 px or 10 ppt
 bindsym $Super+Ctrl+h resize grow left $distanceStr
 bindsym $Super+Ctrl+j resize grow down $distanceStr
 bindsym $Super+Ctrl+k resize grow up $distanceStr
@@ -236,7 +234,8 @@ bindsym $Super+Ctrl+Alt+k resize shrink height $altDistanceStr
 bindsym $Super+Ctrl+Alt+l resize grow width $altDistanceStr
 
 ### Preset sizes for floating windows
-bindsym $Super+Shift+F11 $video
+bindsym $Super+Shift+F10 $video
+bindsym $Super+Shift+F11 $float_fullscreen
 bindsym $Super+Shift+F12 $dropdown
 
 ### Swap currently focused container with the largest container in the tree
