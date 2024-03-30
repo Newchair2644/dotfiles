@@ -3,7 +3,7 @@
 # Color picker script that sends a notification with chosen color and copies to clipboard
 # Based somewhat on farge https://github.com/sdushantha/farge but with gm instead of imagemagick
 
-TMP_DIR="/tmp/pickcolor"
+TMP_DIR="/tmp/eyedropper"
 EXPIRE_TIME=120000
 
 hex_code="$(grim -g "$(slurp -p)" -t ppm - | gm convert - txt:- | grep -o '#.*$')"
@@ -11,5 +11,5 @@ fname="$(echo "$hex_code" | cut -c 2-)"
 
 mkdir -p "$TMP_DIR"
 gm convert -size 100x100 xc:"$hex_code" "${TMP_DIR}/${fname}.png"
-notify-send -a Farge "$hex_code" --icon="${TMP_DIR}/${fname}.png" --expire-time="$EXPIRE_TIME"
+notify-send -a "Eyedropper" "$hex_code" --icon="${TMP_DIR}/${fname}.png" --expire-time="$EXPIRE_TIME"
 wl-copy "$hex_code"
