@@ -9,16 +9,16 @@
 [theme]
 theme = "solarized-dark"
 [theme.overrides]
-idle_bg = "#1e202e"
-idle_fg = "#c0caf5"
-info_bg = "#1abc9c"
-info_fg = "#16161e"
-good_bg = "#9ece6a"
-good_fg = "#16161e"
-warning_bg = "#e0af68"
-warning_fg = "#16161e"
-critical_bg = "#f7768e"
-critical_fg = "#16161e"
+idle_bg = "#073642"
+idle_fg = "#93a1a1"
+info_bg = "#2aa198"
+info_fg = "#002b36"
+good_bg = "#859900"
+good_fg = "#002b36"
+warning_bg = "#b58900"
+warning_fg = "#002b36"
+critical_bg = "#dc322f"
+critical_fg = "#002b36"
 # The rest of the theme settings are left at default.
 # End flavours
 #separator = ""
@@ -37,7 +37,7 @@ block = "memory"
 format = " $icon $mem_total_used_percents.eng(w:2) "
 format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
 [block.theme_overrides]
-idle_bg = "#292e42"
+idle_bg = "#586e75"
 
 [[block]]
 block = "disk_space"
@@ -48,7 +48,7 @@ warning = 15.0
 format = " $icon $available "
 format_alt = " $icon $available / $total "
 [block.theme_overrides]
-idle_bg = "#565f89"
+idle_bg = "#657b83"
 
 [[block]]
 block = "sound"
@@ -56,8 +56,8 @@ block = "sound"
 button = "left"
 cmd = "pavucontrol"
 [block.theme_overrides]
-idle_bg = "#e0af68"
-idle_fg = "#16161e"
+idle_bg = "#b58900"
+idle_fg = "#002b36"
 
 [[block]]
 block = "battery"
@@ -71,17 +71,17 @@ block = "net"
 format = " 󰇚 $speed_down 󰕒 $speed_up "
 format_alt = " $icon  {$ssid at$frequency|Wired connection} "
 [block.theme_overrides]
-idle_bg = "#292e42"
+idle_bg = "#586e75"
 
 [[block]]
 block = "time"
 interval = 5
 format = " $icon $timestamp.datetime(f:'%m/%d/%y %I:%M %p') "
 [block.theme_overrides]
-idle_bg = "#41a6b5"
-idle_fg = "#1e202e"
+idle_bg = "#268bd2"
+idle_fg = "#073642"
 
 [[block]]
 block = "pomodoro"
 [block.theme_overrides]
-idle_bg = "#565f89"
+idle_bg = "#657b83"

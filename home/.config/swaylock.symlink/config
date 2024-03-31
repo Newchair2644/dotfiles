@@ -5,31 +5,31 @@ indicator-thickness=8
 ignore-empty-password
 
 # Start Flavours
-## Base16 Tokyonight
-# Author: Folke Lemaitre (https://github.com/folke)
+## Base16 Solarized Dark
+# Author: Ethan Schoonover (modified by aramisgithub)
 
-color=16161eD9
-inside-ver-color=9ece6a
-inside-wrong-color=f7768e
-inside-clear-color=e0af68
-inside-color=16161e00
+color=002b36D9
+inside-ver-color=859900
+inside-wrong-color=dc322f
+inside-clear-color=b58900
+inside-color=002b3600
 
-ring-ver-color=9ece6a
-ring-wrong-color=f7768e
-ring-clear-color=e0af68
-ring-color=41a6b5
+ring-ver-color=859900
+ring-wrong-color=dc322f
+ring-clear-color=b58900
+ring-color=268bd2
 
-line-ver-color=16161e
-line-wrong-color=16161e
-line-clear-color=16161e
-line-color=16161e
-separator-color=16161e
+line-ver-color=002b36
+line-wrong-color=002b36
+line-clear-color=002b36
+line-color=002b36
+separator-color=002b36
 
-key-hl-color=e0af68
-bs-hl-color=f7768e
+key-hl-color=b58900
+bs-hl-color=dc322f
 
-text-ver-color=16161e
-text-wrong-color=16161e
-text-caps-lock-color=bb9af7
-layout-text-color=c0caf5
+text-ver-color=002b36
+text-wrong-color=002b36
+text-caps-lock-color=6c71c4
+layout-text-color=93a1a1
 # End Flavours

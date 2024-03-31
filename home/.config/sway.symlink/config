@@ -3,25 +3,25 @@
 
 ## Set base16 colors, managed by flavours
 # Start flavours
-## Base16 Tokyonight
-# Author: Folke Lemaitre (https://github.com/folke)
+## Base16 Solarized Dark
+# Author: Ethan Schoonover (modified by aramisgithub)
 
-set $base00 #16161e
-set $base01 #1e202e
-set $base02 #292e42
-set $base03 #565f89
-set $base04 #a9b1d6
-set $base05 #c0caf5
-set $base06 #c0caf5
-set $base07 #c0caf5
-set $base08 #f7768e
-set $base09 #ff9e64
-set $base0A #e0af68
-set $base0B #9ece6a
-set $base0C #1abc9c
-set $base0D #41a6b5
-set $base0E #bb9af7
-set $base0F #ff007c
+set $base00 #002b36
+set $base01 #073642
+set $base02 #586e75
+set $base03 #657b83
+set $base04 #839496
+set $base05 #93a1a1
+set $base06 #eee8d5
+set $base07 #fdf6e3
+set $base08 #dc322f
+set $base09 #cb4b16
+set $base0A #b58900
+set $base0B #859900
+set $base0C #2aa198
+set $base0D #268bd2
+set $base0E #6c71c4
+set $base0F #d33682
 # End flavours
 
 ## Source other files

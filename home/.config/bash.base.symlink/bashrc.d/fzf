@@ -1,26 +1,26 @@
 # Start flavours
-# Base16 Tokyonight
-# Scheme author: Folke Lemaitre (https://github.com/folke)
+# Base16 Solarized Dark
+# Scheme author: Ethan Schoonover (modified by aramisgithub)
 # Template author: Tinted Theming (https://github.com/tinted-theming)
 
 _gen_fzf_default_opts() {
 
-local color00='#16161e'
-local color01='#1e202e'
-local color02='#292e42'
-local color03='#565f89'
-local color04='#a9b1d6'
-local color05='#c0caf5'
-local color06='#c0caf5'
-local color07='#c0caf5'
-local color08='#f7768e'
-local color09='#ff9e64'
-local color0A='#e0af68'
-local color0B='#9ece6a'
-local color0C='#1abc9c'
-local color0D='#41a6b5'
-local color0E='#bb9af7'
-local color0F='#ff007c'
+local color00='#002b36'
+local color01='#073642'
+local color02='#586e75'
+local color03='#657b83'
+local color04='#839496'
+local color05='#93a1a1'
+local color06='#eee8d5'
+local color07='#fdf6e3'
+local color08='#dc322f'
+local color09='#cb4b16'
+local color0A='#b58900'
+local color0B='#859900'
+local color0C='#2aa198'
+local color0D='#268bd2'
+local color0E='#6c71c4'
+local color0F='#d33682'
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
 " --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\

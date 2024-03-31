@@ -1,24 +1,24 @@
 ## base16-kakoune (https://github.com/leira/base16-kakoune)
 ## by Leira Hua
-## Tokyonight scheme by Folke Lemaitre (https://github.com/folke)
+## Solarized Dark scheme by Ethan Schoonover (modified by aramisgithub)
 
 evaluate-commands %sh{
-    base00='rgb:16161e'
-    base01='rgb:1e202e'
-    base02='rgb:292e42'
-    base03='rgb:565f89'
-    base04='rgb:a9b1d6'
-    base05='rgb:c0caf5'
-    base06='rgb:c0caf5'
-    base07='rgb:c0caf5'
-    base08='rgb:f7768e'
-    base09='rgb:ff9e64'
-    base0A='rgb:e0af68'
-    base0B='rgb:9ece6a'
-    base0C='rgb:1abc9c'
-    base0D='rgb:41a6b5'
-    base0E='rgb:bb9af7'
-    base0F='rgb:ff007c'
+    base00='rgb:002b36'
+    base01='rgb:073642'
+    base02='rgb:586e75'
+    base03='rgb:657b83'
+    base04='rgb:839496'
+    base05='rgb:93a1a1'
+    base06='rgb:eee8d5'
+    base07='rgb:fdf6e3'
+    base08='rgb:dc322f'
+    base09='rgb:cb4b16'
+    base0A='rgb:b58900'
+    base0B='rgb:859900'
+    base0C='rgb:2aa198'
+    base0D='rgb:268bd2'
+    base0E='rgb:6c71c4'
+    base0F='rgb:d33682'
 
     ## code
     echo "
