@@ -42,10 +42,8 @@ export WLR_NO_HARDWARE_CURSORS=1
 # Source ~/.bashrc
 [ -n "$BASH_VERSION" ] && [ -f "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
 
-# Start wm if tty1 else multiplexer
+# Start wm if tty1
 if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     # sadly need this for nvidia atm
     exec dbus-run-session sway --unsupported-gpu
-else
-    dvtm
 fi
