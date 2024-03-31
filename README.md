@@ -15,11 +15,10 @@ Scripts and configs are written with portability in mind, but ***things may brea
 
 ## Setup
 ***WARNING!!!!!***
-**Remove the `--unsupported-gpu` option from `home/.profile.symlink` if possible!!!! This is for NVidia GPU support on sway but may cause issues.**
-*Make sure to backup configs before proceeding!*
+**Remove the `--unsupported-gpu` option from `home/.profile.symlink` if possible!!!!** This is for NVidia GPU support on sway but *may* cause issues.
 1. Clone this repository into ~/.dotfiles
-2. Run the installer script. It will create needed directories, symlink configs, and download all packages automagically. Make sure to review packages in `pkg-list.txt` beforehand. It will **not** do partitioning or user management, nor will it copy configs in `./system`. Those tasks are best done manually.
-   **The script requres root access with `sudo`**. To use `opendoas` instead, symlink `doas` to `sudo` (you probably want this anyway).
+2. Run the installer script. It will back up existing configs, create needed directories, install packages, and symlink configs. Make sure to review packages in `pkg-list.txt` beforehand. It will **not** do partitioning or user management, nor will it copy configs in `./system`. Those tasks are best done manually.
+   **The script requres root access with `sudo`**. To use `opendoas` instead, symlink `doas` to `sudo` (you probably want this anyway). Also make sure to be in the `wheel` group beforehand.
 3. 💰💲💸 Profit!
 
 ## Gallery
