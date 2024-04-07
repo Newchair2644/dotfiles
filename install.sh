@@ -83,7 +83,7 @@ pkg_install() {
 # Add user to needed groups and start services TODO packages (before groups, also root access???)
 add_groups_services() {
     echo "Adding user to groups..." | _tag 0
-    sudo usermod -aG dialout audio video kvm input users _seatd socklog bluetooth lpadmin
+    sudo usermod -aG dialout,audio,video,kvm,input,users,_seatd,socklog,bluetooth,lpadmin "$(whoami)"
     echo "Enabling services..." | _tag 0
     for service in acpid dbus seatd chronyd pcscd nanoklogd socklog-unix adb tlp cupsd udevd popcorn iwd; do
         sudo ln -sf "/etc/sv/${service}" "/var/service/"
