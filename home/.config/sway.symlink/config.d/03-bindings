@@ -16,14 +16,11 @@ bindsym $Super+Shift+v mode $passthrough
 ## like an application launcher and terminal)
 
 # Volume
-bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && \
-	exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && \
-	exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && \
-    exec bash -c 'pkill -SIGRTMIN+10 i3blocks && pipewire-notify'
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 bindsym XF86AudioMicMute \
     exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle

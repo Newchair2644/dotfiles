@@ -62,7 +62,7 @@ default_border pixel 2
 default_floating_border normal 2
 
 # window transparency
-for_window [app_id="foot"] opacity 0.95
+#for_window [app_id="foot"] opacity 0.95
 
 ## Eye Candy (needs swayfx)
 #blur enable

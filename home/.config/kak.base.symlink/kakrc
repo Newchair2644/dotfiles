@@ -24,6 +24,9 @@ hook global WinCreate .* %{ add-highlighter window/numbers number-lines -hlcurso
 hook global ModeChange .*:normal %{ add-highlighter -override window/numbers number-lines -hlcursor -relative }
 hook global ModeChange .*:insert %{ add-highlighter -override window/numbers number-lines -hlcursor }
 
+# show matching braces
+add-highlighter global/ show-matching
+
 # wrap paragraphs
 map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
 define-command wrap-paragraph %{
