@@ -68,6 +68,7 @@ rewrite = true
 [[item]]
 file = "~/.config/bash/bashrc.d/fzf"
 template = "fzf"
+subtemplate = "base16-default"
 
 [[item]]
 file = "~/.config/kak/colors/base16.kak"
