@@ -32,7 +32,7 @@ alias \
 	l="ls" \
 	la="ls -a" \
 	ll="ls -la" \
-	yta="yt-dlp --add-metadata -x -f bestaudio/best"
+	yta="yt-dlp --add-metadata -x -f bestaudio/best" \
 	diskspace="du -S -h | sort -h -r | less" \
 	retval="echo $?" \
 	cmd_freq="history | awk '{print $4}' | sort | uniq -c | sed 's/^\s//g' | sort | tail"

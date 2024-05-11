@@ -5,7 +5,6 @@
 [ -f "/usr/share/bash-completion/bash_completion" ] && . "/usr/share/bash-completion/bash_completion"
 [ -f "/usr/share/bash-completion/completions/pass" ] && . "/usr/share/bash-completion/completions/pass"
 [ -f "/usr/share/bash-completion/completions/pass-otp" ] && . "/usr/share/bash-completion/completions/pass-otp"
-[ -f "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh" ] && . "${HOME}/.local/src/nnn/misc/quitcd/quitcd.bash_sh_zsh"
 [ -d "${HOME}/.config/bash/bashrc.d" ] && for f in "${HOME}/.config/bash/bashrc.d/"*; do source "$f"; done
 
 # initialize cod, parses --help output to generate completions
