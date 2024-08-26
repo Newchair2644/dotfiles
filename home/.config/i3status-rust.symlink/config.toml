@@ -52,9 +52,7 @@ idle_bg = "#657b83"
 
 [[block]]
 block = "sound"
-[[block.click]]
-button = "left"
-cmd = "pavucontrol"
+driver = "pulseaudio"
 [block.theme_overrides]
 idle_bg = "#b58900"
 idle_fg = "#002b36"
