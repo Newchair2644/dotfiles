@@ -23,6 +23,7 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/bash/inputrc"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export DOTREMINDERS="${HOME}/.config/reminders"
 export XBPS_DISTDIR="${HOME}/.local/src/void-packages"
+export SVDIR="${HOME}/.config/service"
 
 # Wayland variables (this is stupid should just werk without setting vars)
 export XDG_SESSION_TYPE="wayland"
