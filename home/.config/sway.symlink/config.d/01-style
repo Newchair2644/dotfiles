@@ -24,8 +24,8 @@ exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours c
 
 ## Swaybar + i3blocks
 bar {
-        font pango: JetBrainsMono Nerd Font 12
-	height 27
+        font pango: JetBrainsMono Nerd Font 13.5
+	height 30
         status_padding 2
 	position top
 	tray_output primary
@@ -62,14 +62,14 @@ default_border pixel 2
 default_floating_border normal 2
 
 # window transparency
-#for_window [app_id="foot"] opacity 0.95
+for_window [app_id="foot"] opacity 0.95
 
 ## Eye Candy (needs swayfx)
 #blur enable
 #blur_passes 3
 #blur_radius 5
 #shadows enable
-#corner_radius 3
+#corner_radius 5
 #layer_effects "panel" shadows enable
 #layer_effects "launcher" blur enable; shadows enable
 #layer_effects "notifications" blur enable; shadows enable; corner_radius 10

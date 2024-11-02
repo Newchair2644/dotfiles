@@ -1,8 +1,8 @@
 # Main config file
 # Set variables and a few sway settings
 
-## Set base16 colors, managed by flavours
-# Start flavours
+## Set base16 colors, managed by tinty
+# Start tinted
 ## Base16 Solarized Dark
 # Author: Ethan Schoonover (modified by aramisgithub)
 
@@ -22,7 +22,7 @@ set $base0C #2aa198
 set $base0D #268bd2
 set $base0E #6c71c4
 set $base0F #d33682
-# End flavours
+# End tinted
 
 ## Source other files
 include /etc/sway/config.d/*

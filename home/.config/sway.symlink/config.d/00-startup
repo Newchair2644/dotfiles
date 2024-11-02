@@ -2,8 +2,8 @@
 # Runs when the sway is started, terminate when stopped
 # Similar to .xinitrc
 
-#exec pipewire
 exec fnott
+exec batsignal
 exec foot --server
 exec wlsunset -l 40.325939 -L -78.917488
 exec syncthing --no-browser

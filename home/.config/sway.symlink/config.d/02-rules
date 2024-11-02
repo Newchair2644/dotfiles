@@ -25,7 +25,7 @@ for_window [app_id="^(org.libretro.RetroArch|org.pegasus-frontend.pegasus-fe)$"]
 set $video floating enable, sticky enable, resize set 40 ppt 40 ppt
 set $image floating enable, sticky enable, resize set 65 ppt 72 ppt
 set $float_fullscreen floating enable, \
-	resize set 1600 px 870 px, \
+	resize set 1920 px 1080 px, \
 	move absolute position 0 30
 set $dropdown floating enable, sticky enable, \
 	resize set 100 ppt 50 ppt, \
@@ -39,7 +39,7 @@ for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
 for_window [app_id="foot" title="File Picker"] floating enable
 for_window [title="^notetaker_window$"] floating enable, sticky enable
 for_window [title="^vim-anywhere$"] floating enable
-for_window [instance="Godot_Engine"] floating enable
+for_window [class="^Godot$"] floating enable
 #for_window [class="^Godot$" instance="Godot_Engine"] tiling enable
 for_window [class="^Chiaki$"] fullscreen enable
 for_window [app_id="org.libretro.RetroArch"] fullscreen enable
