@@ -1,16 +1,20 @@
 # Void linux helpers
 
 ### === Log helpers === ###
+# colored log
+svlogtailc() {
+    logcmd='svlogtail'
+    [ -n "$1" ] && logcmd="svlogtail ${1}"
+    stdbuf -oL $logcmd | clog
+}
+
 # colored log tail with file names
-syslog-tailf() {
+svlogtailcf() {
     lines=10
     [ -n "$1" ] && lines="$1"
     find /var/log/socklog -type f -name current | xargs tail -n "${lines}" | clog
 }
 
-#syslog-pager() {
-    #find /var/log/socklog -type f -name current | xargs tail -n "${lines}" | clog
-#}
 
 ### === XBPS helpers === ###
 # shorten some cms
