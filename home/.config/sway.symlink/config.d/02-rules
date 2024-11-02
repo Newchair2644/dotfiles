@@ -53,9 +53,6 @@ bindswitch --locked lid:on exec swaylock
 
 ## Inputs and seats
 
-# Hide when typing
-seat mouse hide_cursor when-typing true
-
 input "type:touchpad" {
 	natural_scroll enable
 	scroll_factor 0.5
