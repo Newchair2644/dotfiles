@@ -14,8 +14,6 @@ Dotfiles for the most based distro known to man
 Scripts and configs are written with portability in mind, but ***things may break***. Do not blindly use this setup, use it at your own risk. (also I kinda need to add text here so the formatting looks nice :))
 
 ## Setup
-***WARNING!!!!!***
-**Remove the `--unsupported-gpu` option from `home/.profile.symlink` if possible!!!!** This is for NVidia GPU support on sway but *may* cause issues.
 1. Clone this repository into ~/.dotfiles
 2. Run the installer script. It will back up existing configs, create needed directories, install packages, and symlink configs. Make sure to review packages in `pkg-list.txt` beforehand. It will **not** do partitioning or user management, nor will it copy configs in `./system`. Those tasks are best done manually.
    **The script requres root access with `sudo`**. To use `opendoas` instead, symlink `doas` to `sudo` (you probably want this anyway). Also make sure to be in the `wheel` group beforehand.
