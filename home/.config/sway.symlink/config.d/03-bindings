@@ -38,10 +38,10 @@ bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
 bindsym XF86Calculator exec footclient --app-id 'Clac' --title 'Calculator' clac
 
 # Copy screenshot to clipboard
-bindsym Print exec sh -c 'grim - | wl-copy' && notify-send " System" "<i>Output</i> sent to <b>CLIPBOARD</b>"
+bindsym Print exec sh -c 'grim - | wl-copy' && notify-send -a "System" "<i>Output</i> sent to <b>CLIPBOARD</b>"
 
 # Copy selection to clipboard
-bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send " System" "<i>Selection</i> sent to <b>CLIPBOARD</b>"
+bindsym Ctrl+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy' && notify-send -a "System" "<i>Output</i> sent to <b>CLIPBOARD</b>"
 
 # Send selection to...
 set $screenshot " Send Screenshot [w,d,u]"
@@ -49,7 +49,7 @@ set $screenshot_name "$(date +'Screenshot_%Y%m%d-%H%M%S.jpg')"
 mode $screenshot {
     # Save clipboard to image-file (use in conjuction with screenshot mapping
     bindsym w exec sh -c 'wl-paste > ${HOME}/Pictures/Screenshots/$screenshot_name' && notify-send "System" "$screenshot_name saved"; mode "default"
-    bindsym d exec sh -c 'wl-paste > /tmp/screenshot.jpg && dragon-drop /tmp/screenshot.jpg'; mode "default"
+    bindsym d exec sh -c 'wl-paste > /tmp/screenshot.png && dragon-drop /tmp/screenshot.png'; mode "default"
     bindsym u exec sh -c 'wl-paste | ffsend upload --name $screenshot_name -' && notify-send "System" "Screenshot uploaded for sharing"; mode "default"
     # TODO: image sharing service (imgur?)
     bindsym Escape mode "default"
@@ -59,10 +59,10 @@ bindsym $Super+Shift+backslash mode $screenshot
 # Notifications
 bindsym $Super+d exec fnottctl dismiss
 bindsym $Super+Shift+d exec fnottctl dismiss all
-bindsym $Super+Shift+n exec fnottctl actions 
+bindsym $Super+Shift+n exec fnottctl actions
 
 # OCR Grab
-bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send " System" "Copied text to selection: <b>CLIPBOARD</b>"
+bindsym $Super+y exec grim -g "$(slurp)" - | tesseract-ocr - - | wl-copy && notify-send -a "System" "Copied text to selection: <b>CLIPBOARD</b>"
 
 # Color Picker
 bindsym $Super+Shift+y exec eyedropper
@@ -80,7 +80,7 @@ bindsym $Super+Return exec footclient
 bindsym $Super+Shift+Return exec footclient --app-id="footfloat"
 
 # Copy cwd
-bindsym $Super+Shift+u exec wl-copy "$(sway-cwd)" && notify-send "Clipboard" "Copied working directory to selection: <b>CLIPBOARD</b>"
+bindsym $Super+Shift+u exec wl-copy "$(sway-cwd)" && notify-send -a "System" "Copied working directory to selection: <b>CLIPBOARD</b>"
 
 # Application launcher
 bindsym Alt+space exec fuzzel
@@ -92,7 +92,7 @@ bindsym Alt+Shift+space exec fuzzel_run
 set $quick_launch "󰍉 Quick Launch [q,w,e,a,d]"
 mode $quick_launch {
 	bindsym q exec foot; mode "default"
-	bindsym w exec firefox; mode "default"
+	bindsym w exec ungoogled-chromium; mode "default"
 	bindsym e exec godot; mode "default"
 	bindsym a exec zathura; mode "default"
 	bindsym d exec chiaki; mode "default"
@@ -148,6 +148,11 @@ bindsym $Super+c kill
 ### fullscreen mode
 bindsym $Super+f fullscreen toggle
 
+### toggle bar
+#bindsym $Super+b bar mode toggle
+bindsym $Super+b exec '[ "$(swaymsg -t get_bar_config bar-0 | jq -r ".mode")" = "dock" ] && swaymsg bar mode invisible || swaymsg bar mode dock'
+
+
 ### container layouts (stacked, tabbed, split, floating, sticky)
 bindsym $Super+w layout tabbed
 bindsym $Super+Shift+w layout stacking
@@ -182,6 +187,10 @@ bindsym $Super+Shift+j move down
 bindsym $Super+Shift+k move up
 bindsym $Super+Shift+l move right
 
+### Move focused workspace between outputs
+bindsym $Super+Ctrl+n move workspace to output right
+bindsym $Super+Ctrl+b move workspace to output left
+
 ### Swap focused window
 set $swap "󰓡 Swap Containers"
 mode $swap {
@@ -209,7 +218,7 @@ bindsym $Super+Alt+h exec sway-snap left
 bindsym $Super+Alt+j exec sway-snap down
 bindsym $Super+Alt+k exec sway-snap up
 bindsym $Super+Alt+l exec sway-snap right
-bindsym $Super+Alt+space move absolute position center
+bindsym $Super+Alt+space move position center
 
 ### Resize
 set $distanceStr 10 px or 10 ppt
@@ -271,7 +280,7 @@ bindsym Ctrl+$Super+Shift+x move container to workspace "7:$ws_x"
 bindsym $Super+Shift+z move scratchpad
 
 ### Show the scratchpad, excluding dropdown terminal (see config.d/startup)
-#bindsym $Super+z [title="[^dropdown]"] scratchpad show
+bindsym $Super+r [con_mark="cwm.*"] scratchpad show
 bindsym $Super+z scratchpad show
 ### Show dropdown
 bindsym F12 [con_mark="^dropdown$"] scratchpad show

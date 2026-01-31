@@ -9,7 +9,7 @@ set $ws_q " 󰞷 "
 set $ws_w " 󰖟 "
 set $ws_e " 󰅴 "
 set $ws_a " 󱗖 "
-set $ws_s " 󰻞 "
+set $ws_s "  "
 set $ws_d " 󰺷 "
 set $ws_x "0 󰆌 "
 
@@ -37,6 +37,7 @@ for_window [app_id="^Clac$" title="Calculator"] $video
 for_window [app_id="^dragon-drop$"] sticky enable
 for_window [app_id="foot" title="cmus v.*"] $dropdown, move scratchpad
 for_window [app_id="foot" title="File Picker"] floating enable
+for_window [app_id="java_cli"] floating enable, opacity 0.4
 for_window [title="^notetaker_window$"] floating enable, sticky enable
 for_window [title="^vim-anywhere$"] floating enable
 for_window [class="^Godot$"] floating enable
@@ -49,6 +50,9 @@ for_window [app_id="^footfloat$"] floating enable
 
 
 ## Display rules
+output "Dell Inc. DELL P1911 77NPN19E1H6U" scale 1 position 0 525
+output "Dell Inc. DELL P1911 8JCGH23AC6LL" scale 0.80 transform 270 position 1440 0
+
 bindswitch --locked lid:on exec swaylock
 
 ## Inputs and seats
@@ -56,12 +60,21 @@ bindswitch --locked lid:on exec swaylock
 input "type:touchpad" {
 	natural_scroll enable
 	scroll_factor 0.5
-	pointer_accel 0.30
+	accel_profile flat
+	pointer_accel 0.80
 	tap enable
 	dwt enable
 }
 
-input "type:mouse" {
+input "1267:32:Elan_TrackPoint" {
 	scroll_factor 0.5
-	accel_profile adaptive
+	accel_profile flat
+	pointer_accel 0.90
+  scroll_factor 0.2
+}
+
+# because of short :(
+input "1452:591:SONIX_Galaxy70" {
+  xkb_layout "us"
+  xkb_options "altwin:swap_lalt_lwin,altwin:swap_ralt_rwin"
 }

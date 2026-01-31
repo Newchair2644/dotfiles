@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# launch dropdown if not already opened
+
+DROPDOWN_NAME="foot --title dropdown"
+
+if ! pgrep -f "$DROPDOWN_NAME" > /dev/null 2>&1; then
+	cd && $DROPDOWN_NAME
+fi

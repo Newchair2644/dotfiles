@@ -1,0 +1,30 @@
+#!/bin/sh
+
+ws_data="$(swaymsg -t get_workspaces | jq -r '.[] | {name, focused}')"
+
+current_ws="$(echo "$ws_data" | grep -B1 '^\s*"focused": true$' | head -n 1 | cut -d '"' -f4)"
+current_num="$(echo "$current_ws"  | cut -d ' ' -f1)"
+current_name="$(echo "$current_ws" | cut -d ' ' -f2)"
+matching_ws="$(echo "$ws_data" | grep '\s*"name": ".*",$' | cut -d '"' -f4 | \
+    grep "$current_name" | cut -d ' ' -f1 | grep -v "$current_num")"
+
+case "$1" in
+	"next")
+		target="$(echo "$matching_ws" | awk '$1 > n' n="$current_num")"
+		[ -z "$target" ] && target="$(echo "$matching_ws" | head -n 1)"
+		;;
+	"prev")
+		target="$(echo "$matching_ws" | sort -n -r | awk '$1 < n' n="$current_num" )"
+		[ -z "$target" ] && target="$(echo "$matching_ws" | tail -n 1)"
+		;;
+	*)
+		echo "Invalid option"
+		exit
+		;;
+esac
+
+if [ -z "$matching_ws" ]; then
+	echo "No matching workspace found"
+else
+	swaymsg "workspace number \"$target\""
+fi

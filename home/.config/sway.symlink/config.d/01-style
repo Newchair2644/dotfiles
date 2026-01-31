@@ -7,11 +7,11 @@
 font pango: JetBrainsMono Nerd Font 10
 
 ### Window gaps
-gaps top 1
-gaps bottom 1
-gaps left 2
-gaps right 2
-gaps inner 2
+gaps top 2
+gaps bottom 2
+gaps left 4
+gaps right 4
+gaps inner 4
 #smart_gaps on
 #hide_edge_borders smart
 
@@ -21,13 +21,14 @@ titlebar_border_thickness 2
 
 ### Wallpaper (current flavours scheme defined by ~/.local/share/flavours/lastscheme)
 exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).* -m fill'
+#exec_always bash -c 'pkill swaybg; swaybg -o "Dell Inc. DELL P1911 8JCGH23AC6LL" -i ~/.dotfiles/wallpapers/$(flavours current).* -m center'
 
 ## Swaybar + i3blocks
 bar {
-        font pango: JetBrainsMono Nerd Font 13.5
+  font pango: JetBrainsMono Nerd Font 13.5
 	height 30
-        status_padding 2
-	position top
+  status_padding 2
+  position top
 	tray_output primary
 	tray_padding 5
 	status_command i3status-rs
@@ -35,6 +36,7 @@ bar {
 
 	colors {
 		background $base00
+
 		separator  $base01
 		statusline $base04
 
@@ -64,12 +66,12 @@ default_floating_border normal 2
 # window transparency
 for_window [app_id="foot"] opacity 0.95
 
-## Eye Candy (needs swayfx)
+### Eye Candy (needs swayfx)
 #blur enable
 #blur_passes 3
 #blur_radius 5
 #shadows enable
-#corner_radius 5
+#corner_radius 15
 #layer_effects "panel" shadows enable
 #layer_effects "launcher" blur enable; shadows enable
 #layer_effects "notifications" blur enable; shadows enable; corner_radius 10

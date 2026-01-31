@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Run specified program $2 if specified workspace $1 has no containers opened
+check_window_count() {
+	if [ "$(swaymsg -t get_tree | jq ".nodes[].nodes[] | select(.name == \"$1\").nodes[].app_id" \
+		| wc -l)" -eq 0 ]; then
+		sway exec "$2" > /dev/null
+	fi
+}
+
+# Subscribe to workspace change
+swaymsg -m -t subscribe '["workspace"]' | jq --unbuffered -r 'select(.change == "focus") | .current.num' |
+while read new_workspace; do
+	case "$new_workspace" in
+		1)
+			check_window_count "1  " alacritty
+			;;
+		2)
+			check_window_count "2  " "alacritty -e nvim"
+			;;
+		3)
+			check_window_count "3 爵 " qutebrowser
+			;;
+	esac
+done

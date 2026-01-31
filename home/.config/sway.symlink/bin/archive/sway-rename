@@ -1,0 +1,19 @@
+#!/bin/sh
+# Rename the current workspace using a list of icons
+
+if [ -z "$DMENU" ]; then
+	echo 'Error: "$DMENU" variable is not set' 1>&2
+	exit
+fi
+
+# Current ws number
+focused_ws_num="$(swaymsg -t get_workspaces | jq '.[] | select(.focused == true).num')"
+
+# Prompt for new icon using file with icons
+new_icon="$(cut -d "#" -f1 ~/.local/share/ws-icons | sed -e '/^$/d' -e 's/ $//g' | \
+	$DMENU -w 40 | sed "s/ .*//")"
+
+# Exit if none chosen.
+[ -z "$new_icon" ] && exit
+
+swaymsg "rename workspace to \"$(printf "%s %s " "$focused_ws_num" "$new_icon")\""
