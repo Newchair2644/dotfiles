@@ -1,92 +1,84 @@
-## Base16 Catppuccin
-# Author: Pocco81 (https://github.com/pocco81)
+## Base16 {{scheme-name}}
+# Author: {{scheme-author}}
 
-# Full config template needed for block theme overrides
-# Start flavours
-# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
-# Nord by arcticicestudio
+# ===============================
+# Super Minimal Bar (Base16)
+# ===============================
 
 [theme]
-theme = "solarized-dark"
-[theme.overrides]
-idle_bg = "#{{base01-hex}}"
-idle_fg = "#{{base05-hex}}"
-info_bg = "#{{base0C-hex}}"
-info_fg = "#{{base00-hex}}"
-good_bg = "#{{base0B-hex}}"
-good_fg = "#{{base00-hex}}"
-warning_bg = "#{{base0A-hex}}"
-warning_fg = "#{{base00-hex}}"
-critical_bg = "#{{base08-hex}}"
-critical_fg = "#{{base00-hex}}"
-# The rest of the theme settings are left at default.
-# End flavours
-#separator = ""
+theme = "plain"
 
+[theme.overrides]
+idle_bg = "#{{base00-hex}}"
+idle_fg = "#{{base05-hex}}"
+separator_fg = "#{{base03-hex}}"
+separator_bg = "#{{base00-hex}}"
+separator = " • "
 [icons]
 icons = "material-nf"
 
-# i3srs config
+# ===============================
+# WIFI
+# yellow
+# ===============================
 [[block]]
-block = "cpu"
-format = " $icon $utilization "
-format_alt = " $icon $frequency{ $boost|} "
-
-[[block]]
-block = "memory"
-format = " $icon $mem_used_percents.eng(w:2) "
-format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
+block = "net"
+interval = 3
+format = "$icon $ssid"
 [block.theme_overrides]
-idle_bg = "#{{base02-hex}}"
+idle_fg = "#{{base0A-hex}}"
 
-[[block]]
-block = "disk_space"
-info_type = "available"
-alert_unit = "GB"
-alert = 5.0
-warning = 7.5
-format = " $icon $available "
-format_alt = " $icon $available / $total "
-[block.theme_overrides]
-idle_bg = "#{{base03-hex}}"
-
+# ===============================
+# VOLUME
+# red
+# ===============================
 [[block]]
 block = "sound"
 driver = "pulseaudio"
+format = "$icon $volume"
 [block.theme_overrides]
-idle_bg = "#{{base0A-hex}}"
-idle_fg = "#{{base00-hex}}"
+idle_fg = "#{{base08-hex}}"
 
+# ===============================
+# BATTERY
+# green
+# ===============================
 [[block]]
 block = "battery"
-format = " $icon $percentage "
-empty_format = " $icon $percentage, $power power, $time remaining "
-missing_format = ""
-interval = 5
-
-[[block]]
-block = "backlight"
-device = "intel_backlight"
+interval = 15
+format = "$icon $percentage"
+full_format = "$icon $percentage"
+empty_format = "$icon $percentage"
+not_charging_format = "$icon $percentage"
+missing_format = "$icon $percentage"
 [block.theme_overrides]
-idle_bg = "#{{base0E-hex}}"
-idle_fg = "#{{base01-hex}}"
+idle_bg     = "#{{base00-hex}}"
+idle_fg     = "#{{base0B-hex}}"
+good_bg     = "#{{base00-hex}}"
+good_fg     = "#{{base0B-hex}}"
+warning_bg  = "#{{base00-hex}}"
+warning_fg  = "#{{base0B-hex}}"
+critical_bg = "#{{base00-hex}}"
+critical_fg = "#{{base0B-hex}}"
 
+# ===============================
+# CALENDAR
+# blue
+# ===============================
 [[block]]
-block = "net"
-format = " 󰇚 $speed_down 󰕒 $speed_up "
-format_alt = " $icon  {$ssid at$frequency|Wired connection} "
+block = "time"
+interval = 60
+format = "󰃭 $timestamp.datetime(f:'%a %b %d')"
 [block.theme_overrides]
-idle_bg = "#{{base02-hex}}"
+idle_fg = "#{{base0D-hex}}"
 
+# ===============================
+# TIME
+# magenta
+# ===============================
 [[block]]
 block = "time"
 interval = 5
-format = " $icon $timestamp.datetime(f:'%m/%d/%y %I:%M %p') "
+format = "󰥔 $timestamp.datetime(f:'%I:%M %p') "
 [block.theme_overrides]
-idle_bg = "#{{base0D-hex}}"
-idle_fg = "#{{base01-hex}}"
-
-[[block]]
-block = "scratchpad"
-[block.theme_overrides]
-idle_bg = "#{{base03-hex}}"
+idle_fg = "#{{base0E-hex}}"
