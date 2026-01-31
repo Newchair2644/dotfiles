@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Use the IPC to apply colorscheme rather than reloading sway
-
-bar_id="bar-0"
-
-#swaymsg 'bar bar-0 colors focused_workspace #000000'
-#swaymsg 'client.focused #000000 #000000 #000000 #000000 #000000 ...
-

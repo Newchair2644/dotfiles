@@ -1,6 +1,0 @@
-#!/bin/bash
-
-WINDOWS=($(xdotool search --classname "$1"))
-for ((i=0; i<${#WINDOWS[@]} && i <= 9; i++)); do
-	i3-msg "[id=\"${WINDOWS[i]}\"] mark $2$i"
-done
