@@ -1,3 +1,5 @@
 home/.config/cmus.symlink/*
 !home/.config/cmus.symlink/autosave
 !home/.config/cmus.symlink/colors.theme
+home/.config/beets.symlink/state.pickle
+home/.config/beets.symlink/library.db
