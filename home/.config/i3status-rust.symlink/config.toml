@@ -1,85 +1,84 @@
-## Base16 Catppuccin
-# Author: Pocco81 (https://github.com/pocco81)
+## Base16 Solarized Dark
+# Author: Ethan Schoonover (modified by aramisgithub)
 
-# Full config template needed for block theme overrides
-# Start flavours
-# base16-i3status-rust (https://github.com/mystfox/base16-i3status-rust)
-# Nord by arcticicestudio
+# ===============================
+# Super Minimal Bar (Base16)
+# ===============================
 
 [theme]
-theme = "solarized-dark"
-[theme.overrides]
-idle_bg = "#073642"
-idle_fg = "#93a1a1"
-info_bg = "#2aa198"
-info_fg = "#002b36"
-good_bg = "#859900"
-good_fg = "#002b36"
-warning_bg = "#b58900"
-warning_fg = "#002b36"
-critical_bg = "#dc322f"
-critical_fg = "#002b36"
-# The rest of the theme settings are left at default.
-# End flavours
-#separator = ""
+theme = "plain"
 
+[theme.overrides]
+idle_bg = "#002b36"
+idle_fg = "#93a1a1"
+separator_fg = "#657b83"
+separator_bg = "#002b36"
+separator = " • "
 [icons]
 icons = "material-nf"
 
-# i3srs config
+# ===============================
+# WIFI
+# yellow
+# ===============================
 [[block]]
-block = "cpu"
-format = " $icon $utilization "
-format_alt = " $icon $frequency{ $boost|} "
-
-[[block]]
-block = "memory"
-format = " $icon $mem_total_used_percents.eng(w:2) "
-format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
+block = "net"
+interval = 3
+format = "$icon $ssid"
 [block.theme_overrides]
-idle_bg = "#586e75"
+idle_fg = "#b58900"
 
-[[block]]
-block = "disk_space"
-info_type = "available"
-alert_unit = "GB"
-alert = 5.0
-warning = 7.5
-format = " $icon $available "
-format_alt = " $icon $available / $total "
-[block.theme_overrides]
-idle_bg = "#657b83"
-
+# ===============================
+# VOLUME
+# red
+# ===============================
 [[block]]
 block = "sound"
 driver = "pulseaudio"
+format = "$icon $volume"
 [block.theme_overrides]
-idle_bg = "#b58900"
-idle_fg = "#002b36"
+idle_fg = "#dc322f"
 
+# ===============================
+# BATTERY
+# green
+# ===============================
 [[block]]
 block = "battery"
-format = " $icon $percentage "
-empty_format = " $icon $percentage, $power power, $time remaining "
-missing_format = ""
-interval = 5
-
-[[block]]
-block = "net"
-format = " 󰇚 $speed_down 󰕒 $speed_up "
-format_alt = " $icon  {$ssid at$frequency|Wired connection} "
+interval = 15
+format = "$icon $percentage"
+full_format = "$icon $percentage"
+empty_format = "$icon $percentage"
+not_charging_format = "$icon $percentage"
+missing_format = "$icon $percentage"
 [block.theme_overrides]
-idle_bg = "#586e75"
+idle_bg     = "#002b36"
+idle_fg     = "#859900"
+good_bg     = "#002b36"
+good_fg     = "#859900"
+warning_bg  = "#002b36"
+warning_fg  = "#859900"
+critical_bg = "#002b36"
+critical_fg = "#859900"
 
+# ===============================
+# CALENDAR
+# blue
+# ===============================
+[[block]]
+block = "time"
+interval = 60
+format = "󰃭 $timestamp.datetime(f:'%a %b %d')"
+[block.theme_overrides]
+idle_fg = "#268bd2"
+
+# ===============================
+# TIME
+# magenta
+# ===============================
 [[block]]
 block = "time"
 interval = 5
-format = " $icon $timestamp.datetime(f:'%m/%d/%y %I:%M %p') "
+format = "󰥔 $timestamp.datetime(f:'%I:%M %p') "
 [block.theme_overrides]
-idle_bg = "#268bd2"
-idle_fg = "#073642"
-
-[[block]]
-block = "pomodoro"
-[block.theme_overrides]
-idle_bg = "#657b83"
+idle_fg = "#6c71c4"
