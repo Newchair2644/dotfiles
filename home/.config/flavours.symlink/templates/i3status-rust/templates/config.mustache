@@ -34,7 +34,7 @@ format_alt = " $icon $frequency{ $boost|} "
 
 [[block]]
 block = "memory"
-format = " $icon $mem_total_used_percents.eng(w:2) "
+format = " $icon $mem_used_percents.eng(w:2) "
 format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
 [block.theme_overrides]
 idle_bg = "#{{base02-hex}}"
@@ -65,6 +65,13 @@ missing_format = ""
 interval = 5
 
 [[block]]
+block = "backlight"
+device = "intel_backlight"
+[block.theme_overrides]
+idle_bg = "#{{base0E-hex}}"
+idle_fg = "#{{base01-hex}}"
+
+[[block]]
 block = "net"
 format = " 󰇚 $speed_down 󰕒 $speed_up "
 format_alt = " $icon  {$ssid at$frequency|Wired connection} "
@@ -80,6 +87,6 @@ idle_bg = "#{{base0D-hex}}"
 idle_fg = "#{{base01-hex}}"
 
 [[block]]
-block = "pomodoro"
+block = "scratchpad"
 [block.theme_overrides]
 idle_bg = "#{{base03-hex}}"
