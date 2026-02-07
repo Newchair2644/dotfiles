@@ -1,24 +1,355 @@
 #!/usr/bin/env python3
+"""
+Marks workflow for Sway - pure logic, no UI.
+
+Commands:
+  check-focused       # Exit 0 if window focused, 1 otherwise (for validation)
+  list-marks          # Output all marks (one per line: "mark → app (ws): title")
+  list-mark-names     # Output just mark names (for suggestions)
+  list-groups         # Output all group names (one per line)
+  list-group-members GROUP  # Output all windows in a group
+  
+  set MARK            # Mark focused window/container
+  goto MARK           # Jump to marked window
+  swap MARK           # Swap with marked window
+  unmark [MARK]       # Remove mark (all marks if no arg)
+  
+  group-add GROUP     # Add focused to group
+  group-show GROUP    # Focus all windows in group
+
+Output format for list-marks:
+  mark_name → app_name (workspace): title
+
+Exit codes:
+  0 = success
+  1 = error (prints to stderr)
+"""
+
 import i3ipc
 import sys
+import time
 
-i3 = i3ipc.Connection()
-group_prefix = "cwm_group_"
+def parse_group_name(mark):
+    """Extract group name from 'group_<n>_<N>' format."""
+    if mark.startswith('group_'):
+        parts = mark.split('_', 2)
+        if len(parts) >= 2:
+            return parts[1]
+    return None
 
-def add_to_group():
-    """Mark the focused window with a unique identifier."""
+def get_all_marks(i3, include_groups=True):
+    """Get all marked containers."""
+    marks = []
+    
+    def collect_marks(node):
+        if node.marks:
+            if node.type == 'con':
+                app = node.app_id or node.window_class or 'window'
+                title = node.name or ''
+            else:
+                num_windows = len(node.leaves())
+                app = f'container ({num_windows} windows)'
+                title = node.name or f'{node.layout} layout'
+            
+            workspace = None
+            parent = node.parent
+            while parent:
+                if parent.type == 'workspace':
+                    workspace = parent.name
+                    break
+                parent = parent.parent
+            
+            for mark in node.marks:
+                if not include_groups and mark.startswith('group_'):
+                    continue
+                
+                marks.append({
+                    'mark': mark,
+                    'id': node.id,
+                    'app': app,
+                    'title': title,
+                    'workspace': workspace,
+                    'is_group': mark.startswith('group_')
+                })
+        
+        for child in node.nodes + node.floating_nodes:
+            collect_marks(child)
+    
+    tree = i3.get_tree()
+    collect_marks(tree)
+    return marks
+
+def list_marks(include_groups=False):
+    """Output all marks in format: mark → app (ws): title"""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3, include_groups=include_groups)
+    
+    for m in marks:
+        title = m['title'][:40] + '...' if len(m['title']) > 40 else m['title']
+        ws = m['workspace'] or '?'
+        
+        if title:
+            print(f"{m['mark']} → {m['app']} ({ws}): {title}")
+        else:
+            print(f"{m['mark']} → {m['app']} ({ws})")
+    
+    return 0
+
+def list_mark_names(include_groups=False):
+    """Output just mark names (one per line)."""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3, include_groups=include_groups)
+    
+    seen = set()
+    for m in marks:
+        if m['mark'] not in seen:
+            print(m['mark'])
+            seen.add(m['mark'])
+    
+    return 0
+
+def list_groups():
+    """Output all group names."""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3)
+    
+    groups = set()
+    for m in marks:
+        if m['is_group']:
+            group_name = parse_group_name(m['mark'])
+            if group_name:
+                groups.add(group_name)
+    
+    for group in sorted(groups):
+        print(group)
+    
+    return 0
+
+def list_group_members(group_name):
+    """Output all windows in a group."""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3)
+    
+    for m in marks:
+        if m['is_group'] and parse_group_name(m['mark']) == group_name:
+            title = m['title'][:40] + '...' if len(m['title']) > 40 else m['title']
+            ws = m['workspace'] or '?'
+            
+            if title:
+                print(f"{m['app']} ({ws}): {title}")
+            else:
+                print(f"{m['app']} ({ws})")
+    
+    return 0
+
+def check_focused():
+    """Check if a window/container is focused (not workspace/output). Exit 0 if yes, 1 if no."""
+    i3 = i3ipc.Connection()
     focused = i3.get_tree().find_focused()
-    if focused:
-        unique_mark = f"{group_prefix}{focused.id}"
-        i3.command(f"mark --add {unique_mark}")
+    
+    if focused and focused.type not in ('workspace', 'output', 'root'):
+        return 0
+    return 1
+
+def set_mark(mark_name):
+    """Mark focused window/container."""
+    i3 = i3ipc.Connection()
+    focused = i3.get_tree().find_focused()
+    
+    if not focused or focused.type in ('workspace', 'output', 'root'):
+        print("Error: No window focused", file=sys.stderr)
+        return 1
+    
+    if mark_name.startswith('group_'):
+        print("Error: Cannot use 'group_' prefix - use group-add instead", file=sys.stderr)
+        return 1
+    
+    i3.command(f'mark --add "{mark_name}"')
+    return 0
+
+def goto_mark(mark_name):
+    """Jump to marked window."""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3)
+    
+    # Find the mark
+    target = None
+    for m in marks:
+        if m['mark'] == mark_name:
+            target = m
+            break
+    
+    if not target:
+        print(f"Error: Mark '{mark_name}' not found", file=sys.stderr)
+        return 1
+    
+    i3.command(f'[con_id={target["id"]}] focus')
+    return 0
+
+def swap_mark(mark_name):
+    """Swap current window with marked window."""
+    i3 = i3ipc.Connection()
+    focused = i3.get_tree().find_focused()
+    
+    if not focused or focused.type in ('workspace', 'output', 'root'):
+        print("Error: No window focused", file=sys.stderr)
+        return 1
+    
+    marks = get_all_marks(i3)
+    
+    # Find the mark
+    target = None
+    for m in marks:
+        if m['mark'] == mark_name:
+            target = m
+            break
+    
+    if not target:
+        print(f"Error: Mark '{mark_name}' not found", file=sys.stderr)
+        return 1
+    
+    i3.command(f'swap container with con_id {target["id"]}')
+    return 0
+
+def unmark(mark_name=None):
+    """Remove mark from focused window."""
+    i3 = i3ipc.Connection()
+    focused = i3.get_tree().find_focused()
+    
+    if not focused or focused.type in ('workspace', 'output', 'root'):
+        print("Error: No window focused", file=sys.stderr)
+        return 1
+    
+    if not focused.marks:
+        print("Error: No marks on focused window", file=sys.stderr)
+        return 1
+    
+    if mark_name:
+        if mark_name in focused.marks:
+            i3.command(f'unmark "{mark_name}"')
+        else:
+            print(f"Error: Mark '{mark_name}' not found on focused window", file=sys.stderr)
+            return 1
     else:
-        print("No focused window.")
+        # Remove all marks
+        for mark in focused.marks:
+            i3.command(f'unmark "{mark}"')
+    
+    return 0
 
-if len(sys.argv) < 3:
-    print("Usage: {sway-marks}")
-    sys.exit(1)
+def group_add(group_name):
+    """Add focused window to a group."""
+    i3 = i3ipc.Connection()
+    focused = i3.get_tree().find_focused()
+    
+    if not focused or focused.type in ('workspace', 'output', 'root'):
+        print("Error: No window focused", file=sys.stderr)
+        return 1
+    
+    # Check if already in this group
+    for mark in focused.marks:
+        if parse_group_name(mark) == group_name:
+            print(f"Error: Already in group '{group_name}'", file=sys.stderr)
+            return 1
+    
+    # Find next available number for this group
+    marks = get_all_marks(i3)
+    existing_numbers = []
+    
+    for m in marks:
+        if m['is_group'] and parse_group_name(m['mark']) == group_name:
+            parts = m['mark'].split('_', 2)
+            if len(parts) >= 3:
+                try:
+                    existing_numbers.append(int(parts[2]))
+                except ValueError:
+                    pass
+    
+    next_num = max(existing_numbers, default=0) + 1
+    group_mark = f"group_{group_name}_{next_num}"
+    
+    i3.command(f'mark --add "{group_mark}"')
+    return 0
 
-if sys.argv[1] == "--group":
-    add_to_group()
-else:
-    print("Invalid command. Use 'add', 'next', or 'toggle'.")
+def group_show(group_name):
+    """Focus all windows in a group."""
+    i3 = i3ipc.Connection()
+    marks = get_all_marks(i3)
+    
+    members = [m for m in marks if m['is_group'] and parse_group_name(m['mark']) == group_name]
+    
+    if not members:
+        print(f"Error: Group '{group_name}' not found", file=sys.stderr)
+        return 1
+    
+    for m in members:
+        i3.command(f'[con_id={m["id"]}] focus')
+        time.sleep(0.1)
+    
+    return 0
+
+def main():
+    if len(sys.argv) < 2:
+        print(__doc__)
+        return 1
+    
+    cmd = sys.argv[1].replace('-', '_')
+    
+    # Commands with no arguments
+    if cmd == 'list_marks':
+        return list_marks(include_groups=False)
+    elif cmd == 'list_mark_names':
+        return list_mark_names(include_groups=False)
+    elif cmd == 'list_groups':
+        return list_groups()
+    elif cmd == 'check_focused':
+        return check_focused()
+    
+    # Commands with one argument
+    elif cmd == 'list_group_members':
+        if len(sys.argv) < 3:
+            print("Error: GROUP required", file=sys.stderr)
+            return 1
+        return list_group_members(sys.argv[2])
+    
+    elif cmd == 'set':
+        if len(sys.argv) < 3:
+            print("Error: MARK required", file=sys.stderr)
+            return 1
+        return set_mark(sys.argv[2])
+    
+    elif cmd == 'goto':
+        if len(sys.argv) < 3:
+            print("Error: MARK required", file=sys.stderr)
+            return 1
+        return goto_mark(sys.argv[2])
+    
+    elif cmd == 'swap':
+        if len(sys.argv) < 3:
+            print("Error: MARK required", file=sys.stderr)
+            return 1
+        return swap_mark(sys.argv[2])
+    
+    elif cmd == 'unmark':
+        mark = sys.argv[2] if len(sys.argv) >= 3 else None
+        return unmark(mark)
+    
+    elif cmd == 'group_add':
+        if len(sys.argv) < 3:
+            print("Error: GROUP required", file=sys.stderr)
+            return 1
+        return group_add(sys.argv[2])
+    
+    elif cmd == 'group_show':
+        if len(sys.argv) < 3:
+            print("Error: GROUP required", file=sys.stderr)
+            return 1
+        return group_show(sys.argv[2])
+    
+    else:
+        print(f"Error: Unknown command '{cmd}'", file=sys.stderr)
+        print(__doc__)
+        return 1
+
+if __name__ == '__main__':
+    sys.exit(main())

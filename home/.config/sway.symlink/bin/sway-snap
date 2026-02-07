@@ -1,44 +1,162 @@
-#!/bin/sh
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use JSON::PP;
 
-# Make sure to explicitly set bar height in your sway config because it is set to 0 by default
-# This script assumes you are using a bar with id "bar-0" when finding "$bar_height"
+=head1 NAME
 
-[ -z "$1" ] && exit
+sway-snap - Snap focused window to edges of the current monitor
 
-bar_height="$(swaymsg -t get_bar_config 'bar-0' | grep -o '"bar_height": [0-9]*' | cut -d ' ' -f2)"
-monitor_dimensions="$(swaymsg -t get_outputs |
-    jq -r '.. | select(.focused?) | .current_mode | "\(.width) \(.height)"')"
-win_param="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused?) |
-    "\(.rect.x) \(.rect.y) \(.rect.width) \(.rect.height) \(.deco_rect.height)"')"
+=head1 SYNOPSIS
 
-monitor_width="$(echo "$monitor_dimensions" | cut -d' ' -f1)"
-monitor_height="$(echo "$monitor_dimensions" | cut -d' ' -f2)"
+  ./sway-snap up     # Snap to top edge
+  ./sway-snap down   # Snap to bottom edge
+  ./sway-snap left   # Snap to left edge
+  ./sway-snap right  # Snap to right edge
 
-new_x="$(echo "$win_param" | cut -d' ' -f1)"
-new_y="$(echo "$win_param" | cut -d' ' -f2)"
-win_width="$(echo "$win_param" | cut -d' ' -f3)"
-win_height="$(echo "$win_param" | cut -d' ' -f4)"
-deco_height="$(echo "$win_param" | cut -d' ' -f5)"
+=head1 DESCRIPTION
 
-case "$1" in
-    up)
-        new_y=$(( bar_height ))
-        ;;
-    down)
-        new_y=$(( monitor_height - win_height - deco_height ))
-        ;;
-    left)
-        new_x=0
-        new_y=$(( new_y - deco_height ))
-        ;;
-    right)
-        new_x=$(( monitor_width -  win_width ))
-        new_y=$(( new_y - deco_height ))
-        ;;
-    *)
-        echo "ERROR: $1: No such position" >&2
-        exit 1
-        ;;
-esac
+Handles multiple monitors and dynamically detects bar dimensions.
+Accounts for bar visibility toggled via sway config.
 
-swaymsg "move absolute position ${new_x} ${new_y}"
+=cut
+
+sub swaymsg {
+    my @args = @_;
+    my $cmd = join(' ', 'swaymsg', @args);
+    my $output = `$cmd`;
+    return decode_json($output);
+}
+
+sub find_node {
+    my ($node, $predicate) = @_;
+    
+    return $node if $predicate->($node);
+    
+    for my $child (@{$node->{nodes} // []}, @{$node->{floating_nodes} // []}) {
+        my $result = find_node($child, $predicate);
+        return $result if $result;
+    }
+    
+    return undef;
+}
+
+sub get_focused_window {
+    my $tree = swaymsg('-t', 'get_tree');
+    my $focused = find_node($tree, sub { $_[0]->{focused} });
+    
+    return undef unless $focused;
+    
+    return {
+        x => $focused->{rect}{x},
+        y => $focused->{rect}{y},
+        width => $focused->{rect}{width},
+        height => $focused->{rect}{height},
+        deco_height => $focused->{deco_rect}{height}
+    };
+}
+
+sub get_focused_output {
+    my $outputs = swaymsg('-t', 'get_outputs');
+    
+    for my $output (@$outputs) {
+        if ($output->{focused}) {
+            return {
+                x => $output->{rect}{x},
+                y => $output->{rect}{y},
+                width => $output->{rect}{width},
+                height => $output->{rect}{height}
+            };
+        }
+    }
+    
+    return undef;
+}
+
+sub get_bar_dimensions {
+    my ($bar_ids, $bar_config);
+    
+    eval {
+        $bar_ids = swaymsg('-t', 'get_bar_config');
+        return {height => 0, position => 'top'} unless @$bar_ids;
+        
+        $bar_config = swaymsg('-t', 'get_bar_config', $bar_ids->[0]);
+    };
+    
+    return {height => 0, position => 'top'} if $@;
+    
+    # Check if bar is visible (mode is "dock" not "invisible")
+    my $mode = $bar_config->{mode} // 'dock';
+    my $is_visible = $mode eq 'dock';
+    
+    return {
+        height => $is_visible ? ($bar_config->{bar_height} // 0) : 0,
+        position => $bar_config->{position} // 'top'
+    };
+}
+
+sub snap_window {
+    my ($direction) = @_;
+    
+    my $window = get_focused_window();
+    unless ($window) {
+        warn "No focused window found\n";
+        return 1;
+    }
+    
+    my $output = get_focused_output();
+    unless ($output) {
+        warn "No focused output found\n";
+        return 1;
+    }
+    
+    my $bar = get_bar_dimensions();
+    
+    my ($new_x, $new_y) = ($window->{x}, $window->{y});
+    
+    # Determine bar offset
+    my $bar_top_offset = ($bar->{position} eq 'top') ? $bar->{height} : 0;
+    my $bar_bottom_offset = ($bar->{position} eq 'bottom') ? $bar->{height} : 0;
+    
+    if ($direction eq 'up') {
+        # Snap to top of monitor (below bar if top-positioned)
+        $new_y = $output->{y} + $bar_top_offset;
+    }
+    elsif ($direction eq 'down') {
+        # Snap to bottom of monitor (above bar if bottom-positioned)
+        $new_y = $output->{y} + $output->{height} - $window->{height} 
+                 - $window->{deco_height} - $bar_bottom_offset;
+    }
+    elsif ($direction eq 'left') {
+        # Snap to left edge
+        $new_x = $output->{x};
+        $new_y = $window->{y} - $window->{deco_height};
+    }
+    elsif ($direction eq 'right') {
+        # Snap to right edge
+        $new_x = $output->{x} + $output->{width} - $window->{width};
+        $new_y = $window->{y} - $window->{deco_height};
+    }
+    else {
+        warn "ERROR: $direction: No such position\n";
+        warn "Valid positions: up, down, left, right\n";
+        return 1;
+    }
+    
+    # Move the window
+    system("swaymsg 'move absolute position $new_x $new_y'");
+    
+    return 0;
+}
+
+sub main {
+    unless (@ARGV) {
+        print "Usage: $0 {up|down|left|right}\n";
+        return 1;
+    }
+    
+    my $direction = lc($ARGV[0]);
+    return snap_window($direction);
+}
+
+exit main();

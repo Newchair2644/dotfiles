@@ -1,0 +1,27 @@
+#!/bin/bash
+
+TMP_DIR="/tmp/lockscreen"
+mkdir -p "$TMP_DIR"
+
+SWAYLOCK_ARGS=()
+
+# Screenshot and blur in parallel
+while read -r output; do
+    TMP_IMG="${TMP_DIR}/${output}.png"
+    
+    (
+        grim -o "$output" "$TMP_IMG"
+        gm convert "$TMP_IMG" -scale 25% -blur 0x2 -scale 400% "$TMP_IMG"
+    ) &
+    
+    SWAYLOCK_ARGS+=("--image" "${output}:${TMP_IMG}")
+done < <(swaymsg -t get_outputs | jq -r '.[].name')
+
+# Wait for all blur jobs to finish
+wait
+
+# Lock with all blurred images
+swaylock "${SWAYLOCK_ARGS[@]}"
+
+# Clean up
+rm -rf "$TMP_DIR"
