@@ -21,7 +21,6 @@ cups
 dotool
 dragon
 dumb_runtime_dir
-ffsend
 firefox
 flavours
 fnott
@@ -50,6 +49,7 @@ pandoc
 papirus-icon-theme
 pass
 pcsc-ccid
+perl-JSON-XS
 pipewire
 pqiv
 python3-i3ipc
@@ -68,7 +68,6 @@ syncthing
 tlp
 !tmux
 u2f-hidraw-policy
-upower
 !void-docs-browse
 wev
 wl-clipboard
