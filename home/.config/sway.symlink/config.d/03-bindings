@@ -16,11 +16,11 @@ bindsym $Super+Shift+v mode $passthrough
 ## like an application launcher and terminal)
 
 # Volume
-bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && volume-notify
 
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && volume-notify
 
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && volume-notify
 
 bindsym XF86AudioMicMute \
     exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
@@ -32,7 +32,7 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Cmus window
-bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
+#bindsym $Super+Shift+m [app_id="foot" title="^Playing: .*"] scratchpad show
 
 # Calculator
 bindsym XF86Calculator exec footclient --app-id 'Clac' --title 'Calculator' clac
@@ -93,7 +93,7 @@ set $quick_launch "󰍉 Quick Launch [q,w,e,a,d]"
 mode $quick_launch {
 	bindsym q exec foot; mode "default"
 	bindsym w exec ungoogled-chromium; mode "default"
-	bindsym e exec godot; mode "default"
+	bindsym e exec footclient zellij; mode "default"
 	bindsym a exec zathura; mode "default"
 	bindsym d exec chiaki; mode "default"
 	bindsym Escape mode "default"
@@ -101,7 +101,10 @@ mode $quick_launch {
 bindsym $Super+semicolon mode $quick_launch
 
 # Window switcher
-bindsym $Super+g exec sway-window-picker -w 50
+#bindsym $Super+g exec sway-window-picker -w 50
+
+# mark
+bindsym $Super+Shift+semicolon mark "swapme"; exec /home/newchair/.local/src/wl-input/wl-input -F '[con_mark="%s"] swap container with mark "swapme"; focus' -l 1 -P 'Swap With Mark: '
 
 # Dmenu scratchpad menu
 bindsym $Super+Shift+Tab exec sway-scratchpad
@@ -130,14 +133,14 @@ bindsym Ctrl+Alt+r reload
 bindsym Ctrl+Alt+Shift+BackSpace exit
 
 ### Lockscreen
-bindsym Ctrl+Alt+l exec swaylock
+bindsym Ctrl+Alt+l exec swaylock-blur
 
 ### Power menu (displays in reverse order)
 set $power_menu swaynag -t normal \
 	-m "󰐦 UP - $(uptime -p | sed -e 's/up //g')"  \
 	-Z '󰿅 Logout' 'sway exit' \
 	-Z '󰤄 Suspend' 'sudo zzz' \
-	-Z '󰍁 Lock' 'swaylock' \
+	-Z '󰍁 Lock' 'swaylock-blur' \
 	-Z '󰜉 Reboot' 'sudo reboot' \
 	-Z '󰐥 Shutdown' 'sudo poweroff'
 bindsym $Super+x exec $power_menu
@@ -150,8 +153,8 @@ bindsym $Super+f fullscreen toggle
 
 ### toggle bar
 #bindsym $Super+b bar mode toggle
-bindsym $Super+b exec '[ "$(swaymsg -t get_bar_config bar-0 | jq -r ".mode")" = "dock" ] && swaymsg bar mode invisible || swaymsg bar mode dock'
-
+bindsym $Super+b exec '[ "$(swaymsg -t get_bar_config bar-0 | jq -r ".mode")" = "dock" ] && \
+swaymsg bar mode invisible || swaymsg bar mode dock'
 
 ### container layouts (stacked, tabbed, split, floating, sticky)
 bindsym $Super+w layout tabbed
@@ -284,3 +287,24 @@ bindsym $Super+r [con_mark="cwm.*"] scratchpad show
 bindsym $Super+z scratchpad show
 ### Show dropdown
 bindsym F12 [con_mark="^dropdown$"] scratchpad show
+
+# Marks workflow TODO move me
+# Sway Marks Config - using dmenu for UI
+
+# Mark current window (only show dmenu if window focused)
+bindsym $Super+m exec sway-marks check-focused && sway-marks list-mark-names | dmenu -p "Mark as:" | xargs -r sway-marks set
+
+# Jump to mark
+bindsym $Super+apostrophe exec sway-marks list-marks | dmenu -i -p "Jump to:" | cut -d' ' -f1 | xargs -r sway-marks goto
+
+# Swap with mark (only show dmenu if window focused)
+bindsym $Super+shift+m exec sway-marks check-focused && sway-marks list-marks | dmenu -i -p "Swap with:" | cut -d' ' -f1 | xargs -r sway-marks swap
+
+# Unmark current window
+bindsym $Super+ctrl+m exec sway-marks unmark && notify-send "Unmarked"
+
+# Add to group (only show dmenu if window focused)
+bindsym $Super+g exec sway-marks check-focused && sway-marks list-groups | dmenu -p "Add to group:" | xargs -r sway-marks group-add
+
+# Show group
+bindsym $Super+shift+g exec sway-marks list-groups | dmenu -p "Show group:" | xargs -r sway-marks group-show

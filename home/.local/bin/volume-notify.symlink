@@ -1,0 +1,46 @@
+#!/bin/sh
+# Volume notification script with native progress bar
+# Updates the same notification instead of creating new ones
+
+NOTIFICATION_ID=9993  # Fixed ID to replace the same notification
+
+# Get volume and mute status
+if command -v pamixer > /dev/null 2>&1; then
+    VOLUME=$(pamixer --get-volume)
+    MUTED=$(pamixer --get-mute)
+elif command -v wpctl > /dev/null 2>&1; then
+    VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
+    MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo "true" || echo "false")
+elif command -v amixer > /dev/null 2>&1; then
+    VOLUME=$(amixer get Master | grep -oP '\d+%' | head -1 | tr -d '%')
+    MUTED=$(amixer get Master | grep -q '\[off\]' && echo "true" || echo "false")
+else
+    echo "No volume control found (pamixer, wpctl, or amixer)"
+    exit 1
+fi
+
+# Icon base path
+ICON_PATH="/usr/share/icons/Papirus/48x48/status"
+
+# Determine icon and message
+if [ "$MUTED" = "true" ]; then
+    ICON="$ICON_PATH/notification-audio-volume-muted.svg"
+    MESSAGE="Muted"
+    DISPLAY_VOLUME=0
+else
+    if [ "$VOLUME" -eq 0 ]; then
+        ICON="$ICON_PATH/notification-audio-volume-off.svg"
+    elif [ "$VOLUME" -lt 33 ]; then
+        ICON="$ICON_PATH/notification-audio-volume-low.svg"
+    elif [ "$VOLUME" -lt 66 ]; then
+        ICON="$ICON_PATH/notification-audio-volume-medium.svg"
+    else
+        ICON="$ICON_PATH/notification-audio-volume-high.svg"
+    fi
+    MESSAGE="Volume: ${VOLUME}%"
+    DISPLAY_VOLUME=$VOLUME
+fi
+
+# Send notification with native progress bar
+notify-send -r $NOTIFICATION_ID -a "Volume" -i "$ICON" \
+    --hint=int:value:"$DISPLAY_VOLUME" "$MESSAGE" -t 2000

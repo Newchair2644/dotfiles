@@ -53,6 +53,7 @@ for_window [app_id="^footfloat$"] floating enable
 output "Dell Inc. DELL P1911 77NPN19E1H6U" scale 1 position 0 525
 output "Dell Inc. DELL P1911 8JCGH23AC6LL" scale 0.80 transform 270 position 1440 0
 
+# no blur here, delay makes it insecure
 bindswitch --locked lid:on exec swaylock
 
 ## Inputs and seats
