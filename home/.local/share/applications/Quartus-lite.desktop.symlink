@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Quartus
+Comment=Launch Quartus 18.1 with ncurses5 & libpng12 compat libraries
+Terminal=false
+Categories=Development;Engineering;Electronics;
+StartupNotify=true
+
+Exec=/usr/bin/env bash -lc "export LD_LIBRARY_PATH='/opt/compat/ncurses5-32/lib:/opt/compat/libpng12/lib'${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}; exec $HOME/.local/share/intelFPGA_lite/18.1/quartus/bin/quartus"
+
