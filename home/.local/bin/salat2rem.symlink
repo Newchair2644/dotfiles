@@ -5,7 +5,7 @@
 cache_file="${DOTREMINDERS}/.cache/02-salat.rem"
 ip="$(curl -s myip.wtf/text)"
 
-endpoint="http://www.islamicfinder.us/index.php/api/prayer_times"
+endpoint="https://www.salahhour.com/api/prayer_times"
 response="$(curl -s "${endpoint}/?user_ip=${ip}&show_entire_month=1&method=2" | \
     jq -r '.results | to_entries[] | .key as $date | .value |
     to_entries[] | .value |= gsub("%"; "") | .value |= gsub(" "; "") |
