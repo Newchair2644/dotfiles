@@ -1,14 +1,11 @@
 #!/bin/bash
 # Source all configs and define general behavior
-
+#
 # source completions, functions, aliases, etc
 [ -f "/usr/share/bash-completion/bash_completion" ] && . "/usr/share/bash-completion/bash_completion"
 [ -f "/usr/share/bash-completion/completions/pass" ] && . "/usr/share/bash-completion/completions/pass"
 [ -f "/usr/share/bash-completion/completions/pass-otp" ] && . "/usr/share/bash-completion/completions/pass-otp"
 [ -d "${HOME}/.config/bash/bashrc.d" ] && for f in "${HOME}/.config/bash/bashrc.d/"*; do source "$f"; done
-
-# initialize cod, parses --help output to generate completions
-source <(cod init $$ bash)
 
 # Base16 Shell, sets shell colors (terminal-agnostic)
 base16-shell() {

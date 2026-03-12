@@ -12,7 +12,7 @@ blink_yellow="\[\e[05;33m\]"
 first_line="${reset}┌─[${blue}\u${reset}]-[${cyan}\h${reset}]-[${yellow}\w${reset}]"
 second_line="\n└─[${blink_yellow}\$${reset}] "
 
-# Set prompt with git branch 
+# Set prompt with git branch
 git_ps1() {
     if [ -f /usr/share/git/git-prompt.sh ]; then
         source /usr/share/git/git-prompt.sh
@@ -42,6 +42,11 @@ osc7_cwd() {
 
 # Foot terminal notification
 osc7_notify() {
+    # Skip first call in new shell, prevent spamming previous command when many terminals are opened rapidly
+    if [[ -z "$_notif_initialized" ]]; then
+        _notif_initialized=1
+        return
+    fi
     local prog="$(fc -nl -1 | awk '{ for (i=1; i<=NF; i++) if ($i != "sudo" && $i !~ /^-/) { print $i; break } }')"
     printf "\e]777;notify;%s;exited\e\\" "$prog"
 }

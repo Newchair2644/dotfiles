@@ -1,6 +1,16 @@
 $include /etc/inputrc
 
 set completion-ignore-case On
+set colored-stats on
+set page-completions off
+
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+\t": menu-complete
+"\e[Z": menu-complete-backward
+
+set menu-complete-display-prefix on
 
 # allow foot to jump between prompts <https://codeberg.org/dnkl/foot/wiki#user-content-shell-integration>
 $if term=foot

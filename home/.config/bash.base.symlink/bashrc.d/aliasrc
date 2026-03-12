@@ -35,10 +35,11 @@ alias \
 	yta="yt-dlp --add-metadata -x -f bestaudio/best" \
 	diskspace="du -S -h | sort -h -r | less" \
 	retval="echo $?" \
+	ff="fastfetch" \
 	cmd_freq="history | awk '{print $4}' | sort | uniq -c | sed 's/^\s//g' | sort | tail"
 
 # typing sudo is too hard
-sudo_cmds=(mount umount shutdown poweroff reboot halt ifconfig ipinfo makewhatis)
+sudo_cmds=(mount umount shutdown poweroff reboot halt ipinfo makewhatis)
 for cmd in "${sudo_cmds[@]}"; do
     [ -x "$(command -v $cmd)" ] && alias $cmd="sudo ${cmd}"
 done; unset cmd sudo_cmds

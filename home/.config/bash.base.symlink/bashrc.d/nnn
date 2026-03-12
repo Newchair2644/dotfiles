@@ -1,3 +1,6 @@
+# Set fifo
+export NNN_FIFO=/tmp/nnn.fifo
+
 # NNN file manager theme <https://github.com/jarun/nnn/wiki/Themes>
 BLK="0B"
 CHR="0B"
@@ -15,4 +18,13 @@ export NNN_COLORS="6231"
 export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
 
 # NNN plugin keys
-export NNN_PLUG='f:finder;o:dragdrop;u:upload;g:gitroot;p:preview-tabbed;d:gpgd;t:nmount;v:imgview'
+export NNN_PLUG='f:finder;o:dragdrop;u:upload;g:gitroot;p:preview-tui;t:nmount;v:imgview;?:fzplug'
+
+# Pistol preview
+export NNN_PISTOL=1
+export NNN_TERMINAL=foot
+
+# Aliases for bookmarks for shell
+#bookdir="$HOME/.config/nnn/bookmarks"
+#find "$bookdir" -mindepth 1 -maxdepth 1 -print0 |
+#xargs -0 -I{} sh -c 'ln -sfn -- "$(readlink -f -- "$1")" "$(basename -- "$1")"' sh {}
