@@ -73,9 +73,3 @@ input "1267:32:Elan_TrackPoint" {
 	pointer_accel 0.90
   scroll_factor 0.2
 }
-
-# because of short :(
-input "1452:591:SONIX_Galaxy70" {
-  xkb_layout "us"
-  xkb_options "altwin:swap_lalt_lwin,altwin:swap_ralt_rwin"
-}
