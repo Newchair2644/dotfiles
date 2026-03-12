@@ -1,0 +1,139 @@
+#    __        __
+#   / /_____ _/ /__ ________
+#  /  '_/ _ `/  '_// __/ __/
+# /_/\_\\_,_/_/\_\/_/  \__/
+
+# Load plugin manager
+source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
+bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
+
+bundle auto-pairs.kak "https://github.com/alexherbo2/auto-pairs.kak" %{
+  enable-auto-pairs
+}
+
+bundle kak-ansi "https://github.com/eraserhd/kak-ansi" %{
+  hook global BufSetOption filetype=make ansi-enable
+  hook global BufCreate \*frun\* ansi-enable
+}
+
+bundle kak-harpoon "https://github.com/raiguard/kak-harpoon" %{
+  harpoon-add-bindings
+}
+
+map global user b '<esc>:prompt -buffer-completion buffer: %{ buffer %val{text} }<ret>' -docstring "buffer"
+
+# GNU STL has a really stupid indentation format
+hook global BufCreate /usr/include/c\+\+/.* %{
+  set-option buffer tabstop 8
+  set-option buffer softabstop 4
+  set-option buffer indentwidth 4
+}
+
+
+# General
+# ~~~~~~~
+# ensure default kak stuff is sourced
+nop %sh{
+    mkdir -p "$kak_config/autoload"
+    ln -s "$kak_runtime/rc" "$kak_config/autoload/standard-library"
+}
+
+# basic settings
+colorscheme base16
+set-option global ui_options terminal_assistant=none
+
+# enable editor config
+hook global BufOpenFile .* %{ editorconfig-load }
+hook global BufNewFile .* %{ editorconfig-load }
+
+# relative line numbering in normal mode, absolute in insert mode
+hook global WinCreate .* %{ add-highlighter window/numbers number-lines -hlcursor -relative }
+hook global ModeChange .*:normal %{ add-highlighter -override window/numbers number-lines -hlcursor -relative }
+hook global ModeChange .*:insert %{ add-highlighter -override window/numbers number-lines -hlcursor }
+
+# show matching braces
+add-highlighter global/ show-matching
+
+# wrap paragraphs
+map global user w ": wrap-paragraph<ret>" -docstring "wrap paragraph"
+define-command wrap-paragraph %{
+    execute-keys "<a-i>p<a-j>|fold -s -w %opt{autowrap_column}<ret>|sed 's/\s*$//g'<ret><esc>"
+}
+
+# easy copy to system clipboard
+define-command -hidden clipboard-copy %{
+    execute-keys "<a-|>" %sh{
+        if command -v wl-copy > /dev/null; then
+            printf 'wl-copy'
+        elif command -v xsel > /dev/null; then
+            printf 'xsel -ib'
+        elif command -v xclip > /dev/null; then
+            printf 'xclip -i'
+        fi
+    } <ret>
+}
+map -docstring "copy the current selection to the system clipboard (wayland, xorg)" \
+    global normal Y ':clipboard-copy<ret>:echo copied to clipboard!<ret>'
+
+# Linting and LSP
+# ~~~~~~~~~
+# enable lsp on filetypes
+eval %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(c|cpp|java) %{
+    lsp-enable-window
+}
+# enable synchronous linting and formatting
+hook global WinSetOption filetype=(py|python) %{
+    set-option window lintcmd 'ruff check'
+    set-option window formatcmd 'ruff format -'
+}
+
+# lsp mappings
+map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
+map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
+map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object e '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
+map global object k '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
+map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
+map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
+
+
+# fuzzy file picker
+define-command -hidden my-file-picker %{
+  prompt -shell-script-candidates 'find -type f' open: %{ edit -existing %val{text} }
+}
+map -docstring "file picker" global user f ':my-file-picker<ret>'
+
+# Git branch
+declare-option -hidden str modeline_git_branch
+hook global WinDisplay .* %{
+  set-option window modeline_git_branch %sh{
+    branch=$(git -C "${kak_buffile%/*}" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [ -n "$branch" ]; then
+      printf "$branch "
+    fi
+  }
+}
+
+set-option global modelinefmt '{keyword}%opt{lsp_modeline_breadcrumbs}%opt{lsp_modeline_code_actions}%opt{lsp_modeline_progress}%opt{lsp_modeline_message_requests} {StatusLine}{string}%opt{modeline_git_branch}{type}%sh{ [ -n "$kak_opt_filetype" ] && echo "$kak_opt_filetype " }{default}%val{bufname}{{context_info}}{default} {{mode_info}} {meta}%val{cursor_line}:%val{cursor_char_column}'
+
+# TODO fix this
+hook global ModuleLoaded tmux %{
+  alias global terminal tmux-terminal-horizontal
+  define-command -params .. terminal-floating %{
+    tmux-terminal-impl 'display-popup -E' %arg{@}
+  }
+  define-command -params .. terminal-overlay %{
+    tmux-terminal-window %arg{@}
+  }
+  define-command splitv %{
+    alias local terminal tmux-terminal-vertical
+    new
+  }
+  define-command splith %{
+    alias local terminal tmux-terminal-horizontal
+    new
+  }
+}
+map global normal <minus> ':terminal-overlay "%val{config}/nnn-pick.sh" "%val{buffile}" "%val{client}" "%val{session}"<ret>'
