@@ -1,24 +1,24 @@
 ## base16-kakoune (https://github.com/leira/base16-kakoune)
 ## by Leira Hua
-## Solarized Dark scheme by Ethan Schoonover (modified by aramisgithub)
+## Gruvbox dark, pale scheme by Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
 evaluate-commands %sh{
-    base00='rgb:002b36'
-    base01='rgb:073642'
-    base02='rgb:586e75'
-    base03='rgb:657b83'
-    base04='rgb:839496'
-    base05='rgb:93a1a1'
-    base06='rgb:eee8d5'
-    base07='rgb:fdf6e3'
-    base08='rgb:dc322f'
-    base09='rgb:cb4b16'
-    base0A='rgb:b58900'
-    base0B='rgb:859900'
-    base0C='rgb:2aa198'
-    base0D='rgb:268bd2'
-    base0E='rgb:6c71c4'
-    base0F='rgb:d33682'
+    base00='rgb:262626'
+    base01='rgb:3a3a3a'
+    base02='rgb:4e4e4e'
+    base03='rgb:8a8a8a'
+    base04='rgb:949494'
+    base05='rgb:dab997'
+    base06='rgb:d5c4a1'
+    base07='rgb:ebdbb2'
+    base08='rgb:d75f5f'
+    base09='rgb:ff8700'
+    base0A='rgb:ffaf00'
+    base0B='rgb:afaf00'
+    base0C='rgb:85ad85'
+    base0D='rgb:83adad'
+    base0E='rgb:d485ad'
+    base0F='rgb:d65d0e'
 
     ## code
     echo "

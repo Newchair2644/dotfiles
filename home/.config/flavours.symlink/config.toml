@@ -7,6 +7,8 @@ template = "sway"
 subtemplate = "colors"
 hook = "swaymsg reload"
 light = false
+start = "# Start tinted"
+end = "# End tinted"
 
 [[item]]
 file = "~/.config/swaylock/config"
@@ -79,3 +81,9 @@ rewrite = true
 file = "~/.config/cava/config"
 template = "cava"
 subtemplate = "gradient"
+
+[[items]]
+file = "~/.config/zellij/themes/default.kdl"
+template = "zellij"
+subtemplate = "zellij"
+rewrite = true

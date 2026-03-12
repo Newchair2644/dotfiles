@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# LS_COLORS
+export LS_COLORS="$(vivid generate base16)"
+
 # Append to path
 export PATH="${PATH}:${HOME}/.local/bin"
 export PATH="${PATH}:${HOME}/.config/sway/bin"
@@ -7,7 +10,6 @@ export PATH="${PATH}:${HOME}/.config/fuzzel"
 # TESTING
 export PATH="${PATH}:${HOME}/Downloads/jdt-language-server-1.9.0-202203031534/bin"
 export PATH="${PATH}:${HOME}/Downloads/clangd_18.1.3/bin"
-
 
 # Set defaults
 export EDITOR="kak"

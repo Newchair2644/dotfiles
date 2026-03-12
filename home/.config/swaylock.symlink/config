@@ -4,7 +4,8 @@ indicator-radius=120
 indicator-thickness=8
 ignore-empty-password
 
-# Start Flavours
+# Tinty Start
+## export solarized-dark
 ## Base16 Solarized Dark
 # Author: Ethan Schoonover (modified by aramisgithub)
 
@@ -32,4 +33,4 @@ text-ver-color=002b36
 text-wrong-color=002b36
 text-caps-lock-color=6c71c4
 layout-text-color=93a1a1
-# End Flavours
+# Tinty End

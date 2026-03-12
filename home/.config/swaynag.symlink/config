@@ -9,7 +9,7 @@ button-dismiss-gap=5
 button-margin-right=10
 button-padding=5
 
-# Start flavours
+# Tinty Start
 ## Base16 Solarized Dark
 ## Author: Ethan Schoonover (modified by aramisgithub)
 [normal]
@@ -37,4 +37,4 @@ button-background=93a1a1
 details-background=93a1a1
 text=002b36
 button-text=073642
-# End flavours
+# Tinty End

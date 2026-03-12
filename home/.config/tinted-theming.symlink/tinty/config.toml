@@ -1,0 +1,115 @@
+# Through which shell command hooks will run. The command will be replaced in '{}'
+shell = "sh -c '{}'"
+default-scheme = "base16-oceanicnext"
+
+### ====== WINDOW MANAGER ====== #
+[[items]]
+name = "base16-i3"
+path = "https://github.com/tinted-theming/base16-i3"
+themes-dir = "colors"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/sway/config && swaymsg reload"
+supported-systems = ["base16"]
+# TODO write-to-file = ["/home/newchair/.config/sway/config", "Tinty Start", "Tinty End"]
+
+[[items]]
+name = "swaylock"
+path = "~/.local/share/tinted-theming/tinty/repos/swaylock"
+themes-dir = "colors"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/swaylock/config"
+supported-systems = ["base16"]
+
+[[items]]
+name = "swaynag"
+path = "~/.local/share/tinted-theming/tinty/repos/swaynag"
+themes-dir = "themes"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/swaynag/config"
+supported-systems = ["base16"]
+
+[[items]]
+name = "i3status-rust"
+path = "~/.local/share/tinted-theming/tinty/repos/i3status-rust"
+themes-dir = "config"
+hook = "cp -f %f ~/.config/i3status-rust/config.toml"
+supported-systems = ["base16"]
+
+## ====== GUI ====== #
+[[items]]
+name = "base16-fuzzel"
+path = "~/.local/share/tinted-theming/tinty/repos/base16-fuzzel"
+themes-dir = "colors"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/fuzzel/fuzzel.ini" 
+#write-to-file = ["/home/newchair/.dotfiles/home/.config/fuzzel.symlink/fuzzel.ini", "# Tinty Start\n", "\n# Tinty End"]
+supported-systems = ["base16"]
+
+[[items]]
+name = "base16-fnott"
+path = "~/.local/share/tinted-theming/tinty/repos/base16-fnott"
+themes-dir = "colors"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/fnott/fnott.ini && pkill fnott"  # assumes runit user service
+supported-systems = ["base16"]
+
+[[items]]
+name = "base16-gtk-flatcolor-colors3"
+path = "https://github.com/tinted-theming/base16-gtk-flatcolor"
+themes-dir = "gtk-3"
+#hook = "cp -f %f ~/.local/share/themes/FlatColor/colors3; gsettings set org.gnome.desktop.interface gtk-theme dummy && gsettings set org.gnome.desktop.interface gtk-theme FlatColor"
+hook = "cp -f %f ~/.local/share/themes/FlatColor/colors3 && if [ \"$TINTY_SCHEME_VARIANT\" = \"dark\" ]; then gsettings set org.gnome.desktop.interface color-scheme prefer-dark; else gsettings set org.gnome.desktop.interface color-scheme default; fi && gsettings set org.gnome.desktop.interface gtk-theme dummy && gsettings set org.gnome.desktop.interface gtk-theme FlatColor"
+supported-systems = ["base16"]
+
+[[items]]
+name = "base16-gtk-flatcolor-colors2"
+path = "https://github.com/tinted-theming/base16-gtk-flatcolor"
+themes-dir = "gtk-2"
+hook = "cp -f %f ~/.local/share/themes/FlatColor/colors2"
+supported-systems = ["base16"]
+
+[[items]]
+name = "base16-zathura"
+path = "https://github.com/HaoZeke/base16-zathura"
+themes-dir = "colors"     # needs to be generated
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/zathura/zathurarc"
+supported-systems = ["base16"]
+ 
+
+## ====== CLI ====== #
+[[items]]
+name = "tinted-shell"
+path = "https://github.com/tinted-theming/tinted-shell"
+themes-dir = "scripts"
+hook = "cp -f %f ~/.config/bash/base16-shell && pkill -USR1 bash"
+supported-systems = ["base16"]
+
+[[items]]
+name = "vivid"
+path = "https://github.com/tinted-theming/base16-vivid"
+themes-dir = "themes"
+hook = "cp -f %f ~/.config/vivid/themes/base16.yml"
+supported-systems = ["base16"]
+ 
+[[items]]
+name = "tinted-fzf"
+path = "https://github.com/tinted-theming/tinted-fzf"
+themes-dir = "bash"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/bash/bashrc.d/fzf"
+supported-systems = ["base16"]
+
+[[items]]
+name = "base16-kakoune"
+path = "https://github.com/aprilarcus/base16-kakoune"
+themes-dir = "colors"
+hook = "cp -f %f ~/.config/kak/colors/base16.kak"
+supported-systems = ["base16"]
+
+[[items]]
+name = "cava"
+path = "~/.local/share/tinted-theming/tinty/repos/cava"
+themes-dir = "themes"
+hook = "sed -i \"/# Tinty Start/,/# Tinty End/{/# Tinty Start/!{/# Tinty End/!d;}}; /# Tinty Start/r %f\" ~/.config/cava/config"
+supported-systems = ["base16"]
+
+[[items]]  # TODO PR
+name = "base16-zellij"
+path = "https://github.com/ralsina/base16-zellij"
+themes-dir = "colors"
+hook = "cp -f %f ~/.config/zellij/themes/default.kdl"
+supported-systems = ["base16"]

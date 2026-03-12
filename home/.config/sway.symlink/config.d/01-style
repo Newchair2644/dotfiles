@@ -19,9 +19,9 @@ gaps inner 4
 title_align center
 titlebar_border_thickness 2
 
-### Wallpaper (current flavours scheme defined by ~/.local/share/flavours/lastscheme)
-exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$(flavours current).* -m fill'
-#exec_always bash -c 'pkill swaybg; swaybg -o "Dell Inc. DELL P1911 8JCGH23AC6LL" -i ~/.dotfiles/wallpapers/$(flavours current).* -m center'
+### Wallpaper (current tinty scheme defined by ~/.local/share/tinted-theming/tinty/current_scheme)
+set $wallpaper $(tinty current | cut -d- -f2-)
+exec_always bash -c 'pkill swaybg; swaybg -i ~/.dotfiles/wallpapers/$wallpaper.* -m fill'
 
 ## Swaybar + i3blocks
 bar {

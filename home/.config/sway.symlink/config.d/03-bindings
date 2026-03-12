@@ -110,7 +110,7 @@ bindsym $Super+Shift+semicolon mark "swapme"; exec /home/newchair/.local/src/wl-
 bindsym $Super+Shift+Tab exec sway-scratchpad
 
 # Dmenu theme picker
-bindsym Ctrl+Alt+t exec flavours-menu
+bindsym Ctrl+Alt+t exec tinty-menu
 
 # Notetaker window
 #bindsym $Super+n exec footclient --title 'notetaker_window' -e notetaker

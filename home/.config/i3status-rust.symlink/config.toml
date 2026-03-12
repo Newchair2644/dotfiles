@@ -35,9 +35,11 @@ idle_fg = "#b58900"
 [[block]]
 block = "sound"
 driver = "pulseaudio"
-format = "$icon $volume"
+#format = "$icon $volume"
 [block.theme_overrides]
-idle_fg = "#dc322f"
+idle_fg     = "#dc322f"
+warning_fg  = "#dc322f"
+warning_bg  = "#002b36"
 
 # ===============================
 # BATTERY
