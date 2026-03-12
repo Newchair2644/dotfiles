@@ -1,15 +1,42 @@
 $include /etc/inputrc
 
-set completion-ignore-case On
-set colored-stats on
-set page-completions off
+# Turn off bell
+set bell-style none
 
+# Ignore case, treat _ and - as the same
+set completion-ignore-case on
+set completion-map-case on
+
+# Show completions on one tab press
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
-\t": menu-complete
-"\e[Z": menu-complete-backward
+# Show completions regardless of how many, dump do not use pager
+set completion-query-items 0
+set page-completions off
 
+# Highlight common prefix, enable colored completion
+set colored-completion-prefix on
+set colored-stats on
+
+# Mark directories with /
+set mark-directories on
+
+# Do not insert chars already in prompt
+set skip-completed-text on
+
+# Show file stats (eg * executable)
+set visible-stats on
+
+# Current prompt searches history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+# Cycle through available completions with tab and shift-tab
+"\t": menu-complete
+"\e[Z": menu-complete-backward
 set menu-complete-display-prefix on
 
 # allow foot to jump between prompts <https://codeberg.org/dnkl/foot/wiki#user-content-shell-integration>
