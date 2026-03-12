@@ -1,4 +1,0 @@
-colors:
-    extension: .config
-    output: colors
-    supported-systems: [base16]
