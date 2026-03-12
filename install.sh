@@ -56,12 +56,9 @@ setup() {
 # Install packages with xbps-install and download some fonts
 pkg_install() {
     echo "Installing packages..." | _tag 0
-    if [ "$INSTALL_TYPE" = "full" ]; then
-        pkg=$(sed 's/^!//' pkg-list.txt)
-    else
-        pkg=$(sed -n 's/^!//p' pkg-list.txt)
-    fi
-    sudo xbps-install -S $pkg
+    for f in pkgs/*.txt; do
+        xbps-install -S $(grep -v '^\s*#' "$f")
+    done
 
     # My favorite fonts, not all are needed, edit fonts var (see fontconfig)
     echo "Installing fonts..." | _tag 0

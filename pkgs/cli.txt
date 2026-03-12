@@ -1,0 +1,70 @@
+# shell / terminal
+bash-completion
+zellij
+fzf
+vivid
+
+# file management
+nnn
+pistol
+atool
+7zip
+unrar
+unzip
+zip
+rsync
+rclone
+
+# text / docs
+mdcat
+groff
+pandoc
+man-pages-posix
+aspell
+aspell-en
+
+# data / scripting
+jq
+moreutils
+psmisc
+lsq
+xdot
+python3-requests
+
+# network / transfer
+wget
+ffsend
+nmap
+qrencode
+
+# media
+ffmpeg
+yt-dlp
+GraphicsMagick
+tesseract-ocr-eng
+
+# music
+beets
+python3-pylast
+
+# calendar / tasks
+remind
+python3-icalendar
+
+# hardware / serial
+picocom
+android-tools
+scrcpy
+
+# system info / misc
+fastfetch
+void-docs-browse
+pacman
+clog
+
+# fun
+asciiquarium
+cbonsai
+cmatrix
+sl
+batsignal

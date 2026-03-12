@@ -1,0 +1,35 @@
+# browsers
+firefox
+ungoogled-chromium
+torbrowser-launcher
+lagrange
+
+# office / docs
+libreoffice-writer
+zathura
+zathura-pdf-mupdf
+zathura-ps
+
+# media
+mpv
+nsxiv
+gimp
+fstl
+
+# communication
+neomutt
+catgirl
+
+# downloading / sharing
+qbittorrent
+nicotine+
+stremio-shell
+syncthing
+
+# streaming
+supersonic-desktop
+moonlight-qt
+
+# printing
+cups
+system-config-printer

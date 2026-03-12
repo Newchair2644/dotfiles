@@ -1,0 +1,6 @@
+docker
+distrobox
+qemu
+libvirt
+virt-manager
+virt-manager-tools

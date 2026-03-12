@@ -1,0 +1,11 @@
+pipewire
+alsa-pipewire
+libspa-bluetooth
+bluez
+pavucontrol
+playerctl
+cava
+cmus-ffmpeg
+cmus-flac
+cmus-opus
+cmus-pulseaudio

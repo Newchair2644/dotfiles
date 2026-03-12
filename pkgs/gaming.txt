@@ -1,0 +1,7 @@
+wine
+wine-mono
+PrismLauncher
+minetest
+retroarch
+pegasus-frontend
+Skyscraper

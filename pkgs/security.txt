@@ -1,0 +1,5 @@
+gnupg
+gnupg2-scdaemon
+pass
+pcsc-ccid
+yubikey-manager
