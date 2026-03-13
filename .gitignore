@@ -4,3 +4,5 @@ home/.config/cmus.symlink/*
 home/.config/beets.symlink/state.pickle
 home/.config/beets.symlink/library.db
 home/.config/kak.symlink/bundle/*
+home/.config/cava.symlink/shaders/
+home/.config/cava.symlink/themes/

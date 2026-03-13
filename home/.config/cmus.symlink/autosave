@@ -1,4 +1,4 @@
-set aaa_mode=all
+set aaa_mode=album
 set altformat_current= %F 
 set altformat_playlist= %f%= %d %{?X!=0?%3X ?    }
 set altformat_title=%f
@@ -75,6 +75,8 @@ set icecast_default_charset=ISO-8859-1
 set id3_default_charset=ISO-8859-1
 set ignore_duplicates=false
 set input.cue.priority=50
+set input.ffmpeg.priority=30
+set input.flac.priority=50
 set input.mad.priority=55
 set input.opus.priority=50
 set input.vorbis.priority=50
@@ -109,7 +111,7 @@ set show_current_bitrate=false
 set show_hidden=false
 set show_playback_position=true
 set show_remaining_time=false
-set shuffle=tracks
+set shuffle=off
 set skip_track_info=false
 set smart_artist_sort=true
 set softvol=false
