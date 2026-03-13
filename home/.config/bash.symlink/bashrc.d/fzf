@@ -1,27 +1,27 @@
 # Tinty Start
-# Scheme name: Solarized Dark
+# Scheme name: Solar Flare
 # Scheme system: base16
-# Scheme author: Ethan Schoonover (modified by aramisgithub)
+# Scheme author: Chuck Harmston (https://chuck.harmston.ch)
 # Template author: Tinted Theming (https://github.com/tinted-theming)
 
 _gen_fzf_default_opts() {
 
-local color00='#002b36'
-local color01='#073642'
-local color02='#586e75'
-local color03='#657b83'
-local color04='#839496'
-local color05='#93a1a1'
-local color06='#eee8d5'
-local color07='#fdf6e3'
-local color08='#dc322f'
-local color09='#cb4b16'
-local color0A='#b58900'
-local color0B='#859900'
-local color0C='#2aa198'
-local color0D='#268bd2'
-local color0E='#6c71c4'
-local color0F='#d33682'
+local color00='#18262f'
+local color01='#222e38'
+local color02='#586875'
+local color03='#667581'
+local color04='#85939e'
+local color05='#a6afb8'
+local color06='#e8e9ed'
+local color07='#f5f7fa'
+local color08='#ef5253'
+local color09='#e66b2b'
+local color0A='#e4b51c'
+local color0B='#7cc844'
+local color0C='#52cbb0'
+local color0D='#33b5e1'
+local color0E='#a363d5'
+local color0F='#d73c9a'
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
 " --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\

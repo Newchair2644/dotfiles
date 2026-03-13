@@ -1,16 +1,16 @@
-## Base16 Solarized Dark
-# Scheme author: Ethan Schoonover (modified by aramisgithub)
+## Base16 Solar Flare
+# Scheme author: Chuck Harmston (https://chuck.harmston.ch)
 # Template author: Tinted Theming (https://github.com/tinted-theming)
 # In file gtk-2.0/gtkrc, delete "gtk-color-scheme" including everything between quotes (don't delete gtk-auto-mnemonics) and inject this.
-gtk-color-scheme = "bg_color:#002b36
-color0:#002b36
-text_color:#93a1a1
-selected_bg_color:#586e75
-selected_fg_color:#93a1a1
-tooltip_bg_color:#002b36
-tooltip_fg_color:#93a1a1
-titlebar_bg_color:#002b36
-titlebar_fg_color:#93a1a1
-menu_bg_color:#002b36
-menu_fg_color:#93a1a1
-link_color:#586e75"
+gtk-color-scheme = "bg_color:#18262f
+color0:#18262f
+text_color:#a6afb8
+selected_bg_color:#586875
+selected_fg_color:#a6afb8
+tooltip_bg_color:#18262f
+tooltip_fg_color:#a6afb8
+titlebar_bg_color:#18262f
+titlebar_fg_color:#a6afb8
+menu_bg_color:#18262f
+menu_fg_color:#a6afb8
+link_color:#586875"

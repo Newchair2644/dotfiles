@@ -1,5 +1,5 @@
-## Base16 Solarized Dark
-# Author: Ethan Schoonover (modified by aramisgithub)
+## Base16 Solar Flare
+# Author: Chuck Harmston (https://chuck.harmston.ch)
 
 # ===============================
 # Super Minimal Bar (Base16)
@@ -9,10 +9,10 @@
 theme = "plain"
 
 [theme.overrides]
-idle_bg = "#002b36"
-idle_fg = "#93a1a1"
-separator_fg = "#657b83"
-separator_bg = "#002b36"
+idle_bg = "#18262f"
+idle_fg = "#a6afb8"
+separator_fg = "#667581"
+separator_bg = "#18262f"
 separator = " • "
 [icons]
 icons = "material-nf"
@@ -26,7 +26,7 @@ block = "net"
 interval = 3
 format = "$icon $ssid"
 [block.theme_overrides]
-idle_fg = "#b58900"
+idle_fg = "#e4b51c"
 
 # ===============================
 # VOLUME
@@ -37,9 +37,9 @@ block = "sound"
 driver = "pulseaudio"
 #format = "$icon $volume"
 [block.theme_overrides]
-idle_fg     = "#dc322f"
-warning_fg  = "#dc322f"
-warning_bg  = "#002b36"
+idle_fg     = "#ef5253"
+warning_fg  = "#ef5253"
+warning_bg  = "#18262f"
 
 # ===============================
 # BATTERY
@@ -54,14 +54,14 @@ empty_format = "$icon $percentage"
 not_charging_format = "$icon $percentage"
 missing_format = "$icon $percentage"
 [block.theme_overrides]
-idle_bg     = "#002b36"
-idle_fg     = "#859900"
-good_bg     = "#002b36"
-good_fg     = "#859900"
-warning_bg  = "#002b36"
-warning_fg  = "#859900"
-critical_bg = "#002b36"
-critical_fg = "#859900"
+idle_bg     = "#18262f"
+idle_fg     = "#7cc844"
+good_bg     = "#18262f"
+good_fg     = "#7cc844"
+warning_bg  = "#18262f"
+warning_fg  = "#7cc844"
+critical_bg = "#18262f"
+critical_fg = "#7cc844"
 
 # ===============================
 # CALENDAR
@@ -72,7 +72,7 @@ block = "time"
 interval = 60
 format = "󰃭 $timestamp.datetime(f:'%a %b %d')"
 [block.theme_overrides]
-idle_fg = "#268bd2"
+idle_fg = "#33b5e1"
 
 # ===============================
 # TIME
@@ -83,4 +83,4 @@ block = "time"
 interval = 5
 format = "󰥔 $timestamp.datetime(f:'%I:%M %p') "
 [block.theme_overrides]
-idle_fg = "#6c71c4"
+idle_fg = "#a363d5"

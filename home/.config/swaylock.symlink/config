@@ -5,32 +5,32 @@ indicator-thickness=8
 ignore-empty-password
 
 # Tinty Start
-## export solarized-dark
-## Base16 Solarized Dark
-# Author: Ethan Schoonover (modified by aramisgithub)
+## export solarflare
+## Base16 Solar Flare
+# Author: Chuck Harmston (https://chuck.harmston.ch)
 
-color=002b36D9
-inside-ver-color=859900
-inside-wrong-color=dc322f
-inside-clear-color=b58900
-inside-color=002b3600
+color=18262fD9
+inside-ver-color=7cc844
+inside-wrong-color=ef5253
+inside-clear-color=e4b51c
+inside-color=18262f00
 
-ring-ver-color=859900
-ring-wrong-color=dc322f
-ring-clear-color=b58900
-ring-color=268bd2
+ring-ver-color=7cc844
+ring-wrong-color=ef5253
+ring-clear-color=e4b51c
+ring-color=33b5e1
 
-line-ver-color=002b36
-line-wrong-color=002b36
-line-clear-color=002b36
-line-color=002b36
-separator-color=002b36
+line-ver-color=18262f
+line-wrong-color=18262f
+line-clear-color=18262f
+line-color=18262f
+separator-color=18262f
 
-key-hl-color=b58900
-bs-hl-color=dc322f
+key-hl-color=e4b51c
+bs-hl-color=ef5253
 
-text-ver-color=002b36
-text-wrong-color=002b36
-text-caps-lock-color=6c71c4
-layout-text-color=93a1a1
+text-ver-color=18262f
+text-wrong-color=18262f
+text-caps-lock-color=a363d5
+layout-text-color=a6afb8
 # Tinty End

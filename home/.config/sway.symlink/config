@@ -3,28 +3,28 @@
 
 ## Set base16 colors, managed by tinty
 # Tinty Start
-## Base16 Solarized Dark
-# Scheme author: Ethan Schoonover (modified by aramisgithub)
+## Base16 Solar Flare
+# Scheme author: Chuck Harmston (https://chuck.harmston.ch)
 # Template author: Tinted Theming (https://github.com/tinted-theming)
 #
 # You can use these variables anywhere in the i3 configuration file.
 
-set $base00 #002b36
-set $base01 #073642
-set $base02 #586e75
-set $base03 #657b83
-set $base04 #839496
-set $base05 #93a1a1
-set $base06 #eee8d5
-set $base07 #fdf6e3
-set $base08 #dc322f
-set $base09 #cb4b16
-set $base0A #b58900
-set $base0B #859900
-set $base0C #2aa198
-set $base0D #268bd2
-set $base0E #6c71c4
-set $base0F #d33682
+set $base00 #18262f
+set $base01 #222e38
+set $base02 #586875
+set $base03 #667581
+set $base04 #85939e
+set $base05 #a6afb8
+set $base06 #e8e9ed
+set $base07 #f5f7fa
+set $base08 #ef5253
+set $base09 #e66b2b
+set $base0A #e4b51c
+set $base0B #7cc844
+set $base0C #52cbb0
+set $base0D #33b5e1
+set $base0E #a363d5
+set $base0F #d73c9a
 # Tinty End
 
 ## Source other files

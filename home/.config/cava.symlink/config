@@ -142,17 +142,17 @@ method = "pulse"
 # You can define as many as 8 different colors. They range from bottom to top of screen
 
 # Tinty Start
-## Base16 Solarized Dark
-# Author: Ethan Schoonover (modified by aramisgithub)
+## Base16 Solar Flare
+# Author: Chuck Harmston (https://chuck.harmston.ch)
 
 gradient = 1
 gradient_count = 6
-gradient_color_1 = '#6c71c4'
-gradient_color_2 = '#268bd2'
-gradient_color_3 = '#2aa198'
-gradient_color_4 = '#859900'
-gradient_color_5 = '#b58900'
-gradient_color_6 = '#dc322f'
+gradient_color_1 = '#a363d5'
+gradient_color_2 = '#33b5e1'
+gradient_color_3 = '#52cbb0'
+gradient_color_4 = '#7cc844'
+gradient_color_5 = '#e4b51c'
+gradient_color_6 = '#ef5253'
 # Tinty End
 
 [smoothing]
