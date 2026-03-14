@@ -2,19 +2,18 @@
 export NNN_FIFO=/tmp/nnn.fifo
 
 # NNN file manager theme <https://github.com/jarun/nnn/wiki/Themes>
-BLK="0B"
-CHR="0B"
-DIR="04"
-EXE="06"
-REG="00"
-HARDLINK="06"
-SYMLINK="06"
-MISSING="00"
-ORPHAN="09"
-FIFO="06"
-SOCK="0B"
-OTHER="06"
-export NNN_COLORS="6231"
+BLK="03"      # base0A yellow
+CHR="03"      # base0A yellow
+DIR="05"      # base0E purple
+EXE="02"      # base0B green
+REG="07"      # base05 foreground
+HARDLINK="08" # base03 muted
+SYMLINK="06"  # base0C cyan
+MISSING="01"  # base08 red
+ORPHAN="01"   # base08 red
+FIFO="03"     # base0A yellow
+SOCK="04"     # base0D blue
+OTHER="00"
 export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
 
 # NNN plugin keys
